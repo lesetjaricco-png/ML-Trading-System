@@ -90,7 +90,7 @@ class RiskManager:
 
         max_shares = (portfolio_value * self.max_position_size) / entry_price
         shares = min(raw_shares, max_shares)
-        return max(0.0, np.floor(shares))
+        return max(0.0, float(shares))
 
     def calculate_stop_loss(self, entry_price: float, atr: Optional[float] = None) -> float:
         """Return the stop-loss price for a long position."""

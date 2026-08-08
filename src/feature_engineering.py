@@ -3,10 +3,12 @@
 from __future__ import annotations
 
 import logging
-from typing import List
+from typing import Any, Dict, List
 
 import numpy as np
 import pandas as pd
+
+from src.instruments import InstrumentSpec, resolve_instrument_spec
 
 logger = logging.getLogger(__name__)
 
@@ -30,10 +32,18 @@ class FeatureEngineer:
         Look-back window for the Average True Range.
     volume_sma_period:
         Window for volume Simple Moving Average.
-    lookahead_days:
-        Number of future bars used to compute the target label.
-    return_threshold:
-        Minimum forward return required to label a bar as a buy signal.
+    timeframe:
+        Candle size of the raw market data (for example "15m").
+    take_profit_points:
+        Price distance in points to define the take-profit level.
+    stop_loss_points:
+        Price distance in points to define the stop-loss level.
+    max_bars:
+        Maximum number of future candles to examine before declaring the trade unresolved.
+    same_bar_rule:
+        How to handle cases where both TP and SL would be reached in the same bar.
+    unresolved_policy:
+        What to do when neither TP nor SL is reached within max_bars.
     """
 
     def __init__(
@@ -48,8 +58,14 @@ class FeatureEngineer:
         ema_periods: List[int] = None,
         atr_period: int = 14,
         volume_sma_period: int = 20,
-        lookahead_days: int = 5,
-        return_threshold: float = 0.01,
+        timeframe: str = "15m",
+        take_profit_points: float = 100.0,
+        stop_loss_points: float = 20.0,
+        max_bars: int = 40,
+        same_bar_rule: str = "drop",
+        unresolved_policy: str = "drop",
+        instrument_config: Dict[str, Dict[str, Any]] | None = None,
+        instrument_spec: InstrumentSpec | None = None,
     ):
         self.rsi_period = rsi_period
         self.macd_fast = macd_fast
@@ -61,20 +77,28 @@ class FeatureEngineer:
         self.ema_periods = ema_periods or [12, 26]
         self.atr_period = atr_period
         self.volume_sma_period = volume_sma_period
-        self.lookahead_days = lookahead_days
-        self.return_threshold = return_threshold
+        self.timeframe = timeframe
+        self.take_profit_points = take_profit_points
+        self.stop_loss_points = stop_loss_points
+        self.max_bars = max_bars
+        self.same_bar_rule = same_bar_rule.lower()
+        self.unresolved_policy = unresolved_policy.lower()
+        self.instrument_config = instrument_config or {}
+        self.instrument_spec = instrument_spec
 
     # ------------------------------------------------------------------
     # Public API
     # ------------------------------------------------------------------
 
-    def transform(self, df: pd.DataFrame) -> pd.DataFrame:
+    def transform(self, df: pd.DataFrame, instrument_name: str | None = None) -> pd.DataFrame:
         """Add all features and the binary target column to *df*.
 
         Parameters
         ----------
         df:
             Raw OHLCV DataFrame with columns ``Open, High, Low, Close, Volume``.
+        instrument_name:
+            Instrument identifier used to resolve per-instrument TP/SL overrides.
 
         Returns
         -------
@@ -89,10 +113,20 @@ class FeatureEngineer:
         df = self._add_bollinger_bands(df)
         df = self._add_moving_averages(df)
         df = self._add_atr(df)
+        df = self._add_volatility_features(df)
         df = self._add_volume_features(df)
         df = self._add_candlestick_features(df)
-        df = self._add_target(df)
-        df.dropna(inplace=True)
+        df = self._add_time_features(df)
+        df = self._add_target(df, instrument_name=instrument_name)
+
+        for column in df.columns:
+            if column == "target":
+                continue
+            df[column] = df[column].ffill().bfill()
+
+        df = df.dropna(subset=["target"])
+        feature_columns = [col for col in df.columns if col not in {"Open", "High", "Low", "Close", "Volume", "target"}]
+        df = df.ffill().bfill()
         logger.info("Feature matrix shape after engineering: %s", df.shape)
         return df
 
@@ -117,12 +151,18 @@ class FeatureEngineer:
             *[f"price_to_sma_{p}" for p in self.sma_periods],
             "atr",
             "atr_pct",
+            "volatility_5",
+            "volatility_20",
             "volume_sma",
             "volume_ratio",
             "obv",
             "body_size",
             "upper_shadow",
             "lower_shadow",
+            "day_of_week",
+            "is_weekend",
+            "hour_of_day",
+            "is_market_open",
         ]
 
     # ------------------------------------------------------------------
@@ -181,6 +221,12 @@ class FeatureEngineer:
         df["atr_pct"] = df["atr"] / df["Close"]
         return df
 
+    def _add_volatility_features(self, df: pd.DataFrame) -> pd.DataFrame:
+        returns = df["Close"].pct_change()
+        df["volatility_5"] = returns.rolling(5).std()
+        df["volatility_20"] = returns.rolling(20).std()
+        return df
+
     def _add_volume_features(self, df: pd.DataFrame) -> pd.DataFrame:
         df["volume_sma"] = df["Volume"].rolling(self.volume_sma_period).mean()
         df["volume_ratio"] = df["Volume"] / df["volume_sma"].replace(0, np.nan)
@@ -194,8 +240,179 @@ class FeatureEngineer:
         df["lower_shadow"] = (df[["Close", "Open"]].min(axis=1) - df["Low"]) / df["Open"]
         return df
 
-    def _add_target(self, df: pd.DataFrame) -> pd.DataFrame:
-        """Binary label: 1 if forward return >= threshold, else 0."""
-        forward_return = df["Close"].shift(-self.lookahead_days) / df["Close"] - 1
-        df["target"] = (forward_return >= self.return_threshold).astype(int)
+    def _add_time_features(self, df: pd.DataFrame) -> pd.DataFrame:
+        df = df.copy()
+        df.index = pd.to_datetime(df.index)
+        df["day_of_week"] = df.index.dayofweek
+        df["is_weekend"] = df["day_of_week"].isin([5, 6]).astype(int)
+        df["hour_of_day"] = 0
+        df["is_market_open"] = 1
         return df
+
+    def _add_target(self, df: pd.DataFrame, instrument_name: str | None = None) -> pd.DataFrame:
+        """Create a TP-before-SL target using a configurable bar-based horizon."""
+        df = df.copy()
+        df["target"] = self._build_target_series(df, instrument_name=instrument_name)
+        return df
+
+    def _build_target_series(self, df: pd.DataFrame, instrument_name: str | None = None) -> List[float]:
+        target = []
+        for idx in range(len(df)):
+            entry_price = df.iloc[idx]["Close"]
+            tp_price, sl_price = self._resolve_tp_sl_levels(entry_price, instrument_name)
+            outcome = self._evaluate_trade_outcome(df, idx, tp_price, sl_price)
+            target.append(outcome)
+        return target
+
+    def _resolve_tp_sl_levels(self, entry_price: float, instrument_name: str | None = None) -> tuple[float, float]:
+        config = self._resolve_target_config(instrument_name)
+        tp_points = config.get("take_profit_points", self.take_profit_points)
+        sl_points = config.get("stop_loss_points", self.stop_loss_points)
+        point_size = self._resolve_point_size(instrument_name)
+        return entry_price + tp_points * point_size, entry_price - sl_points * point_size
+
+    def _resolve_point_size(self, instrument_name: str | None = None) -> float:
+        config = self._resolve_target_config(instrument_name)
+        configured_point_size = config.get("point_size")
+        if configured_point_size is not None:
+            return float(configured_point_size)
+
+        if self.instrument_spec is not None:
+            return self.instrument_spec.effective_point_size()
+
+        if instrument_name:
+            resolved_spec = resolve_instrument_spec(instrument_name, fallback_point_size=0.01)
+            return resolved_spec.effective_point_size()
+
+        return 0.01
+
+    def _resolve_target_config(self, instrument_name: str | None = None) -> Dict[str, Any]:
+        if instrument_name and instrument_name in self.instrument_config:
+            return self.instrument_config[instrument_name]
+        return {}
+
+    def evaluate_target_summary(
+        self,
+        df: pd.DataFrame,
+        instrument_name: str | None = None,
+        instrument_config: Dict[str, Dict[str, Any]] | None = None,
+    ) -> Dict[str, Any]:
+        """Evaluate the TP-before-SL target independently of XGBoost."""
+        if instrument_config is not None:
+            self.instrument_config = instrument_config
+
+        target = self._build_target_series(df, instrument_name)
+        valid = [value for value in target if pd.notna(value)]
+        wins = sum(1 for value in valid if value == 1)
+        losses = sum(1 for value in valid if value == 0)
+        dropped = sum(1 for value in target if pd.isna(value))
+
+        total_observations = len(df)
+        win_rate = wins / len(valid) if valid else 0.0
+        total_points = sum(
+            self._trade_pnl_points(value) for value in valid
+        )
+        avg_win = sum(
+            self._trade_pnl_points(value) for value in valid if value == 1
+        ) / wins if wins else 0.0
+        avg_loss = sum(
+            self._trade_pnl_points(value) for value in valid if value == 0
+        ) / losses if losses else 0.0
+        gross_profit = sum(self._trade_pnl_points(value) for value in valid if value == 1)
+        gross_loss = abs(sum(self._trade_pnl_points(value) for value in valid if value == 0))
+        profit_factor = gross_profit / gross_loss if gross_loss > 0 else float("inf")
+
+        monthly_breakdown = []
+        if isinstance(df.index, pd.DatetimeIndex):
+            monthly_groups = df.groupby(df.index.to_period("M"))
+            for period, group in monthly_groups:
+                group_target = self._build_target_series(group, instrument_name)
+                valid_group = [value for value in group_target if pd.notna(value)]
+                wins_group = sum(1 for value in valid_group if value == 1)
+                losses_group = sum(1 for value in valid_group if value == 0)
+                dropped_group = sum(1 for value in group_target if pd.isna(value))
+                monthly_breakdown.append(
+                    {
+                        "period": str(period),
+                        "trades": len(valid_group),
+                        "wins": wins_group,
+                        "losses": losses_group,
+                        "dropped": dropped_group,
+                        "win_rate": wins_group / len(valid_group) if valid_group else 0.0,
+                        "pnl_points": sum(self._trade_pnl_points(value) for value in valid_group),
+                    }
+                )
+
+        return {
+            "total_observations": total_observations,
+            "total_trades": len(valid),
+            "wins": wins,
+            "losses": losses,
+            "dropped": dropped,
+            "win_rate": round(win_rate, 4),
+            "total_pnl_points": round(total_points, 2),
+            "average_win": round(avg_win, 2),
+            "average_loss": round(avg_loss, 2),
+            "profit_factor": round(profit_factor, 2),
+            "max_drawdown": round(self._calculate_max_drawdown(target), 2),
+            "monthly_breakdown": monthly_breakdown,
+        }
+
+    def _trade_pnl_points(self, value: float) -> float:
+        if value == 1:
+            return 1.0
+        if value == 0:
+            return -1.0
+        return 0.0
+
+    def _calculate_max_drawdown(self, target: List[float]) -> float:
+        running = []
+        cumulative = 0.0
+        peak = 0.0
+        for value in target:
+            if pd.isna(value):
+                continue
+            cumulative += self._trade_pnl_points(value)
+            running.append(cumulative)
+            if cumulative > peak:
+                peak = cumulative
+        if not running:
+            return 0.0
+        return max(0.0, peak - min(running))
+
+    def _evaluate_trade_outcome(
+        self,
+        df: pd.DataFrame,
+        entry_idx: int,
+        tp_price: float,
+        sl_price: float,
+    ) -> int | float:
+        for offset in range(1, self.max_bars + 1):
+            if entry_idx + offset >= len(df):
+                break
+
+            row = df.iloc[entry_idx + offset]
+            high = row["High"]
+            low = row["Low"]
+
+            if high >= tp_price and low <= sl_price:
+                if self.same_bar_rule == "tp_first":
+                    return 1
+                if self.same_bar_rule == "sl_first":
+                    return 0
+                if self.same_bar_rule == "drop":
+                    return float("nan")
+                raise ValueError(f"Unsupported same_bar_rule: {self.same_bar_rule}")
+
+            if high >= tp_price:
+                return 1
+            if low <= sl_price:
+                return 0
+
+        if self.unresolved_policy == "drop":
+            return float("nan")
+        if self.unresolved_policy == "sl":
+            return 0
+        if self.unresolved_policy == "tp":
+            return 1
+        raise ValueError(f"Unsupported unresolved_policy: {self.unresolved_policy}")

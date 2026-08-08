@@ -19,6 +19,7 @@ build/
 data/raw/*.parquet
 data/raw/*.csv
 data/processed/
+!data/raw/US30_2026-01-01_2026-08-08_15m_mt5.parquet
 
 # Saved models
 models/*.joblib

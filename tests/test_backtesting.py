@@ -8,6 +8,7 @@ import pytest
 
 from src.backtesting import BacktestEngine
 from src.risk_management import RiskManager
+from src.instruments import InstrumentSpec
 
 
 @pytest.fixture
@@ -86,3 +87,64 @@ class TestBacktestEngine:
         engine = BacktestEngine(initial_capital=100_000)
         engine.run(signal_df)
         assert engine.trades == []
+
+    def test_tp_conversion_uses_instrument_point_size(self):
+        spec = InstrumentSpec(symbol="US30", point_size=0.25, tick_size=0.25, tick_value=1.0, contract_size=1.0)
+        engine = BacktestEngine(initial_capital=100_000, instrument_spec=spec, take_profit_points=100, stop_loss_points=20)
+        tp_price, sl_price = engine._resolve_tp_sl_prices(100.0, 1)
+        assert tp_price == pytest.approx(125.0)
+        assert sl_price == pytest.approx(95.0)
+
+    def test_buy_execution_closes_at_configured_tp(self):
+        dates = pd.date_range("2024-01-01", periods=2, freq="15min")
+        df = pd.DataFrame(
+            {
+                "Open": [100.0, 100.0],
+                "High": [100.0, 101.0],
+                "Low": [100.0, 100.0],
+                "Close": [100.0, 100.0],
+                "signal": [1, 0],
+            },
+            index=dates,
+        )
+        engine = BacktestEngine(initial_capital=100_000, instrument_spec=InstrumentSpec(symbol="US30", point_size=0.01), take_profit_points=100, stop_loss_points=20)
+        engine.run(df)
+        assert len(engine.trades) == 1
+        assert engine.trades[0].exit_reason == "take_profit"
+        assert engine.trades[0].exit_price == pytest.approx(101.0)
+
+    def test_buy_execution_closes_at_configured_sl(self):
+        dates = pd.date_range("2024-01-01", periods=2, freq="15min")
+        df = pd.DataFrame(
+            {
+                "Open": [100.0, 100.0],
+                "High": [100.0, 100.0],
+                "Low": [100.0, 99.0],
+                "Close": [100.0, 100.0],
+                "signal": [1, 0],
+            },
+            index=dates,
+        )
+        engine = BacktestEngine(initial_capital=100_000, instrument_spec=InstrumentSpec(symbol="US30", point_size=0.01), take_profit_points=100, stop_loss_points=20)
+        engine.run(df)
+        assert len(engine.trades) == 1
+        assert engine.trades[0].exit_reason == "stop_loss"
+        assert engine.trades[0].exit_price == pytest.approx(99.8)
+
+    def test_same_bar_tp_and_sl_does_not_choose_side(self):
+        dates = pd.date_range("2024-01-01", periods=2, freq="15min")
+        df = pd.DataFrame(
+            {
+                "Open": [100.0, 100.0],
+                "High": [100.0, 101.0],
+                "Low": [100.0, 99.8],
+                "Close": [100.0, 100.0],
+                "signal": [1, 0],
+            },
+            index=dates,
+        )
+        engine = BacktestEngine(initial_capital=100_000, instrument_spec=InstrumentSpec(symbol="US30", point_size=0.01), take_profit_points=100, stop_loss_points=20)
+        engine._open_trade(df.index[0], df.iloc[0])
+        should_exit, reason = engine._check_exit(df.index[1], df.iloc[1])
+        assert should_exit is False
+        assert reason == "same_bar"

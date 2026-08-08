@@ -1,8 +1,9 @@
 data:
-  ticker: "AAPL"
-  start_date: "2018-01-01"
-  end_date: "2024-01-01"
-  interval: "1d"
+  ticker: "US30"
+  start_date: "2024-01-01"
+  end_date: "current"
+  interval: "15m"
+  source: "mt5"
 
 features:
   rsi_period: 14
@@ -33,9 +34,23 @@ model:
   validation_size: 0.1
 
 signal:
-  prediction_threshold: 0.55
-  lookahead_days: 5
-  return_threshold: 0.01
+  prediction_threshold: 0.45
+
+target:
+  type: "tp_before_sl"
+  take_profit_points: 100
+  stop_loss_points: 20
+  max_bars: 40
+  same_bar_rule: "drop"
+  unresolved_policy: "drop"
+
+instruments:
+  US30:
+    take_profit_points: 100
+    stop_loss_points: 20
+  DE40:
+    take_profit_points: 100
+    stop_loss_points: 20
 
 risk:
   max_position_size: 0.1

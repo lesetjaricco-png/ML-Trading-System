@@ -1,0 +1,15 @@
+.git
+.gitignore
+.venv
+venv
+__pycache__
+.pytest_cache
+.coverage
+htmlcov
+.ipynb_checkpoints
+.idea
+.vscode
+
+# Runtime artifacts are mounted from host volumes in docker-compose
+logs
+models

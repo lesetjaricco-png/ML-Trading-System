@@ -8,6 +8,7 @@ from typing import Dict, List, Optional
 import numpy as np
 import pandas as pd
 
+from src.instruments import InstrumentSpec
 from src.risk_management import RiskManager, Trade
 
 logger = logging.getLogger(__name__)
@@ -34,11 +35,19 @@ class BacktestEngine:
         commission: float = 0.001,
         slippage: float = 0.0005,
         risk_manager: Optional[RiskManager] = None,
+        instrument_spec: Optional[InstrumentSpec] = None,
+        take_profit_points: float = 100.0,
+        stop_loss_points: float = 20.0,
+        same_bar_rule: str = "drop",
     ):
         self.initial_capital = initial_capital
         self.commission = commission
         self.slippage = slippage
         self.risk_manager = risk_manager or RiskManager()
+        self.instrument_spec = instrument_spec or InstrumentSpec(symbol="UNKNOWN")
+        self.take_profit_points = take_profit_points
+        self.stop_loss_points = stop_loss_points
+        self.same_bar_rule = same_bar_rule.lower()
 
         self._reset()
 
@@ -166,57 +175,72 @@ class BacktestEngine:
         return self.current_trade.quantity * price
 
     def _open_trade(self, date: pd.Timestamp, row: pd.Series) -> None:
-        entry_price = row["Close"] * (1 + self.slippage)
+        entry_price = row["Close"]
+        fill_price = entry_price * (1 + self.slippage)
         atr = row.get("atr", None)
         quantity = self.risk_manager.calculate_position_size(
-            self.cash, entry_price, atr=atr
+            self.cash, fill_price, atr=atr
         )
         if quantity <= 0:
             return
 
-        cost = quantity * entry_price * (1 + self.commission)
+        cost = quantity * fill_price * (1 + self.commission)
         if cost > self.cash:
-            quantity = np.floor(self.cash / (entry_price * (1 + self.commission)))
-            cost = quantity * entry_price * (1 + self.commission)
+            quantity = self.cash / (fill_price * (1 + self.commission))
+            cost = quantity * fill_price * (1 + self.commission)
 
         if quantity <= 0:
             return
 
+        tp_price, sl_price = self._resolve_tp_sl_prices(entry_price, 1)
         self.cash -= cost
         self.current_trade = Trade(
             entry_date=date,
             entry_price=entry_price,
             quantity=quantity,
-            stop_loss_price=self.risk_manager.calculate_stop_loss(entry_price, atr=atr),
-            take_profit_price=self.risk_manager.calculate_take_profit(entry_price, atr=atr),
+            stop_loss_price=sl_price,
+            take_profit_price=tp_price,
         )
         logger.debug("OPEN  %s @ %.2f  qty=%.0f  SL=%.2f  TP=%.2f",
                      date, entry_price, quantity,
                      self.current_trade.stop_loss_price,
                      self.current_trade.take_profit_price)
 
-    def _check_exit(self, date: pd.Timestamp, row: pd.Series) -> None:
-        should_exit, reason = self.risk_manager.should_exit(
-            self.current_trade, row["Low"]
-        )
-        if not should_exit:
-            should_exit, reason = self.risk_manager.should_exit(
-                self.current_trade, row["High"]
-            )
-        if should_exit:
-            exit_price = (
-                self.current_trade.stop_loss_price
-                if reason == "stop_loss"
-                else self.current_trade.take_profit_price
-            )
-            self._close_trade(date, exit_price, reason=reason)
+    def _check_exit(self, date: pd.Timestamp, row: pd.Series) -> tuple[bool, str]:
+        if self.current_trade is None:
+            return False, ""
+
+        tp_price, sl_price = self._resolve_tp_sl_prices(self.current_trade.entry_price, 1)
+        low = row["Low"]
+        high = row["High"]
+        if low <= sl_price and high >= tp_price:
+            if self.same_bar_rule == "tp_first":
+                self._close_trade(date, tp_price, reason="take_profit")
+                return True, "take_profit"
+            if self.same_bar_rule == "sl_first":
+                self._close_trade(date, sl_price, reason="stop_loss")
+                return True, "stop_loss"
+            return False, "same_bar"
+
+        if high >= tp_price:
+            self._close_trade(date, tp_price, reason="take_profit")
+            return True, "take_profit"
+
+        if low <= sl_price:
+            self._close_trade(date, sl_price, reason="stop_loss")
+            return True, "stop_loss"
+
+        return False, ""
 
     def _close_trade(
         self, date: pd.Timestamp, price: float, reason: str = "signal"
     ) -> None:
         trade = self.current_trade
-        exit_price = price * (1 - self.slippage)
-        proceeds = trade.quantity * exit_price * (1 - self.commission)
+        if trade is None:
+            return
+
+        exit_price = price
+        proceeds = self._calculate_proceeds(trade.quantity, trade.entry_price, exit_price)
         trade.exit_date = date
         trade.exit_price = exit_price
         trade.exit_reason = reason
@@ -228,3 +252,15 @@ class BacktestEngine:
         self.current_trade = None
         logger.debug("CLOSE %s @ %.2f  pnl=%.2f  reason=%s",
                      date, exit_price, trade.pnl, reason)
+
+    def _resolve_tp_sl_prices(self, entry_price: float, direction: int = 1) -> tuple[float, float]:
+        point_size = self.instrument_spec.effective_point_size()
+        tp_price = entry_price + self.take_profit_points * point_size
+        sl_price = entry_price - self.stop_loss_points * point_size
+        if direction < 0:
+            tp_price = entry_price - self.take_profit_points * point_size
+            sl_price = entry_price + self.stop_loss_points * point_size
+        return tp_price, sl_price
+
+    def _calculate_proceeds(self, quantity: float, entry_price: float, exit_price: float) -> float:
+        return quantity * exit_price * (1 - self.commission)

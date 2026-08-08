@@ -1,0 +1,30 @@
+services:
+  backtest:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ml-trading-system:v0.1-baseline
+    working_dir: /app
+    command: ["python", "main.py"]
+    volumes:
+      - ./config:/app/config
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./logs:/app/logs
+    environment:
+      - PYTHONUNBUFFERED=1
+
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ml-trading-system:v0.1-baseline
+    working_dir: /app
+    command: ["pytest", "tests/", "-v"]
+    volumes:
+      - ./config:/app/config
+      - ./data:/app/data
+      - ./models:/app/models
+      - ./logs:/app/logs
+    environment:
+      - PYTHONUNBUFFERED=1
