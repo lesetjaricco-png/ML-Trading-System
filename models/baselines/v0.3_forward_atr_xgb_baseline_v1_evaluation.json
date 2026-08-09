@@ -1,0 +1,639 @@
+{
+  "baseline_id": "v0.3_forward_atr_xgb_baseline_v1",
+  "training": {
+    "timestamp_utc": "2026-08-09T17:34:40.928234+00:00",
+    "duration_seconds": 11.168598899996141,
+    "random_seed": 42,
+    "preprocessing": "StandardScaler fit on the complete recorded TRAIN partition only; VALIDATION transformed with TRAIN-fitted parameters; TEST untouched",
+    "early_stopping": "disabled; validation was not supplied to model.fit"
+  },
+  "model_parameters": {
+    "n_estimators": 500,
+    "max_depth": 6,
+    "learning_rate": 0.05,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "min_child_weight": 1,
+    "gamma": 0.1,
+    "reg_alpha": 0.1,
+    "reg_lambda": 1.0,
+    "random_state": 42,
+    "eval_metric": "mlogloss",
+    "objective": "multi:softprob",
+    "num_class": 3,
+    "n_jobs": -1,
+    "configured_eval_metric": "logloss"
+  },
+  "dataset": {
+    "identifier": "US30_2022-05-12_2026-08-09_M15_v0.3_forward_atr_v1",
+    "path": "data\\processed\\US30_2022-05-12_2026-08-09_M15_v0.3_forward_atr_v1.parquet",
+    "metadata_path": "data\\processed\\US30_2022-05-12_2026-08-09_M15_v0.3_forward_atr_v1.metadata.json",
+    "sha256": "35995f3d673b914cd4631e95f7abc13ee78acec89c12129edbc1b1d353bb4634",
+    "metadata_sha256": "f3a4667ffc2ca8b7dd1fddf0a44c842f0a871401b88f77c57e8e7aa25b79b042",
+    "feature_generation_version": "us30_m15_features_v1",
+    "target_generation_version": "v0.3_forward_atr_v1",
+    "source": "mt5",
+    "fallback_used": false
+  },
+  "features": {
+    "count": 42,
+    "names_in_order": [
+      "returns",
+      "returns_2",
+      "returns_5",
+      "returns_10",
+      "log_returns",
+      "high_low_ratio",
+      "close_open_ratio",
+      "rsi",
+      "macd",
+      "macd_signal",
+      "macd_hist",
+      "bb_upper",
+      "bb_lower",
+      "bb_width",
+      "bb_pct",
+      "sma_10",
+      "sma_20",
+      "sma_50",
+      "sma_200",
+      "ema_12",
+      "ema_26",
+      "price_to_sma_10",
+      "price_to_sma_20",
+      "price_to_sma_50",
+      "price_to_sma_200",
+      "atr",
+      "atr_pct",
+      "volatility_5",
+      "volatility_20",
+      "volume_sma",
+      "volume_ratio",
+      "obv",
+      "body_size",
+      "upper_shadow",
+      "lower_shadow",
+      "day_of_week",
+      "is_weekend",
+      "hour_of_day",
+      "is_market_open",
+      "is_asia_session",
+      "is_london_session",
+      "is_new_york_session"
+    ]
+  },
+  "splits": {
+    "train": {
+      "row_count": 71917,
+      "first_timestamp": "2022-05-16T04:45:00",
+      "last_timestamp": "2025-06-02T22:30:00"
+    },
+    "validation": {
+      "row_count": 7991,
+      "first_timestamp": "2025-06-02T22:45:00",
+      "last_timestamp": "2025-10-02T12:00:00"
+    },
+    "test": {
+      "row_count": 19977,
+      "first_timestamp": "2025-10-02T12:15:00",
+      "last_timestamp": "2026-08-07T22:30:00"
+    }
+  },
+  "test_policy": "not evaluated; not used for fitting, preprocessing, CV, or selection",
+  "evaluation": {
+    "train": {
+      "accuracy": 0.7396165023568836,
+      "balanced_accuracy": 0.6050624043096557,
+      "macro_f1": 0.6497955612762197,
+      "per_class": {
+        "SELL": {
+          "precision": 0.890021296014603,
+          "recall": 0.399522021167634,
+          "f1": 0.5514868749705453,
+          "support": 14645
+        },
+        "BUY": {
+          "precision": 0.8174035416910989,
+          "recall": 0.4473971371718339,
+          "f1": 0.5782792665726375,
+          "support": 15579
+        },
+        "NO_TRADE": {
+          "precision": 0.7105392847085328,
+          "recall": 0.9682680545894994,
+          "f1": 0.8196205422854764,
+          "support": 41693
+        }
+      },
+      "confusion_matrix": [
+        [
+          5851,
+          715,
+          8079
+        ],
+        [
+          242,
+          6970,
+          8367
+        ],
+        [
+          481,
+          842,
+          40370
+        ]
+      ],
+      "confusion_matrix_labels": [
+        "SELL",
+        "BUY",
+        "NO_TRADE"
+      ],
+      "prediction_distribution": {
+        "SELL": {
+          "count": 6574,
+          "percentage": 9.14109320466649
+        },
+        "BUY": {
+          "count": 8527,
+          "percentage": 11.85672372318089
+        },
+        "NO_TRADE": {
+          "count": 56816,
+          "percentage": 79.00218307215262
+        }
+      },
+      "directional": {
+        "accuracy_on_actual_buy_sell_rows": 0.42419931180518794,
+        "actual_directional_row_count": 30224,
+        "predicted_buy_sell_percentage": 20.997816927847378,
+        "predicted_no_trade_percentage": 79.00218307215262,
+        "buy_precision": 0.8174035416910989,
+        "buy_recall": 0.4473971371718339,
+        "sell_precision": 0.890021296014603,
+        "sell_recall": 0.399522021167634
+      }
+    },
+    "validation": {
+      "accuracy": 0.5086972844450006,
+      "balanced_accuracy": 0.40638999294792416,
+      "macro_f1": 0.36408925785314034,
+      "per_class": {
+        "SELL": {
+          "precision": 0.2560131795716639,
+          "recall": 0.4955357142857143,
+          "f1": 0.33760590918965894,
+          "support": 1568
+        },
+        "BUY": {
+          "precision": 0.34782608695652173,
+          "recall": 0.042278332354668234,
+          "f1": 0.07539267015706806,
+          "support": 1703
+        },
+        "NO_TRADE": {
+          "precision": 0.677195198989261,
+          "recall": 0.6813559322033899,
+          "f1": 0.679269194212694,
+          "support": 4720
+        }
+      },
+      "confusion_matrix": [
+        [
+          777,
+          65,
+          726
+        ],
+        [
+          824,
+          72,
+          807
+        ],
+        [
+          1434,
+          70,
+          3216
+        ]
+      ],
+      "confusion_matrix_labels": [
+        "SELL",
+        "BUY",
+        "NO_TRADE"
+      ],
+      "prediction_distribution": {
+        "SELL": {
+          "count": 3035,
+          "percentage": 37.98022775622575
+        },
+        "BUY": {
+          "count": 207,
+          "percentage": 2.590414215992992
+        },
+        "NO_TRADE": {
+          "count": 4749,
+          "percentage": 59.429358027781255
+        }
+      },
+      "directional": {
+        "accuracy_on_actual_buy_sell_rows": 0.25955365331702845,
+        "actual_directional_row_count": 3271,
+        "predicted_buy_sell_percentage": 40.570641972218745,
+        "predicted_no_trade_percentage": 59.429358027781255,
+        "buy_precision": 0.34782608695652173,
+        "buy_recall": 0.042278332354668234,
+        "sell_precision": 0.2560131795716639,
+        "sell_recall": 0.4955357142857143
+      }
+    }
+  },
+  "baselines": {
+    "majority_class": {
+      "class_label": 2,
+      "class_name": "NO_TRADE",
+      "train": {
+        "accuracy": 0.5797377532433222,
+        "balanced_accuracy": 0.3333333333333333,
+        "macro_f1": 0.2446556934542147,
+        "per_class": {
+          "SELL": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 14645
+          },
+          "BUY": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 15579
+          },
+          "NO_TRADE": {
+            "precision": 0.5797377532433222,
+            "recall": 1.0,
+            "f1": 0.7339670803626441,
+            "support": 41693
+          }
+        },
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            14645
+          ],
+          [
+            0,
+            0,
+            15579
+          ],
+          [
+            0,
+            0,
+            41693
+          ]
+        ],
+        "confusion_matrix_labels": [
+          "SELL",
+          "BUY",
+          "NO_TRADE"
+        ],
+        "prediction_distribution": {
+          "SELL": {
+            "count": 0,
+            "percentage": 0.0
+          },
+          "BUY": {
+            "count": 0,
+            "percentage": 0.0
+          },
+          "NO_TRADE": {
+            "count": 71917,
+            "percentage": 100.0
+          }
+        },
+        "directional": {
+          "accuracy_on_actual_buy_sell_rows": 0.0,
+          "actual_directional_row_count": 30224,
+          "predicted_buy_sell_percentage": 0.0,
+          "predicted_no_trade_percentage": 100.0,
+          "buy_precision": 0.0,
+          "buy_recall": 0.0,
+          "sell_precision": 0.0,
+          "sell_recall": 0.0
+        }
+      },
+      "validation": {
+        "accuracy": 0.5906644975597547,
+        "balanced_accuracy": 0.3333333333333333,
+        "macro_f1": 0.24755461149135918,
+        "per_class": {
+          "SELL": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 1568
+          },
+          "BUY": {
+            "precision": 0.0,
+            "recall": 0.0,
+            "f1": 0.0,
+            "support": 1703
+          },
+          "NO_TRADE": {
+            "precision": 0.5906644975597547,
+            "recall": 1.0,
+            "f1": 0.7426638344740776,
+            "support": 4720
+          }
+        },
+        "confusion_matrix": [
+          [
+            0,
+            0,
+            1568
+          ],
+          [
+            0,
+            0,
+            1703
+          ],
+          [
+            0,
+            0,
+            4720
+          ]
+        ],
+        "confusion_matrix_labels": [
+          "SELL",
+          "BUY",
+          "NO_TRADE"
+        ],
+        "prediction_distribution": {
+          "SELL": {
+            "count": 0,
+            "percentage": 0.0
+          },
+          "BUY": {
+            "count": 0,
+            "percentage": 0.0
+          },
+          "NO_TRADE": {
+            "count": 7991,
+            "percentage": 100.0
+          }
+        },
+        "directional": {
+          "accuracy_on_actual_buy_sell_rows": 0.0,
+          "actual_directional_row_count": 3271,
+          "predicted_buy_sell_percentage": 0.0,
+          "predicted_no_trade_percentage": 100.0,
+          "buy_precision": 0.0,
+          "buy_recall": 0.0,
+          "sell_precision": 0.0,
+          "sell_recall": 0.0
+        }
+      }
+    }
+  },
+  "train_validation_gap": {
+    "accuracy": 0.23091921791188297,
+    "balanced_accuracy": 0.19867241136173158,
+    "macro_f1": 0.2857063034230794
+  },
+  "chronological_cv": {
+    "scope": "TRAIN partition only",
+    "n_splits": 5,
+    "preprocessing": "fresh StandardScaler fit independently on each fold's training rows",
+    "duration_seconds": 42.316486600000644,
+    "folds": [
+      {
+        "accuracy": 0.5242,
+        "precision": 0.5233,
+        "recall": 0.5242,
+        "f1": 0.5129,
+        "roc_auc": 0.6414,
+        "fold": 1
+      },
+      {
+        "accuracy": 0.5355,
+        "precision": 0.5046,
+        "recall": 0.5355,
+        "f1": 0.5022,
+        "roc_auc": 0.6521,
+        "fold": 2
+      },
+      {
+        "accuracy": 0.4892,
+        "precision": 0.5538,
+        "recall": 0.4892,
+        "f1": 0.4805,
+        "roc_auc": 0.6458,
+        "fold": 3
+      },
+      {
+        "accuracy": 0.5808,
+        "precision": 0.5098,
+        "recall": 0.5808,
+        "f1": 0.518,
+        "roc_auc": 0.6634,
+        "fold": 4
+      },
+      {
+        "accuracy": 0.5605,
+        "precision": 0.5006,
+        "recall": 0.5605,
+        "f1": 0.5151,
+        "roc_auc": 0.6524,
+        "fold": 5
+      }
+    ]
+  },
+  "feature_importance": [
+    {
+      "feature": "is_asia_session",
+      "importance": 0.3999711573123932
+    },
+    {
+      "feature": "hour_of_day",
+      "importance": 0.11008982360363007
+    },
+    {
+      "feature": "is_london_session",
+      "importance": 0.029323643073439598
+    },
+    {
+      "feature": "is_new_york_session",
+      "importance": 0.025310412049293518
+    },
+    {
+      "feature": "day_of_week",
+      "importance": 0.01627422496676445
+    },
+    {
+      "feature": "ema_26",
+      "importance": 0.016077980399131775
+    },
+    {
+      "feature": "volume_ratio",
+      "importance": 0.015547172166407108
+    },
+    {
+      "feature": "ema_12",
+      "importance": 0.015239162370562553
+    },
+    {
+      "feature": "sma_20",
+      "importance": 0.015153652057051659
+    },
+    {
+      "feature": "sma_50",
+      "importance": 0.015109601430594921
+    },
+    {
+      "feature": "sma_200",
+      "importance": 0.014897630549967289
+    },
+    {
+      "feature": "obv",
+      "importance": 0.014377123676240444
+    },
+    {
+      "feature": "sma_10",
+      "importance": 0.013773048296570778
+    },
+    {
+      "feature": "bb_lower",
+      "importance": 0.013657966628670692
+    },
+    {
+      "feature": "price_to_sma_200",
+      "importance": 0.013099759817123413
+    },
+    {
+      "feature": "atr_pct",
+      "importance": 0.012765211053192616
+    },
+    {
+      "feature": "bb_upper",
+      "importance": 0.012548889964818954
+    },
+    {
+      "feature": "atr",
+      "importance": 0.012537561357021332
+    },
+    {
+      "feature": "volume_sma",
+      "importance": 0.012492331676185131
+    },
+    {
+      "feature": "volatility_20",
+      "importance": 0.012450526468455791
+    },
+    {
+      "feature": "bb_width",
+      "importance": 0.012331372126936913
+    },
+    {
+      "feature": "price_to_sma_20",
+      "importance": 0.012264223769307137
+    },
+    {
+      "feature": "price_to_sma_50",
+      "importance": 0.012163801118731499
+    },
+    {
+      "feature": "macd_signal",
+      "importance": 0.01216224767267704
+    },
+    {
+      "feature": "macd",
+      "importance": 0.012118285521864891
+    },
+    {
+      "feature": "macd_hist",
+      "importance": 0.011841969564557076
+    },
+    {
+      "feature": "price_to_sma_10",
+      "importance": 0.011466321535408497
+    },
+    {
+      "feature": "rsi",
+      "importance": 0.011250268667936325
+    },
+    {
+      "feature": "volatility_5",
+      "importance": 0.011066969484090805
+    },
+    {
+      "feature": "bb_pct",
+      "importance": 0.010742122307419777
+    },
+    {
+      "feature": "returns_10",
+      "importance": 0.010594422928988934
+    },
+    {
+      "feature": "returns_5",
+      "importance": 0.010291695594787598
+    },
+    {
+      "feature": "high_low_ratio",
+      "importance": 0.00975663959980011
+    },
+    {
+      "feature": "close_open_ratio",
+      "importance": 0.009534668177366257
+    },
+    {
+      "feature": "returns_2",
+      "importance": 0.009234534576535225
+    },
+    {
+      "feature": "body_size",
+      "importance": 0.008898909203708172
+    },
+    {
+      "feature": "lower_shadow",
+      "importance": 0.0088298125192523
+    },
+    {
+      "feature": "upper_shadow",
+      "importance": 0.008706396445631981
+    },
+    {
+      "feature": "log_returns",
+      "importance": 0.008071774616837502
+    },
+    {
+      "feature": "returns",
+      "importance": 0.007976708933711052
+    },
+    {
+      "feature": "is_weekend",
+      "importance": 0.0
+    },
+    {
+      "feature": "is_market_open",
+      "importance": 0.0
+    }
+  ],
+  "checks": {
+    "artifact_reload_predictions_identical": true,
+    "repeated_predictions_identical": true,
+    "feature_order_preserved_after_reload": true,
+    "scaler_fit_row_count": 71917,
+    "scaler_fit_matches_train_row_count": true,
+    "test_evaluated": false,
+    "dataset_hash_unchanged": true,
+    "metadata_hash_unchanged": true
+  },
+  "artifacts": {
+    "model": "models\\baselines\\v0.3_forward_atr_xgb_baseline_v1.joblib",
+    "evaluation": "models\\baselines\\v0.3_forward_atr_xgb_baseline_v1_evaluation.json",
+    "report": "models\\baselines\\v0.3_forward_atr_xgb_baseline_v1_report.md",
+    "feature_importance": "models\\baselines\\v0.3_forward_atr_xgb_baseline_v1_feature_importance.csv",
+    "validation_confusion_matrix": "models\\baselines\\v0.3_forward_atr_xgb_baseline_v1_validation_confusion_matrix.csv"
+  },
+  "assessment": {
+    "learnability": "Weak evidence of class discrimination beyond the majority baseline on balanced accuracy and macro F1, but poor temporal generalization, lower overall validation accuracy, and near-absent BUY recall prevent calling the current baseline robustly learnable.",
+    "recommendation": "Diagnose temporal drift and session/price-level dependence using TRAIN and VALIDATION only before any controlled feature or hyperparameter experiment; keep TEST sealed."
+  }
+}

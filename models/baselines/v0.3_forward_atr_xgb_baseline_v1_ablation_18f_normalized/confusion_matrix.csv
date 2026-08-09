@@ -1,0 +1,7 @@
+split,actual,predicted_sell,predicted_buy,predicted_no_trade
+train,SELL,3077,443,11125
+train,BUY,172,3974,11433
+train,NO_TRADE,209,371,41113
+validation,SELL,80,132,1356
+validation,BUY,102,148,1453
+validation,NO_TRADE,115,153,4452

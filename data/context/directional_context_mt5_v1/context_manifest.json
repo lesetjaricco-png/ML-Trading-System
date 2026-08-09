@@ -1,0 +1,80 @@
+{
+  "version": "directional_context_mt5_v1",
+  "generated_at_utc": "2026-08-09T19:49:41.452759+00:00",
+  "instruments": [
+    {
+      "source": "MetaTrader5 via IC Markets terminal",
+      "instrument": "US500",
+      "instrument_identity": "US SPX 500 Index spot CFD",
+      "timeframe": "M15",
+      "timezone": "UTC",
+      "timestamp_resolution": "1 second epoch converted to UTC-naive DatetimeIndex",
+      "timestamp_semantics": "bar open",
+      "availability_rule": "bar_open_timestamp + 15 minutes",
+      "retrieval_date_utc": "2026-08-09T19:49:40.822205+00:00",
+      "historical_coverage": {
+        "requested_start": "2022-05-12",
+        "requested_end": "2025-10-03",
+        "row_count": 80197,
+        "first_bar_open_utc": "2022-05-12T01:00:00",
+        "last_bar_open_utc": "2025-10-02T23:45:00",
+        "duplicate_timestamps": 0,
+        "missing_ohlcv_values": 0
+      },
+      "missing_data_behavior": "No synthetic fill; backward as-of join is capped at 4 hours and records source age.",
+      "historical_availability": "Final OHLCV is usable only at the recorded bar close availability timestamp.",
+      "revision_policy": "Broker bar snapshot retrieved once; no revised macroeconomic series used.",
+      "broker": "Raw Trading Ltd",
+      "server": "ICMarketsSC-Demo",
+      "terminal": "MetaTrader 5 IC Markets Global",
+      "data_path": "data\\context\\directional_context_mt5_v1\\US500_2022-05-12_2025-10-03_15m_mt5.parquet",
+      "provenance_path": "data\\context\\directional_context_mt5_v1\\US500_2022-05-12_2025-10-03_15m_mt5.parquet.provenance.json",
+      "data_sha256": "6ff57d0ee9dbd9910449803e5cee3baa8a1e568af1727dd2d2ea4c814b7db8c1",
+      "provenance_sha256": "be1d759f55f7ff80361b5dd74edd5240e1ffd19a9c1305373eadea78ba322cf3"
+    },
+    {
+      "source": "MetaTrader5 via IC Markets terminal",
+      "instrument": "USTEC",
+      "instrument_identity": "US Tech 100 Index spot CFD",
+      "timeframe": "M15",
+      "timezone": "UTC",
+      "timestamp_resolution": "1 second epoch converted to UTC-naive DatetimeIndex",
+      "timestamp_semantics": "bar open",
+      "availability_rule": "bar_open_timestamp + 15 minutes",
+      "retrieval_date_utc": "2026-08-09T19:49:41.229491+00:00",
+      "historical_coverage": {
+        "requested_start": "2022-05-12",
+        "requested_end": "2025-10-03",
+        "row_count": 80172,
+        "first_bar_open_utc": "2022-05-12T01:00:00",
+        "last_bar_open_utc": "2025-10-02T23:45:00",
+        "duplicate_timestamps": 0,
+        "missing_ohlcv_values": 0
+      },
+      "missing_data_behavior": "No synthetic fill; backward as-of join is capped at 4 hours and records source age.",
+      "historical_availability": "Final OHLCV is usable only at the recorded bar close availability timestamp.",
+      "revision_policy": "Broker bar snapshot retrieved once; no revised macroeconomic series used.",
+      "broker": "Raw Trading Ltd",
+      "server": "ICMarketsSC-Demo",
+      "terminal": "MetaTrader 5 IC Markets Global",
+      "data_path": "data\\context\\directional_context_mt5_v1\\USTEC_2022-05-12_2025-10-03_15m_mt5.parquet",
+      "provenance_path": "data\\context\\directional_context_mt5_v1\\USTEC_2022-05-12_2025-10-03_15m_mt5.parquet.provenance.json",
+      "data_sha256": "1081deb3cc0e3475cce7359bb025e5fd9a22e40d97ab0010e9e0aaeb41e8973f",
+      "provenance_sha256": "e25045948428dff88e1ec0ee56de333df9137d35d48e00fb390655dac8cd0fd4"
+    }
+  ],
+  "unavailable_families": {
+    "VIX": {
+      "status": "UNAVAILABLE_RELIABLE_HISTORY",
+      "reason": "Only a current-expiry VIX futures CFD was available; no stable spot/continuous identity."
+    },
+    "DXY": {
+      "status": "UNAVAILABLE_RELIABLE_HISTORY",
+      "reason": "Only a current-expiry DXY futures CFD was available; no stable spot/continuous identity."
+    },
+    "US_TREASURY_YIELDS": {
+      "status": "UNAVAILABLE_RELIABLE_HISTORY",
+      "reason": "No timestamped cash-yield history was available from the verified MT5 source."
+    }
+  }
+}

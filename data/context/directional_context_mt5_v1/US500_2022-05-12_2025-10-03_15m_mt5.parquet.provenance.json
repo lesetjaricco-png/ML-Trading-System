@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "source": "mt5",
+  "symbol": "US500",
+  "timeframe": "15m",
+  "mt5_timeframe": "M15",
+  "requested_start": "2022-05-12",
+  "requested_end": "2025-10-03",
+  "actual_start": "2022-05-12T01:00:00",
+  "actual_end": "2025-10-02T23:45:00",
+  "actual_first_timestamp": "2022-05-12T01:00:00",
+  "actual_last_timestamp": "2025-10-02T23:45:00",
+  "row_count": 80197,
+  "chunk_count": 2,
+  "duplicate_count": 2,
+  "retrieved_at_utc": "2026-08-09T19:49:40.822205+00:00",
+  "from_cache": false,
+  "cache_source_provenance": null,
+  "fallback_used": false,
+  "broker": "Raw Trading Ltd",
+  "server": "ICMarketsSC-Demo",
+  "terminal": "MetaTrader 5 IC Markets Global"
+}

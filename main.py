@@ -28,7 +28,7 @@ logger = logging.getLogger(__name__)
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="XGBoost ML Trading System")
-    parser.add_argument("--config", default="config/config.yaml")
+    parser.add_argument("--config", default="config/config_v03.yaml")
     parser.add_argument("--ticker", default=None)
     parser.add_argument("--start", default=None)
     parser.add_argument("--end", default=None)
@@ -63,6 +63,9 @@ def build_diagnostic_report(
     perf: dict,
 ) -> dict:
     """Build a concise diagnostic summary for the pipeline run."""
+    signal_series = pd.Series([0] * len(df_signals), index=df_signals.index) if "signal" not in df_signals.columns else df_signals["signal"]
+    signal_series = pd.to_numeric(signal_series, errors="coerce").fillna(0)
+
     return {
         "data": {
             "rows": len(df_raw),
@@ -75,8 +78,12 @@ def build_diagnostic_report(
             "split_summary": split_summary,
         },
         "signals": {
-            "buy_signals": int(df_signals["signal"].sum()) if "signal" in df_signals.columns else 0,
-            "buy_signal_ratio": round(float(df_signals["signal"].mean()) if "signal" in df_signals.columns else 0.0, 4),
+            "buy_signals": int((signal_series == 1).sum()),
+            "sell_signals": int((signal_series == -1).sum()),
+            "no_trade_signals": int((signal_series == 0).sum()),
+            "buy_signal_ratio": round(float((signal_series == 1).mean()), 4),
+            "sell_signal_ratio": round(float((signal_series == -1).mean()), 4),
+            "no_trade_ratio": round(float((signal_series == 0).mean()), 4),
         },
         "backtest": {
             "rows": len(equity),
@@ -85,6 +92,16 @@ def build_diagnostic_report(
             "max_drawdown": perf.get("max_drawdown", None),
         },
     }
+
+
+def resolve_use_cache(cfg: dict, cli_use_cache: bool | None = None) -> bool:
+    """Resolve cache usage from config first, with CLI override only when provided."""
+    config_value = cfg.get("data", {}).get("use_cache")
+    if cli_use_cache is not None:
+        return cli_use_cache
+    if isinstance(config_value, bool):
+        return config_value
+    return True
 
 
 def run_pipeline(cfg: dict, use_cache: bool = True) -> dict:
@@ -107,15 +124,19 @@ def run_pipeline(cfg: dict, use_cache: bool = True) -> dict:
     # ------------------------------------------------------------------ #
     logger.info("=== Step 1: Data Ingestion ===")
     ingestion = DataIngestion(data_dir="data/raw")
+    start_date = resolve_date(cfg["data"].get("start_date"))
+    end_date = resolve_date(cfg["data"].get("end_date"))
     df_raw = ingestion.fetch(
         ticker=cfg["data"]["ticker"],
-        start_date=cfg["data"]["start_date"],
-        end_date=cfg["data"]["end_date"],
+        start_date=start_date,
+        end_date=end_date,
         interval=cfg["data"]["interval"],
         source=cfg["data"].get("source", "mt5"),
         use_cache=use_cache,
     )
     logger.info("Downloaded %d rows for %s", len(df_raw), cfg["data"]["ticker"])
+    if not use_cache:
+        logger.info("Data cache was bypassed for this run; using fresh ingestion output.")
 
     # ------------------------------------------------------------------ #
     # 2. Feature engineering                                               #
@@ -123,6 +144,7 @@ def run_pipeline(cfg: dict, use_cache: bool = True) -> dict:
     logger.info("=== Step 2: Feature Engineering ===")
     instrument_name = cfg["data"].get("ticker")
     instrument_spec = resolve_instrument_spec(instrument_name, fallback_point_size=0.01)
+    target_mode = cfg.get("experiment", {}).get("target_mode", "v0.1_tp_before_sl")
     fe = FeatureEngineer(
         rsi_period=cfg["features"]["rsi_period"],
         macd_fast=cfg["features"]["macd_fast"],
@@ -142,6 +164,9 @@ def run_pipeline(cfg: dict, use_cache: bool = True) -> dict:
         unresolved_policy=cfg["target"].get("unresolved_policy", "drop"),
         instrument_config=cfg.get("instruments", {}),
         instrument_spec=instrument_spec,
+        target_mode=target_mode,
+        forward_horizon=cfg.get("target", {}).get("forward_horizon", 5),
+        atr_threshold_multiplier=cfg.get("target", {}).get("atr_threshold_multiplier", 1.0),
     )
     df_features = fe.transform(df_raw, instrument_name=instrument_name)
     logger.info("Feature matrix: %s", df_features.shape)
@@ -163,7 +188,10 @@ def run_pipeline(cfg: dict, use_cache: bool = True) -> dict:
         random_state=cfg["model"]["random_state"],
         eval_metric=cfg["model"]["eval_metric"],
         early_stopping_rounds=cfg["model"]["early_stopping_rounds"],
-        prediction_threshold=cfg["signal"]["prediction_threshold"],
+        prediction_threshold=cfg["signal"].get("prediction_threshold", 0.55),
+        buy_threshold=cfg["signal"].get("buy_threshold", 0.70),
+        sell_threshold=cfg["signal"].get("sell_threshold", 0.70),
+        signal_mode=cfg.get("experiment", {}).get("signal_mode", "v0.1_binary"),
     )
     metrics = model.train(
         df_features,
@@ -189,8 +217,24 @@ def run_pipeline(cfg: dict, use_cache: bool = True) -> dict:
     # ------------------------------------------------------------------ #
     logger.info("=== Step 4: Signal Generation ===")
     df_signals = model.generate_signals(df_features)
-    buy_signals = df_signals["signal"].sum()
-    logger.info("Total BUY signals: %d / %d bars", buy_signals, len(df_signals))
+    if "buy_proba" in df_signals.columns and "sell_proba" in df_signals.columns:
+        buy_signals = int((df_signals["signal"] == 1).sum())
+        sell_signals = int((df_signals["signal"] == -1).sum())
+        no_trade_signals = int((df_signals["signal"] == 0).sum())
+        logger.info("=== SIGNAL DISTRIBUTION ===")
+        logger.info("BUY signals: %d", buy_signals)
+        logger.info("SELL signals: %d", sell_signals)
+        logger.info("NO TRADE signals: %d", no_trade_signals)
+        logger.info("BUY percentage: %.2f%%", 100 * buy_signals / len(df_signals))
+        logger.info("SELL percentage: %.2f%%", 100 * sell_signals / len(df_signals))
+        logger.info("NO TRADE percentage: %.2f%%", 100 * no_trade_signals / len(df_signals))
+        logger.info("Average BUY probability: %.4f", df_signals["buy_proba"].mean())
+        logger.info("Average SELL probability: %.4f", df_signals["sell_proba"].mean())
+        logger.info("Maximum BUY probability: %.4f", df_signals["buy_proba"].max())
+        logger.info("Maximum SELL probability: %.4f", df_signals["sell_proba"].max())
+    else:
+        buy_signals = int(df_signals["signal"].sum())
+        logger.info("Total BUY signals: %d / %d bars", buy_signals, len(df_signals))
 
     # ------------------------------------------------------------------ #
     # 5. Backtesting                                                       #
@@ -266,7 +310,8 @@ def main() -> None:
     cfg["data"]["start_date"] = resolve_date(cfg["data"].get("start_date"))
     cfg["data"]["end_date"] = resolve_date(cfg["data"].get("end_date"))
 
-    run_pipeline(cfg, use_cache=not args.no_cache)
+    cache_setting = resolve_use_cache(cfg, None if not args.no_cache else False)
+    run_pipeline(cfg, use_cache=cache_setting)
 
 
 if __name__ == "__main__":

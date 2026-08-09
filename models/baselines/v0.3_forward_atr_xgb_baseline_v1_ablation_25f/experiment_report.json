@@ -1,0 +1,551 @@
+{
+  "experiment_id": "v0.3_forward_atr_xgb_baseline_v1_ablation_25f",
+  "status": "completed",
+  "timestamp_utc": "2026-08-09T18:02:41.068769+00:00",
+  "runtime_seconds": 35.394688800006406,
+  "training_seconds": 8.152223299999605,
+  "cv_seconds": 26.18593220000912,
+  "features": [
+    "returns",
+    "returns_2",
+    "returns_5",
+    "returns_10",
+    "log_returns",
+    "high_low_ratio",
+    "close_open_ratio",
+    "rsi",
+    "bb_width",
+    "bb_pct",
+    "price_to_sma_10",
+    "price_to_sma_20",
+    "price_to_sma_50",
+    "price_to_sma_200",
+    "atr_pct",
+    "volatility_5",
+    "volatility_20",
+    "volume_ratio",
+    "day_of_week",
+    "is_weekend",
+    "hour_of_day",
+    "is_market_open",
+    "is_asia_session",
+    "is_london_session",
+    "is_new_york_session"
+  ],
+  "feature_source": "models\\baselines\\v0.3_forward_atr_xgb_baseline_v1_diagnostics\\diagnostic_report.json",
+  "model_parameters": {
+    "n_estimators": 500,
+    "max_depth": 6,
+    "learning_rate": 0.05,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "min_child_weight": 1,
+    "gamma": 0.1,
+    "reg_alpha": 0.1,
+    "reg_lambda": 1.0,
+    "random_state": 42,
+    "objective": "multi:softprob",
+    "eval_metric": "mlogloss",
+    "early_stopping": false
+  },
+  "boundaries": {
+    "train": [
+      0,
+      71917
+    ],
+    "validation": [
+      71917,
+      79908
+    ],
+    "test_start": 79908,
+    "recorded_validation_end": "2025-10-02T12:00:00"
+  },
+  "data_access": {
+    "reader": "pyarrow.ParquetFile.iter_batches",
+    "batch_size": 79908,
+    "rows_exposed": 79908,
+    "last_exposed_timestamp": "2025-10-02T12:00:00",
+    "test_rows_exposed": 0,
+    "test_labels_exposed": false
+  },
+  "preprocessing": {
+    "type": "StandardScaler",
+    "fit_scope": "TRAIN only",
+    "scaler_n_samples_seen": 71917
+  },
+  "evaluation": {
+    "train": {
+      "accuracy": 0.7046317282422793,
+      "balanced_accuracy": 0.5507125530116471,
+      "macro_f1": 0.5860015457745612,
+      "per_class": {
+        "SELL": {
+          "precision": 0.8453550899313925,
+          "recall": 0.3113007852509389,
+          "f1": 0.45503543267791197,
+          "support": 14645
+        },
+        "BUY": {
+          "precision": 0.7577212561640281,
+          "recall": 0.3747994094614545,
+          "f1": 0.5015245866437621,
+          "support": 15579
+        },
+        "NO_TRADE": {
+          "precision": 0.6847733686966575,
+          "recall": 0.9660374643225481,
+          "f1": 0.8014446180020097,
+          "support": 41693
+        }
+      },
+      "confusion_matrix": [
+        [
+          4559,
+          949,
+          9137
+        ],
+        [
+          336,
+          5839,
+          9404
+        ],
+        [
+          498,
+          918,
+          40277
+        ]
+      ],
+      "confusion_matrix_labels": [
+        "SELL",
+        "BUY",
+        "NO_TRADE"
+      ],
+      "prediction_distribution": {
+        "SELL": {
+          "count": 5393,
+          "percentage": 7.49892236884186
+        },
+        "BUY": {
+          "count": 7706,
+          "percentage": 10.715129941460294
+        },
+        "NO_TRADE": {
+          "count": 58818,
+          "percentage": 81.78594768969785
+        }
+      },
+      "directional": {
+        "accuracy_on_actual_buy_sell_rows": 0.3440312334568555,
+        "actual_directional_row_count": 30224,
+        "predicted_buy_sell_percentage": 18.214052310302154,
+        "predicted_no_trade_percentage": 81.78594768969785,
+        "buy_precision": 0.7577212561640281,
+        "buy_recall": 0.3747994094614545,
+        "sell_precision": 0.8453550899313925,
+        "sell_recall": 0.3113007852509389
+      }
+    },
+    "validation": {
+      "accuracy": 0.5915404830434239,
+      "balanced_accuracy": 0.38903459621753894,
+      "macro_f1": 0.3720994583661921,
+      "per_class": {
+        "SELL": {
+          "precision": 0.2972972972972973,
+          "recall": 0.09119897959183673,
+          "f1": 0.13958028306490972,
+          "support": 1568
+        },
+        "BUY": {
+          "precision": 0.3581514762516046,
+          "recall": 0.1638285378743394,
+          "f1": 0.22481869460112813,
+          "support": 1703
+        },
+        "NO_TRADE": {
+          "precision": 0.6395780716089734,
+          "recall": 0.9120762711864406,
+          "f1": 0.7518993974325386,
+          "support": 4720
+        }
+      },
+      "confusion_matrix": [
+        [
+          143,
+          251,
+          1174
+        ],
+        [
+          172,
+          279,
+          1252
+        ],
+        [
+          166,
+          249,
+          4305
+        ]
+      ],
+      "confusion_matrix_labels": [
+        "SELL",
+        "BUY",
+        "NO_TRADE"
+      ],
+      "prediction_distribution": {
+        "SELL": {
+          "count": 481,
+          "percentage": 6.0192716806407205
+        },
+        "BUY": {
+          "count": 779,
+          "percentage": 9.74846702540358
+        },
+        "NO_TRADE": {
+          "count": 6731,
+          "percentage": 84.2322612939557
+        }
+      },
+      "directional": {
+        "accuracy_on_actual_buy_sell_rows": 0.12901253439315194,
+        "actual_directional_row_count": 3271,
+        "predicted_buy_sell_percentage": 15.767738706044298,
+        "predicted_no_trade_percentage": 84.2322612939557,
+        "buy_precision": 0.3581514762516046,
+        "buy_recall": 0.1638285378743394,
+        "sell_precision": 0.2972972972972973,
+        "sell_recall": 0.09119897959183673
+      }
+    }
+  },
+  "gaps": {
+    "accuracy": 0.11309124519885538,
+    "balanced_accuracy": 0.16167795679410818,
+    "macro_f1": 0.21390208740836908,
+    "buy_recall": 0.2109708715871151,
+    "sell_recall": 0.22010180565910217
+  },
+  "cv": {
+    "scope": "TRAIN only",
+    "folds": [
+      {
+        "row_type": "fold",
+        "fold": 1,
+        "accuracy": 0.5523110295344569,
+        "balanced_accuracy": 0.410484133661678,
+        "macro_f1": 0.41020372727121845,
+        "buy_recall": 0.1984251968503937,
+        "scaler_fit_rows": 11987,
+        "train_first": "2022-05-16T04:45:00",
+        "train_last": "2022-11-15T04:45:00",
+        "validation_first": "2022-11-15T05:00:00",
+        "validation_last": "2023-05-22T04:45:00"
+      },
+      {
+        "row_type": "fold",
+        "fold": 2,
+        "accuracy": 0.5586517603871183,
+        "balanced_accuracy": 0.40214558978980514,
+        "macro_f1": 0.3955070314198901,
+        "buy_recall": 0.21309613928841786,
+        "scaler_fit_rows": 23973,
+        "train_first": "2022-05-16T04:45:00",
+        "train_last": "2023-05-22T04:45:00",
+        "validation_first": "2023-05-22T05:00:00",
+        "validation_last": "2023-11-21T09:00:00"
+      },
+      {
+        "row_type": "fold",
+        "fold": 3,
+        "accuracy": 0.5747538795261138,
+        "balanced_accuracy": 0.4058500061943106,
+        "macro_f1": 0.4017077279259509,
+        "buy_recall": 0.17838246409674982,
+        "scaler_fit_rows": 35959,
+        "train_first": "2022-05-16T04:45:00",
+        "train_last": "2023-11-21T09:00:00",
+        "validation_first": "2023-11-21T09:15:00",
+        "validation_last": "2024-05-27T06:45:00"
+      },
+      {
+        "row_type": "fold",
+        "fold": 4,
+        "accuracy": 0.5905222759886535,
+        "balanced_accuracy": 0.3922256049812492,
+        "macro_f1": 0.37941924810265953,
+        "buy_recall": 0.17896389324960754,
+        "scaler_fit_rows": 47945,
+        "train_first": "2022-05-16T04:45:00",
+        "train_last": "2024-05-27T06:45:00",
+        "validation_first": "2024-05-27T07:00:00",
+        "validation_last": "2024-11-26T08:45:00"
+      },
+      {
+        "row_type": "fold",
+        "fold": 5,
+        "accuracy": 0.5798431503420658,
+        "balanced_accuracy": 0.38796773624722175,
+        "macro_f1": 0.36984153758305044,
+        "buy_recall": 0.1636073423782921,
+        "scaler_fit_rows": 59931,
+        "train_first": "2022-05-16T04:45:00",
+        "train_last": "2024-11-26T08:45:00",
+        "validation_first": "2024-11-26T09:00:00",
+        "validation_last": "2025-06-02T22:30:00"
+      }
+    ]
+  },
+  "feature_importance": [
+    {
+      "rank": 1,
+      "feature": "is_asia_session",
+      "importance": 0.6463834643363953
+    },
+    {
+      "rank": 2,
+      "feature": "hour_of_day",
+      "importance": 0.08976087719202042
+    },
+    {
+      "rank": 3,
+      "feature": "is_new_york_session",
+      "importance": 0.02385525591671467
+    },
+    {
+      "rank": 4,
+      "feature": "is_london_session",
+      "importance": 0.022197110578417778
+    },
+    {
+      "rank": 5,
+      "feature": "volume_ratio",
+      "importance": 0.014997405931353569
+    },
+    {
+      "rank": 6,
+      "feature": "day_of_week",
+      "importance": 0.014453631825745106
+    },
+    {
+      "rank": 7,
+      "feature": "price_to_sma_200",
+      "importance": 0.012876179069280624
+    },
+    {
+      "rank": 8,
+      "feature": "volatility_20",
+      "importance": 0.012483703903853893
+    },
+    {
+      "rank": 9,
+      "feature": "price_to_sma_50",
+      "importance": 0.01228130329400301
+    },
+    {
+      "rank": 10,
+      "feature": "atr_pct",
+      "importance": 0.012219799682497978
+    },
+    {
+      "rank": 11,
+      "feature": "price_to_sma_20",
+      "importance": 0.012218858115375042
+    },
+    {
+      "rank": 12,
+      "feature": "bb_width",
+      "importance": 0.011991073377430439
+    },
+    {
+      "rank": 13,
+      "feature": "rsi",
+      "importance": 0.011399485170841217
+    },
+    {
+      "rank": 14,
+      "feature": "price_to_sma_10",
+      "importance": 0.011271175928413868
+    },
+    {
+      "rank": 15,
+      "feature": "volatility_5",
+      "importance": 0.01116232667118311
+    },
+    {
+      "rank": 16,
+      "feature": "returns_10",
+      "importance": 0.01105257123708725
+    },
+    {
+      "rank": 17,
+      "feature": "bb_pct",
+      "importance": 0.01069574523717165
+    },
+    {
+      "rank": 18,
+      "feature": "returns_5",
+      "importance": 0.010444315150380135
+    },
+    {
+      "rank": 19,
+      "feature": "high_low_ratio",
+      "importance": 0.010370771400630474
+    },
+    {
+      "rank": 20,
+      "feature": "close_open_ratio",
+      "importance": 0.01026241760700941
+    },
+    {
+      "rank": 21,
+      "feature": "returns_2",
+      "importance": 0.009756560437381268
+    },
+    {
+      "rank": 22,
+      "feature": "log_returns",
+      "importance": 0.008985280059278011
+    },
+    {
+      "rank": 23,
+      "feature": "returns",
+      "importance": 0.00888063758611679
+    },
+    {
+      "rank": 24,
+      "feature": "is_weekend",
+      "importance": 0.0
+    },
+    {
+      "rank": 25,
+      "feature": "is_market_open",
+      "importance": 0.0
+    }
+  ],
+  "importance_profile": {
+    "baseline_top_feature": {
+      "feature": "is_asia_session",
+      "importance": 0.3999711573123932
+    },
+    "ablation_top_feature": {
+      "rank": 1,
+      "feature": "is_asia_session",
+      "importance": 0.6463834643363953
+    },
+    "baseline_top1_share": 0.3999711573123932,
+    "ablation_top1_share": 0.6463834643363953,
+    "top1_share_difference": 0.24641230702400208,
+    "baseline_concentration": {
+      "top1_share": 0.3999711479998392,
+      "top2_share": 0.5100609690402409,
+      "hhi": 0.17905021537250945,
+      "normalized_entropy": 0.7277295383853459
+    },
+    "ablation_concentration": {
+      "top1_share": 0.6463834968439386,
+      "top2_share": 0.7361443785501611,
+      "hhi": 0.42947402373947824,
+      "normalized_entropy": 0.5105302398919613
+    }
+  },
+  "comparison": [
+    {
+      "metric": "Validation Accuracy",
+      "baseline": 0.5086972844450006,
+      "ablation_25f": 0.5915404830434239,
+      "difference": 0.08284319859842326
+    },
+    {
+      "metric": "Validation Balanced Accuracy",
+      "baseline": 0.40638999294792416,
+      "ablation_25f": 0.38903459621753894,
+      "difference": -0.01735539673038522
+    },
+    {
+      "metric": "Validation Macro F1",
+      "baseline": 0.36408925785314034,
+      "ablation_25f": 0.3720994583661921,
+      "difference": 0.00801020051305179
+    },
+    {
+      "metric": "BUY Recall",
+      "baseline": 0.042278332354668234,
+      "ablation_25f": 0.1638285378743394,
+      "difference": 0.12155020551967116
+    },
+    {
+      "metric": "SELL Recall",
+      "baseline": 0.4955357142857143,
+      "ablation_25f": 0.09119897959183673,
+      "difference": -0.40433673469387754
+    },
+    {
+      "metric": "BUY Prediction %",
+      "baseline": 2.590414215992992,
+      "ablation_25f": 9.74846702540358,
+      "difference": 7.158052809410588
+    },
+    {
+      "metric": "SELL Prediction %",
+      "baseline": 37.98022775622575,
+      "ablation_25f": 6.0192716806407205,
+      "difference": -31.96095607558503
+    },
+    {
+      "metric": "NO_TRADE Prediction %",
+      "baseline": 59.429358027781255,
+      "ablation_25f": 84.2322612939557,
+      "difference": 24.802903266174447
+    },
+    {
+      "metric": "CV Mean Accuracy",
+      "baseline": 0.5380443851159686,
+      "ablation_25f": 0.5712164191556817,
+      "difference": 0.03317203403971303
+    },
+    {
+      "metric": "CV Mean Macro F1",
+      "baseline": 0.3860620848072621,
+      "ablation_25f": 0.39133585446055386,
+      "difference": 0.005273769653291738
+    },
+    {
+      "metric": "TRAIN-VALIDATION Accuracy Gap",
+      "baseline": 0.23091921791188297,
+      "ablation_25f": 0.11309124519885538,
+      "difference": -0.11782797271302758
+    },
+    {
+      "metric": "TRAIN-VALIDATION Balanced Accuracy Gap",
+      "baseline": 0.19867241136173158,
+      "ablation_25f": 0.16167795679410818,
+      "difference": -0.0369944545676234
+    },
+    {
+      "metric": "TRAIN-VALIDATION Macro F1 Gap",
+      "baseline": 0.2857063034230794,
+      "ablation_25f": 0.21390208740836908,
+      "difference": -0.07180421601471032
+    }
+  ],
+  "hypothesis": {
+    "verdict": "INCONCLUSIVE",
+    "reason": "The measured changes are mixed or insufficiently consistent across validation, gaps, directional behavior, and CV."
+  },
+  "next_experiment": "Run one controlled session/time-only removal from the 25-feature set, retaining the 18 normalized/relative features and identical parameters, to measure whether stable calendar activity signal helps or masks directional generalization.",
+  "integrity": {
+    "dataset_sha256": "35995f3d673b914cd4631e95f7abc13ee78acec89c12129edbc1b1d353bb4634",
+    "metadata_sha256": "f3a4667ffc2ca8b7dd1fddf0a44c842f0a871401b88f77c57e8e7aa25b79b042",
+    "reference_model_sha256": "6e30c834df78c6448a6987b9427e1a7ee0677eacaf15efd04e82a828d207f3b8",
+    "dataset_sha256_after": "35995f3d673b914cd4631e95f7abc13ee78acec89c12129edbc1b1d353bb4634",
+    "metadata_sha256_after": "f3a4667ffc2ca8b7dd1fddf0a44c842f0a871401b88f77c57e8e7aa25b79b042",
+    "reference_model_sha256_after": "6e30c834df78c6448a6987b9427e1a7ee0677eacaf15efd04e82a828d207f3b8",
+    "dataset_unchanged": true,
+    "metadata_unchanged": true,
+    "reference_model_unchanged": true,
+    "reference_baseline_retrained": false,
+    "test_labels_read": false,
+    "test_evaluated": false,
+    "reload_predictions_identical": true,
+    "reload_feature_order_preserved": true
+  }
+}

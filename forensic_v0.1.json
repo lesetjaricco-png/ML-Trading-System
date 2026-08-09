@@ -1,0 +1,736 @@
+{
+  "target_dist": {
+    "0.0": 138475,
+    "1.0": 57742
+  },
+  "split_sizes": {
+    "train": 156973,
+    "test": 39244
+  },
+  "top_features": [
+    "returns_2",
+    "upper_shadow",
+    "returns_5",
+    "volatility_5",
+    "high_low_ratio",
+    "returns",
+    "returns_10",
+    "log_returns",
+    "body_size",
+    "lower_shadow",
+    "close_open_ratio",
+    "price_to_sma_200",
+    "price_to_sma_10",
+    "sma_20",
+    "atr_pct"
+  ],
+  "quantile_target_rates": {
+    "returns_2": [
+      {
+        "bin": 0,
+        "count": 9811,
+        "target_rate": 0.8653552135358271
+      },
+      {
+        "bin": 1,
+        "count": 9811,
+        "target_rate": 0.3114871063092447
+      },
+      {
+        "bin": 2,
+        "count": 9811,
+        "target_rate": 0.00010192640913260625
+      },
+      {
+        "bin": 3,
+        "count": 9811,
+        "target_rate": 0.0
+      }
+    ],
+    "upper_shadow": [
+      {
+        "bin": 0,
+        "count": 9811,
+        "target_rate": 0.0
+      },
+      {
+        "bin": 1,
+        "count": 9811,
+        "target_rate": 0.04739578024666191
+      },
+      {
+        "bin": 2,
+        "count": 9811,
+        "target_rate": 0.4247273468555703
+      },
+      {
+        "bin": 3,
+        "count": 9811,
+        "target_rate": 0.7048211191519723
+      }
+    ],
+    "returns_5": [
+      {
+        "bin": 0,
+        "count": 9811,
+        "target_rate": 0.7987972683722352
+      },
+      {
+        "bin": 1,
+        "count": 9811,
+        "target_rate": 0.2650086637447763
+      },
+      {
+        "bin": 2,
+        "count": 9811,
+        "target_rate": 0.09978595454082152
+      },
+      {
+        "bin": 3,
+        "count": 9811,
+        "target_rate": 0.01335235959637142
+      }
+    ],
+    "volatility_5": [
+      {
+        "bin": 0,
+        "count": 9811,
+        "target_rate": 0.6444806849454694
+      },
+      {
+        "bin": 1,
+        "count": 9811,
+        "target_rate": 0.13301396391805118
+      },
+      {
+        "bin": 2,
+        "count": 9811,
+        "target_rate": 0.23595963714198348
+      },
+      {
+        "bin": 3,
+        "count": 9811,
+        "target_rate": 0.16348996024870044
+      }
+    ],
+    "high_low_ratio": [
+      {
+        "bin": 0,
+        "count": 9811,
+        "target_rate": 0.0
+      },
+      {
+        "bin": 1,
+        "count": 9811,
+        "target_rate": 0.09917439608602589
+      },
+      {
+        "bin": 2,
+        "count": 9811,
+        "target_rate": 0.6725104474569361
+      },
+      {
+        "bin": 3,
+        "count": 9811,
+        "target_rate": 0.4052594027112425
+      }
+    ],
+    "returns": [
+      {
+        "bin": 0,
+        "count": 9811,
+        "target_rate": 0.4279889919478137
+      },
+      {
+        "bin": 1,
+        "count": 9811,
+        "target_rate": 0.4511262868209153
+      },
+      {
+        "bin": 2,
+        "count": 9811,
+        "target_rate": 0.2846804607073693
+      },
+      {
+        "bin": 3,
+        "count": 9811,
+        "target_rate": 0.013148506778106207
+      }
+    ],
+    "returns_10": [
+      {
+        "bin": 0,
+        "count": 9811,
+        "target_rate": 0.5052492100703292
+      },
+      {
+        "bin": 1,
+        "count": 9811,
+        "target_rate": 0.4088268270308837
+      },
+      {
+        "bin": 2,
+        "count": 9811,
+        "target_rate": 0.24727346855570279
+      },
+      {
+        "bin": 3,
+        "count": 9811,
+        "target_rate": 0.015594740597288758
+      }
+    ],
+    "log_returns": [
+      {
+        "bin": 0,
+        "count": 9811,
+        "target_rate": 0.4279889919478137
+      },
+      {
+        "bin": 1,
+        "count": 9811,
+        "target_rate": 0.4511262868209153
+      },
+      {
+        "bin": 2,
+        "count": 9811,
+        "target_rate": 0.2846804607073693
+      },
+      {
+        "bin": 3,
+        "count": 9811,
+        "target_rate": 0.013148506778106207
+      }
+    ],
+    "body_size": [
+      {
+        "bin": 0,
+        "count": 9811,
+        "target_rate": 0.32942615431658345
+      },
+      {
+        "bin": 1,
+        "count": 9811,
+        "target_rate": 0.1321985526449903
+      },
+      {
+        "bin": 2,
+        "count": 9811,
+        "target_rate": 0.1725614106615024
+      },
+      {
+        "bin": 3,
+        "count": 9811,
+        "target_rate": 0.5427581286311284
+      }
+    ],
+    "lower_shadow": [
+      {
+        "bin": 0,
+        "count": 9811,
+        "target_rate": 0.2556314341045765
+      },
+      {
+        "bin": 1,
+        "count": 9811,
+        "target_rate": 0.0
+      },
+      {
+        "bin": 2,
+        "count": 9811,
+        "target_rate": 0.40179390480073385
+      },
+      {
+        "bin": 3,
+        "count": 9811,
+        "target_rate": 0.519518907348894
+      }
+    ],
+    "close_open_ratio": [
+      {
+        "bin": 0,
+        "count": 9811,
+        "target_rate": 0.17154214657017633
+      },
+      {
+        "bin": 1,
+        "count": 9811,
+        "target_rate": 0.32942615431658345
+      },
+      {
+        "bin": 2,
+        "count": 9811,
+        "target_rate": 0.1283253490979513
+      },
+      {
+        "bin": 3,
+        "count": 9811,
+        "target_rate": 0.5476505962694934
+      }
+    ],
+    "price_to_sma_200": [
+      {
+        "bin": 0,
+        "count": 9811,
+        "target_rate": 0.7020691061053919
+      },
+      {
+        "bin": 1,
+        "count": 9811,
+        "target_rate": 0.3471613495056569
+      },
+      {
+        "bin": 2,
+        "count": 9811,
+        "target_rate": 0.12465599836917746
+      },
+      {
+        "bin": 3,
+        "count": 9811,
+        "target_rate": 0.003057792273978188
+      }
+    ],
+    "price_to_sma_10": [
+      {
+        "bin": 0,
+        "count": 9811,
+        "target_rate": 0.6781163999592295
+      },
+      {
+        "bin": 1,
+        "count": 9811,
+        "target_rate": 0.3321781673631638
+      },
+      {
+        "bin": 2,
+        "count": 9811,
+        "target_rate": 0.15003567424319642
+      },
+      {
+        "bin": 3,
+        "count": 9811,
+        "target_rate": 0.01661400468861482
+      }
+    ],
+    "sma_20": [
+      {
+        "bin": 0,
+        "count": 9811,
+        "target_rate": 0.4062786668025685
+      },
+      {
+        "bin": 1,
+        "count": 9811,
+        "target_rate": 0.31352563449189685
+      },
+      {
+        "bin": 2,
+        "count": 9811,
+        "target_rate": 0.25501987564978085
+      },
+      {
+        "bin": 3,
+        "count": 9811,
+        "target_rate": 0.2021200693099582
+      }
+    ],
+    "atr_pct": [
+      {
+        "bin": 0,
+        "count": 9811,
+        "target_rate": 0.003567424319641219
+      },
+      {
+        "bin": 1,
+        "count": 9811,
+        "target_rate": 0.12006930995821018
+      },
+      {
+        "bin": 2,
+        "count": 9811,
+        "target_rate": 0.36876974824176945
+      },
+      {
+        "bin": 3,
+        "count": 9811,
+        "target_rate": 0.6845377637345836
+      }
+    ]
+  },
+  "single_feature_diagnostics": [
+    {
+      "feature": "returns_2",
+      "accuracy": 0.9192742839669759,
+      "roc_auc": 0.9632934490880618
+    },
+    {
+      "feature": "upper_shadow",
+      "accuracy": 0.7781062073183161,
+      "roc_auc": 0.8850094390934669
+    },
+    {
+      "feature": "returns_5",
+      "accuracy": 0.8614310467842218,
+      "roc_auc": 0.9123553898008988
+    },
+    {
+      "feature": "volatility_5",
+      "accuracy": 0.7946182855977983,
+      "roc_auc": 0.7142807167889585
+    },
+    {
+      "feature": "high_low_ratio",
+      "accuracy": 0.686270512689838,
+      "roc_auc": 0.7713727622811001
+    },
+    {
+      "feature": "returns",
+      "accuracy": 0.6752114972989501,
+      "roc_auc": 0.7147603203615726
+    },
+    {
+      "feature": "returns_10",
+      "accuracy": 0.7107838140862297,
+      "roc_auc": 0.7449459989900045
+    },
+    {
+      "feature": "log_returns",
+      "accuracy": 0.6752114972989501,
+      "roc_auc": 0.7147504240851492
+    },
+    {
+      "feature": "body_size",
+      "accuracy": 0.7448272347365202,
+      "roc_auc": 0.6172811361628235
+    },
+    {
+      "feature": "lower_shadow",
+      "accuracy": 0.7057639384364489,
+      "roc_auc": 0.6754355852321279
+    },
+    {
+      "feature": "close_open_ratio",
+      "accuracy": 0.7448272347365202,
+      "roc_auc": 0.6592798014068402
+    },
+    {
+      "feature": "price_to_sma_200",
+      "accuracy": 0.8141117113444093,
+      "roc_auc": 0.8578283215791054
+    },
+    {
+      "feature": "price_to_sma_10",
+      "accuracy": 0.8009122413617368,
+      "roc_auc": 0.8413966552067785
+    },
+    {
+      "feature": "sma_20",
+      "accuracy": 0.7057639384364489,
+      "roc_auc": 0.6105280719074639
+    },
+    {
+      "feature": "atr_pct",
+      "accuracy": 0.7977525226786261,
+      "roc_auc": 0.8493867680855836
+    }
+  ],
+  "resolution": {
+    "0_bars": {
+      "count": 162409,
+      "share": 0.8277009637289328
+    },
+    "1_bar": {
+      "count": 33807,
+      "share": 0.17229393987269198
+    },
+    "2_bars": {
+      "count": 0,
+      "share": 0.0
+    },
+    "3_bars": {
+      "count": 0,
+      "share": 0.0
+    },
+    "4_5_bars": {
+      "count": 0,
+      "share": 0.0
+    },
+    "6_10_bars": {
+      "count": 0,
+      "share": 0.0
+    },
+    "11_20_bars": {
+      "count": 0,
+      "share": 0.0
+    },
+    "21_40_bars": {
+      "count": 0,
+      "share": 0.0
+    },
+    "unresolved": {
+      "count": 1,
+      "share": 5.096398375268198e-06
+    }
+  },
+  "resolution_counts": {
+    "tp_first": 0,
+    "sl_first": 33807
+  },
+  "conditional_rates": {
+    "bullish_target_rate": 0.3571973671658876,
+    "bearish_target_rate": 0.18926846100759145,
+    "bullish_buy_rate": 0.3571973671658876,
+    "bearish_buy_rate": 0.18926846100759145,
+    "bullish_sell_rate": 0.6428026328341123,
+    "bearish_sell_rate": 0.8107315389924086,
+    "positive_return_target_rate": 0.0939478348949101,
+    "negative_return_target_rate": 0.40641181502994284,
+    "body_gt_range_target_rate": 0.6462705436156764,
+    "body_lt_range_target_rate": 0.25478194338179033,
+    "prev_pos_target_rate": 0.09951886553557862,
+    "prev_neg_target_rate": 0.4452449567723343,
+    "last3_pos_target_rate": 0.2712999862580734,
+    "last5_pos_target_rate": 0.15340746168796
+  },
+  "future_return_relationship": {
+    "1": {
+      "corr": NaN,
+      "bucket_stats": [
+        {
+          "bucket": "Q1",
+          "share": 0.25,
+          "target_rate": 0.0
+        },
+        {
+          "bucket": "Q2",
+          "share": 0.25,
+          "target_rate": 0.0
+        },
+        {
+          "bucket": "Q3",
+          "share": 0.24997451839771684,
+          "target_rate": 0.2567787971457696
+        },
+        {
+          "bucket": "Q4",
+          "share": 0.25,
+          "target_rate": 0.9201916216491693
+        }
+      ]
+    },
+    "2": {
+      "corr": NaN,
+      "bucket_stats": [
+        {
+          "bucket": "Q1",
+          "share": 0.25,
+          "target_rate": 0.003567424319641219
+        },
+        {
+          "bucket": "Q2",
+          "share": 0.24997451839771684,
+          "target_rate": 0.21753312945973496
+        },
+        {
+          "bucket": "Q3",
+          "share": 0.24997451839771684,
+          "target_rate": 0.4685015290519878
+        },
+        {
+          "bucket": "Q4",
+          "share": 0.25,
+          "target_rate": 0.48741208847212314
+        }
+      ]
+    },
+    "3": {
+      "corr": NaN,
+      "bucket_stats": [
+        {
+          "bucket": "Q1",
+          "share": 0.25,
+          "target_rate": 0.23708082764244215
+        },
+        {
+          "bucket": "Q2",
+          "share": 0.24997451839771684,
+          "target_rate": 0.30988786952089703
+        },
+        {
+          "bucket": "Q3",
+          "share": 0.24997451839771684,
+          "target_rate": 0.3384301732925586
+        },
+        {
+          "bucket": "Q4",
+          "share": 0.24997451839771684,
+          "target_rate": 0.29164118246687054
+        }
+      ]
+    },
+    "5": {
+      "corr": NaN,
+      "bucket_stats": [
+        {
+          "bucket": "Q1",
+          "share": 0.24997451839771684,
+          "target_rate": 0.04566768603465851
+        },
+        {
+          "bucket": "Q2",
+          "share": 0.24997451839771684,
+          "target_rate": 0.2869520897043833
+        },
+        {
+          "bucket": "Q3",
+          "share": 0.2499490367954337,
+          "target_rate": 0.38831685187073095
+        },
+        {
+          "bucket": "Q4",
+          "share": 0.24997451839771684,
+          "target_rate": 0.4560652395514781
+        }
+      ]
+    },
+    "10": {
+      "corr": NaN,
+      "bucket_stats": [
+        {
+          "bucket": "Q1",
+          "share": 0.2499490367954337,
+          "target_rate": 0.0
+        },
+        {
+          "bucket": "Q2",
+          "share": 0.24992355519315054,
+          "target_rate": 0.004486133768352365
+        },
+        {
+          "bucket": "Q3",
+          "share": 0.24992355519315054,
+          "target_rate": 0.3302406199021207
+        },
+        {
+          "bucket": "Q4",
+          "share": 0.2499490367954337,
+          "target_rate": 0.8421857477826485
+        }
+      ]
+    },
+    "20": {
+      "corr": NaN,
+      "bucket_stats": [
+        {
+          "bucket": "Q1",
+          "share": 0.24987259198858425,
+          "target_rate": 0.024270854578829288
+        },
+        {
+          "bucket": "Q2",
+          "share": 0.24987259198858425,
+          "target_rate": 0.28237813583520294
+        },
+        {
+          "bucket": "Q3",
+          "share": 0.24987259198858425,
+          "target_rate": 0.4443198042015093
+        },
+        {
+          "bucket": "Q4",
+          "share": 0.24987259198858425,
+          "target_rate": 0.4259636956965123
+        }
+      ]
+    },
+    "40": {
+      "corr": NaN,
+      "bucket_stats": [
+        {
+          "bucket": "Q1",
+          "share": 0.2497451839771685,
+          "target_rate": 0.0008162432404856647
+        },
+        {
+          "bucket": "Q2",
+          "share": 0.2497451839771685,
+          "target_rate": 0.008162432404856647
+        },
+        {
+          "bucket": "Q3",
+          "share": 0.2497451839771685,
+          "target_rate": 0.28048158351188657
+        },
+        {
+          "bucket": "Q4",
+          "share": 0.2497451839771685,
+          "target_rate": 0.887460463218039
+        }
+      ]
+    }
+  },
+  "regime_structure": {
+    "volatility": [
+      {
+        "level": "Q1",
+        "target_rate": 0.6444806849454694,
+        "count": 9811
+      },
+      {
+        "level": "Q2",
+        "target_rate": 0.13301396391805118,
+        "count": 9811
+      },
+      {
+        "level": "Q3",
+        "target_rate": 0.23595963714198348,
+        "count": 9811
+      },
+      {
+        "level": "Q4",
+        "target_rate": 0.16348996024870044,
+        "count": 9811
+      }
+    ],
+    "trend": [
+      {
+        "level": "down",
+        "target_rate": 0.5549783086069305,
+        "count": 18671
+      },
+      {
+        "level": "up",
+        "target_rate": 0.05759976668448938,
+        "count": 20573
+      }
+    ],
+    "session": [
+      {
+        "level": "asia",
+        "target_rate": 0.27571166207529846,
+        "count": 13068
+      },
+      {
+        "level": "london",
+        "target_rate": 0.3021088019559902,
+        "count": 13088
+      },
+      {
+        "level": "ny",
+        "target_rate": 0.30485941320293397,
+        "count": 13088
+      }
+    ],
+    "direction": [
+      {
+        "level": "bearish",
+        "target_rate": 0.18926846100759145,
+        "count": 17388
+      },
+      {
+        "level": "bullish",
+        "target_rate": 0.37774524158125916,
+        "count": 21856
+      }
+    ]
+  }
+}

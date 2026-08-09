@@ -1,0 +1,225 @@
+{
+  "perturbation_test_full_transform": {
+    "early": {
+      "probe_ts": "2021-01-03 14:30:00",
+      "first_modified_future_ts": "2021-01-03 14:45:00",
+      "delta": 777.7,
+      "changed_features": [],
+      "target_changed": true,
+      "target_original": 2.0,
+      "target_perturbed": 1.0
+    },
+    "middle": {
+      "probe_ts": "2023-10-21 00:00:00",
+      "first_modified_future_ts": "2023-10-21 00:15:00",
+      "delta": 777.7,
+      "changed_features": [],
+      "target_changed": true,
+      "target_original": 2.0,
+      "target_perturbed": 1.0
+    },
+    "validation_region": {
+      "probe_ts": "2025-01-14 17:45:00",
+      "first_modified_future_ts": "2025-01-14 18:00:00",
+      "delta": 777.7,
+      "changed_features": [],
+      "target_changed": true,
+      "target_original": 2.0,
+      "target_perturbed": 1.0
+    },
+    "test_region": {
+      "probe_ts": "2025-06-27 06:15:00",
+      "first_modified_future_ts": "2025-06-27 06:30:00",
+      "delta": 777.7,
+      "changed_features": [],
+      "target_changed": true,
+      "target_original": 2.0,
+      "target_perturbed": 1.0
+    }
+  },
+  "perturbation_test_feature_only": {
+    "early": {
+      "probe_ts": "2021-01-03 14:30:00",
+      "changed_features": []
+    },
+    "middle": {
+      "probe_ts": "2023-10-21 00:00:00",
+      "changed_features": []
+    },
+    "validation_region": {
+      "probe_ts": "2025-01-14 17:45:00",
+      "changed_features": []
+    },
+    "test_region": {
+      "probe_ts": "2025-06-27 06:15:00",
+      "changed_features": []
+    }
+  },
+  "feature_classification": {
+    "returns": "A_causal",
+    "returns_2": "A_causal",
+    "returns_5": "A_causal",
+    "returns_10": "A_causal",
+    "log_returns": "A_causal",
+    "high_low_ratio": "A_causal",
+    "close_open_ratio": "A_causal",
+    "rsi": "A_causal",
+    "macd": "A_causal",
+    "macd_signal": "A_causal",
+    "macd_hist": "A_causal",
+    "bb_upper": "A_causal",
+    "bb_lower": "A_causal",
+    "bb_width": "A_causal",
+    "bb_pct": "A_causal",
+    "sma_10": "A_causal",
+    "sma_20": "A_causal",
+    "sma_50": "A_causal",
+    "sma_200": "A_causal",
+    "ema_12": "A_causal",
+    "ema_26": "A_causal",
+    "price_to_sma_10": "A_causal",
+    "price_to_sma_20": "A_causal",
+    "price_to_sma_50": "A_causal",
+    "price_to_sma_200": "A_causal",
+    "atr": "A_causal",
+    "atr_pct": "A_causal",
+    "volatility_5": "A_causal",
+    "volatility_20": "A_causal",
+    "volume_sma": "A_causal",
+    "volume_ratio": "A_causal",
+    "obv": "A_causal",
+    "body_size": "A_causal",
+    "upper_shadow": "A_causal",
+    "lower_shadow": "A_causal",
+    "day_of_week": "A_causal",
+    "is_weekend": "A_causal",
+    "hour_of_day": "A_causal",
+    "is_market_open": "A_causal",
+    "is_asia_session": "A_causal",
+    "is_london_session": "A_causal",
+    "is_new_york_session": "A_causal"
+  },
+  "model_input": {
+    "feature_columns": [
+      "returns",
+      "returns_2",
+      "returns_5",
+      "returns_10",
+      "log_returns",
+      "high_low_ratio",
+      "close_open_ratio",
+      "rsi",
+      "macd",
+      "macd_signal",
+      "macd_hist",
+      "bb_upper",
+      "bb_lower",
+      "bb_width",
+      "bb_pct",
+      "sma_10",
+      "sma_20",
+      "sma_50",
+      "sma_200",
+      "ema_12",
+      "ema_26",
+      "price_to_sma_10",
+      "price_to_sma_20",
+      "price_to_sma_50",
+      "price_to_sma_200",
+      "atr",
+      "atr_pct",
+      "volatility_5",
+      "volatility_20",
+      "volume_sma",
+      "volume_ratio",
+      "obv",
+      "body_size",
+      "upper_shadow",
+      "lower_shadow",
+      "day_of_week",
+      "is_weekend",
+      "hour_of_day",
+      "is_market_open",
+      "is_asia_session",
+      "is_london_session",
+      "is_new_york_session"
+    ],
+    "target_in_features": false,
+    "invalid_in_features": []
+  },
+  "duplicates": {
+    "test_duplicate_feature_rows": 0,
+    "test_rows_with_identical_train_features": 0,
+    "identical_features_same_target": 0,
+    "identical_features_diff_target": 0,
+    "test_rows": 39244
+  },
+  "full_model_metrics": {
+    "accuracy": 1.0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "f1": 1.0,
+    "roc_auc": 1.0
+  },
+  "single_feature_test_accuracy": {
+    "rsi": 0.9628223422688819,
+    "returns_2": 0.9291611456528387,
+    "returns_5": 0.9338497604729386,
+    "returns": 0.9532922230149832,
+    "returns_10": 0.9406278666802569,
+    "macd": 0.9258485373560289,
+    "atr_pct": 0.929390480073387
+  },
+  "target_alignment_all_match": true,
+  "target_distribution_by_atr_multiplier": {
+    "0.25": {
+      "BUY_%": 37.1,
+      "SELL_%": 33.01,
+      "NO_TRADE_%": 29.89
+    },
+    "0.5": {
+      "BUY_%": 22.36,
+      "SELL_%": 23.11,
+      "NO_TRADE_%": 54.53
+    },
+    "0.75": {
+      "BUY_%": 11.86,
+      "SELL_%": 16.13,
+      "NO_TRADE_%": 72.02
+    },
+    "1.0": {
+      "BUY_%": 1.62,
+      "SELL_%": 5.81,
+      "NO_TRADE_%": 92.58
+    },
+    "1.25": {
+      "BUY_%": 0.15,
+      "SELL_%": 0.96,
+      "NO_TRADE_%": 98.89
+    },
+    "1.5": {
+      "BUY_%": 0.0,
+      "SELL_%": 0.02,
+      "NO_TRADE_%": 99.98
+    }
+  },
+  "current_target_distribution": {
+    "BUY_%": 1.62,
+    "SELL_%": 5.81,
+    "NO_TRADE_%": 92.58,
+    "test_counts": {
+      "2": 36341,
+      "0": 2264,
+      "1": 639
+    }
+  },
+  "returns_5_vs_forward5_corr_test": -0.5844696432188582,
+  "shuffled_target_test_accuracy": 0.926,
+  "data_summary": {
+    "raw_rows": 196417,
+    "feature_rows": 196218,
+    "val_idx": 141276,
+    "test_idx": 156974,
+    "test_rows": 39244
+  }
+}

@@ -1,0 +1,210 @@
+{
+  "diagnostic_id": "v0.3_forward_atr_xgb_baseline_v1_target_construction_diagnostic_v1",
+  "status": "completed",
+  "generated_at_utc": "2026-08-09T18:52:06.167934+00:00",
+  "runtime_seconds": 0.3223463000031188,
+  "mode": "read-only; no target changes, model fitting, or TEST access",
+  "construction": {
+    "target_mode": "v0.3_forward_atr",
+    "target_definition": "At candle close t, compare Close[t+h]/Close[t]-1 with +/- atr_threshold_multiplier * ATR[t]/Close[t]. 1=BUY, 0=SELL, 2=NO_TRADE; a complete h-bar horizon is required.",
+    "horizon_bars": 5,
+    "horizon_minutes": 75,
+    "atr_threshold_multiplier": 1.0,
+    "configured_take_profit_points": 100,
+    "configured_stop_loss_points": 20,
+    "target_uses_tp_sl": false,
+    "same_bar_rule": "not_applicable_to_forward_close_target",
+    "spread_used": false,
+    "point_size_used": false,
+    "intrahorizon_path_used": false,
+    "strict_boundary_comparisons": true
+  },
+  "data_access": {
+    "reader": "pyarrow.ParquetFile.iter_batches",
+    "batch_size": 79908,
+    "rows_exposed": 79908,
+    "last_exposed_timestamp": "2025-10-02T12:00:00",
+    "test_rows_exposed": 0,
+    "test_labels_exposed": false
+  },
+  "class_distribution": {
+    "train": [
+      {
+        "class": "SELL",
+        "count": 14645,
+        "percentage": 20.3637526593156
+      },
+      {
+        "class": "BUY",
+        "count": 15579,
+        "percentage": 21.662472016352183
+      },
+      {
+        "class": "NO_TRADE",
+        "count": 41693,
+        "percentage": 57.973775324332216
+      }
+    ],
+    "validation": [
+      {
+        "class": "SELL",
+        "count": 1568,
+        "percentage": 19.622074834188464
+      },
+      {
+        "class": "BUY",
+        "count": 1703,
+        "percentage": 21.311475409836067
+      },
+      {
+        "class": "NO_TRADE",
+        "count": 4720,
+        "percentage": 59.06644975597547
+      }
+    ]
+  },
+  "reconstruction": {
+    "method": "forward_return[t] = persisted returns_5[t+5]",
+    "audited_rows": 79903,
+    "matching_rows": 79903,
+    "match_percentage": 100.0,
+    "unaudited_validation_tail_rows": 5,
+    "reason": "Their future endpoints are in TEST and were not read."
+  },
+  "boundary_summary": [
+    {
+      "split": "train",
+      "class": "SELL",
+      "count": 14645,
+      "within_0_05_atr_of_boundary_pct": 3.97405257767156,
+      "within_0_10_atr_of_boundary_pct": 7.620348241720724,
+      "within_0_25_atr_of_boundary_pct": 18.600204848071016,
+      "median_boundary_distance_atr": 0.8779514890745894,
+      "median_absolute_move_atr": 1.8779514890745894,
+      "median_threshold_price_points": 33.618337684510585,
+      "median_absolute_forward_move_price_points": 68.99999999999811
+    },
+    {
+      "split": "train",
+      "class": "BUY",
+      "count": 15579,
+      "within_0_05_atr_of_boundary_pct": 4.461133577251428,
+      "within_0_10_atr_of_boundary_pct": 8.845240387701393,
+      "within_0_25_atr_of_boundary_pct": 20.59182232492458,
+      "median_boundary_distance_atr": 0.7886288041344724,
+      "median_absolute_move_atr": 1.7886288041344724,
+      "median_threshold_price_points": 34.21221459462893,
+      "median_absolute_forward_move_price_points": 64.99999999999687
+    },
+    {
+      "split": "train",
+      "class": "NO_TRADE",
+      "count": 41693,
+      "within_0_05_atr_of_boundary_pct": 3.3362914637948817,
+      "within_0_10_atr_of_boundary_pct": 6.768522293910249,
+      "within_0_25_atr_of_boundary_pct": 18.506703763221644,
+      "median_boundary_distance_atr": 0.5808708342360511,
+      "median_absolute_move_atr": 0.4191291657639488,
+      "median_threshold_price_points": 36.06914830747016,
+      "median_absolute_forward_move_price_points": 13.500000000001275
+    },
+    {
+      "split": "validation",
+      "class": "SELL",
+      "count": 1566,
+      "within_0_05_atr_of_boundary_pct": 4.342273307790549,
+      "within_0_10_atr_of_boundary_pct": 8.55683269476373,
+      "within_0_25_atr_of_boundary_pct": 20.88122605363985,
+      "median_boundary_distance_atr": 0.8161415660653885,
+      "median_absolute_move_atr": 1.8161415660653883,
+      "median_threshold_price_points": 31.97775198437286,
+      "median_absolute_forward_move_price_points": 62.00000000000201
+    },
+    {
+      "split": "validation",
+      "class": "BUY",
+      "count": 1703,
+      "within_0_05_atr_of_boundary_pct": 4.7563123899001765,
+      "within_0_10_atr_of_boundary_pct": 9.16030534351145,
+      "within_0_25_atr_of_boundary_pct": 22.078684674104522,
+      "median_boundary_distance_atr": 0.7600350253948662,
+      "median_absolute_move_atr": 1.7600350253948662,
+      "median_threshold_price_points": 33.12632960478796,
+      "median_absolute_forward_move_price_points": 66.2999999999992
+    },
+    {
+      "split": "validation",
+      "class": "NO_TRADE",
+      "count": 4717,
+      "within_0_05_atr_of_boundary_pct": 3.095187619249523,
+      "within_0_10_atr_of_boundary_pct": 6.911172355310578,
+      "within_0_25_atr_of_boundary_pct": 19.01632393470426,
+      "median_boundary_distance_atr": 0.560685824626902,
+      "median_absolute_move_atr": 0.439314175373098,
+      "median_threshold_price_points": 37.24288702421555,
+      "median_absolute_forward_move_price_points": 15.500000000000732
+    }
+  ],
+  "directional_symmetry": [
+    {
+      "split": "train",
+      "buy_count": 15579,
+      "sell_count": 14645,
+      "buy_to_sell_count_ratio": 1.0637760327756913,
+      "buy_median_excess_atr": 0.7886288041344724,
+      "sell_median_excess_atr": 0.8779514890745894,
+      "buy_median_move_points": 64.99999999999687,
+      "sell_median_move_points": -68.99999999999811
+    },
+    {
+      "split": "validation",
+      "buy_count": 1703,
+      "sell_count": 1566,
+      "buy_to_sell_count_ratio": 1.0874840357598978,
+      "buy_median_excess_atr": 0.7600350253948662,
+      "sell_median_excess_atr": 0.8161415660653885,
+      "buy_median_move_points": 66.2999999999992,
+      "sell_median_move_points": -62.00000000000201
+    }
+  ],
+  "economic_assessment": {
+    "meaningful_as_market_outcome": true,
+    "meaningful_as_executable_trade_outcome": false,
+    "reason": "Labels encode only a volatility-scaled future close endpoint, without spread, costs, bid/ask execution, or path-dependent TP/SL outcomes.",
+    "close_call_interpretation": "Boundary-close rows can flip between a directional class and NO_TRADE, but not directly between BUY and SELL because the directional thresholds are 2 ATR apart.",
+    "raw_cache_columns": [
+      "Open",
+      "High",
+      "Low",
+      "Close",
+      "Volume"
+    ],
+    "spread_or_bid_ask_available": false
+  },
+  "conclusion": {
+    "verdict": "TARGET_MECHANICALLY_SOUND_BUT_UNVALIDATED_ECONOMICALLY",
+    "answer": "The labels are mechanically stable around their threshold, but economic validity remains unproven because the target ignores execution costs and intrahorizon path."
+  },
+  "smallest_controlled_experiment": {
+    "implemented": false,
+    "proposal": "Hold horizon=5 and barrier distance=1 ATR fixed; assign BUY or SELL by first High/Low barrier passage, NO_TRADE if unresolved, and drop same-bar ties; compare label agreement, class balance, and BUY-vs-SELL AUC against the frozen endpoint target.",
+    "isolated_factor": "endpoint-only close return versus intrahorizon first-passage path",
+    "spread_follow_up_requirement": "A later execution-aware test requires a new raw capture retaining historical spread or bid/ask data."
+  },
+  "integrity": {
+    "before": {
+      "dataset_sha256": "35995f3d673b914cd4631e95f7abc13ee78acec89c12129edbc1b1d353bb4634",
+      "metadata_sha256": "f3a4667ffc2ca8b7dd1fddf0a44c842f0a871401b88f77c57e8e7aa25b79b042",
+      "reference_model_sha256": "6e30c834df78c6448a6987b9427e1a7ee0677eacaf15efd04e82a828d207f3b8"
+    },
+    "after": {
+      "dataset_sha256": "35995f3d673b914cd4631e95f7abc13ee78acec89c12129edbc1b1d353bb4634",
+      "metadata_sha256": "f3a4667ffc2ca8b7dd1fddf0a44c842f0a871401b88f77c57e8e7aa25b79b042",
+      "reference_model_sha256": "6e30c834df78c6448a6987b9427e1a7ee0677eacaf15efd04e82a828d207f3b8"
+    },
+    "all_protected_artifacts_unchanged": true,
+    "test_rows_exposed": 0,
+    "test_labels_read": false,
+    "test_evaluated": false
+  }
+}

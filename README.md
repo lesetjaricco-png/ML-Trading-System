@@ -17,6 +17,13 @@ This repository is prepared as a reproducible baseline:
   - Calmar ratio: -0.23
   - Final portfolio value: 94,290.62
 
+## Experiment Registry
+
+- Active default run: [config/config.yaml](config/config.yaml) and [config/config_v03.yaml](config/config_v03.yaml) for the new V0.3 forward-looking ATR target.
+- Frozen historical experiments:
+  - [config/config_v01.yaml](config/config_v01.yaml) for the original V0.1 TP-before-SL baseline.
+  - [config/config_v02.yaml](config/config_v02.yaml) for the V0.2 directional experiment.
+
 ## Project Layout
 
 ```

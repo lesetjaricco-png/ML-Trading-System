@@ -1,0 +1,991 @@
+{
+  "V0.1": {
+    "target_dist": {
+      "train": {
+        "0": 99701,
+        "1": 41574
+      },
+      "val": {
+        "0": 11077,
+        "1": 4621
+      },
+      "test": {
+        "1": 11547,
+        "0": 27697
+      }
+    },
+    "majority_baseline": {
+      "accuracy": 0.7057639384364489,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "confusion_matrix": [
+        [
+          27697,
+          0
+        ],
+        [
+          11547,
+          0
+        ]
+      ],
+      "roc_auc": null
+    },
+    "random_baseline": {
+      "accuracy": 0.5837325451024359,
+      "precision": 0.29252190179742293,
+      "recall": 0.29238330302243,
+      "f1": 0.29244856883781495,
+      "roc_auc": null
+    },
+    "normal_model": {
+      "accuracy": 0.9997451839771685,
+      "precision": 0.9992211163998269,
+      "recall": 0.9999133974192431,
+      "f1": 0.9995671370444117,
+      "confusion_matrix": [
+        [
+          27688,
+          9
+        ],
+        [
+          1,
+          11546
+        ]
+      ],
+      "roc_auc": 0.9999998155196496
+    },
+    "shuffled_target_model": {
+      "accuracy": 0.7057639384364489,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "confusion_matrix": [
+        [
+          27697,
+          0
+        ],
+        [
+          11547,
+          0
+        ]
+      ],
+      "roc_auc": 0.4533474208157102
+    },
+    "feature_shuffled_model": {
+      "accuracy": 0.7057639384364489,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0.0,
+      "confusion_matrix": [
+        [
+          27697,
+          0
+        ],
+        [
+          11547,
+          0
+        ]
+      ],
+      "roc_auc": 0.5342099517524788
+    },
+    "top_features": [
+      {
+        "feature": "returns_2",
+        "importance": 0.4694680869579315
+      },
+      {
+        "feature": "upper_shadow",
+        "importance": 0.14183799922466278
+      },
+      {
+        "feature": "returns_5",
+        "importance": 0.060071442276239395
+      },
+      {
+        "feature": "volatility_5",
+        "importance": 0.03278505057096481
+      },
+      {
+        "feature": "high_low_ratio",
+        "importance": 0.024944115430116653
+      },
+      {
+        "feature": "returns",
+        "importance": 0.02417278289794922
+      },
+      {
+        "feature": "returns_10",
+        "importance": 0.024141503497958183
+      },
+      {
+        "feature": "log_returns",
+        "importance": 0.01994265429675579
+      },
+      {
+        "feature": "body_size",
+        "importance": 0.017978670075535774
+      },
+      {
+        "feature": "lower_shadow",
+        "importance": 0.01617148518562317
+      },
+      {
+        "feature": "close_open_ratio",
+        "importance": 0.01567607931792736
+      },
+      {
+        "feature": "price_to_sma_200",
+        "importance": 0.013492180034518242
+      },
+      {
+        "feature": "price_to_sma_10",
+        "importance": 0.010272972285747528
+      },
+      {
+        "feature": "sma_20",
+        "importance": 0.010004701092839241
+      },
+      {
+        "feature": "atr_pct",
+        "importance": 0.009713255800306797
+      }
+    ],
+    "conditional_probabilities": [
+      {
+        "feature": "returns_2",
+        "buckets": [
+          {
+            "bucket": 0,
+            "win_rate": 0.889171974522293
+          },
+          {
+            "bucket": 1,
+            "win_rate": 0.8664627930682977
+          },
+          {
+            "bucket": 2,
+            "win_rate": 0.8188073394495413
+          },
+          {
+            "bucket": 3,
+            "win_rate": 0.30980891719745224
+          },
+          {
+            "bucket": 4,
+            "win_rate": 0.05784913353720693
+          },
+          {
+            "bucket": 5,
+            "win_rate": 0.0
+          },
+          {
+            "bucket": 6,
+            "win_rate": 0.00025477707006369424
+          },
+          {
+            "bucket": 7,
+            "win_rate": 0.0
+          },
+          {
+            "bucket": 8,
+            "win_rate": 0.0
+          },
+          {
+            "bucket": 9,
+            "win_rate": 0.0
+          }
+        ]
+      },
+      {
+        "feature": "upper_shadow",
+        "buckets": [
+          {
+            "bucket": 0,
+            "win_rate": 0.0
+          },
+          {
+            "bucket": 1,
+            "win_rate": 0.0
+          },
+          {
+            "bucket": 2,
+            "win_rate": 0.0
+          },
+          {
+            "bucket": 3,
+            "win_rate": 0.0
+          },
+          {
+            "bucket": 4,
+            "win_rate": 0.11850152905198777
+          },
+          {
+            "bucket": 5,
+            "win_rate": 0.4964322120285423
+          },
+          {
+            "bucket": 6,
+            "win_rate": 0.3154140127388535
+          },
+          {
+            "bucket": 7,
+            "win_rate": 0.6371049949031601
+          },
+          {
+            "bucket": 8,
+            "win_rate": 0.5881753312945973
+          },
+          {
+            "bucket": 9,
+            "win_rate": 0.7867515923566879
+          }
+        ]
+      },
+      {
+        "feature": "returns_5",
+        "buckets": [
+          {
+            "bucket": 0,
+            "win_rate": 0.9518471337579618
+          },
+          {
+            "bucket": 1,
+            "win_rate": 0.7765035677879715
+          },
+          {
+            "bucket": 2,
+            "win_rate": 0.5310907237512742
+          },
+          {
+            "bucket": 3,
+            "win_rate": 0.2810191082802548
+          },
+          {
+            "bucket": 4,
+            "win_rate": 0.11901121304791029
+          },
+          {
+            "bucket": 5,
+            "win_rate": 0.18960244648318042
+          },
+          {
+            "bucket": 6,
+            "win_rate": 0.045605095541401276
+          },
+          {
+            "bucket": 7,
+            "win_rate": 0.034148827726809376
+          },
+          {
+            "bucket": 8,
+            "win_rate": 0.013506625891946993
+          },
+          {
+            "bucket": 9,
+            "win_rate": 0.0
+          }
+        ]
+      },
+      {
+        "feature": "volatility_5",
+        "buckets": [
+          {
+            "bucket": 0,
+            "win_rate": 0.8578343949044586
+          },
+          {
+            "bucket": 1,
+            "win_rate": 0.5583588175331294
+          },
+          {
+            "bucket": 2,
+            "win_rate": 0.327217125382263
+          },
+          {
+            "bucket": 3,
+            "win_rate": 0.09707006369426752
+          },
+          {
+            "bucket": 4,
+            "win_rate": 0.10321100917431193
+          },
+          {
+            "bucket": 5,
+            "win_rate": 0.16666666666666666
+          },
+          {
+            "bucket": 6,
+            "win_rate": 0.27796178343949046
+          },
+          {
+            "bucket": 7,
+            "win_rate": 0.22145769622833844
+          },
+          {
+            "bucket": 8,
+            "win_rate": 0.09148827726809378
+          },
+          {
+            "bucket": 9,
+            "win_rate": 0.24101910828025477
+          }
+        ]
+      },
+      {
+        "feature": "high_low_ratio",
+        "buckets": [
+          {
+            "bucket": 0,
+            "win_rate": 0.0
+          },
+          {
+            "bucket": 1,
+            "win_rate": 0.0
+          },
+          {
+            "bucket": 2,
+            "win_rate": 0.06218144750254842
+          },
+          {
+            "bucket": 3,
+            "win_rate": 0.12331210191082803
+          },
+          {
+            "bucket": 4,
+            "win_rate": 0.06243628950050968
+          },
+          {
+            "bucket": 5,
+            "win_rate": 0.5848623853211009
+          },
+          {
+            "bucket": 6,
+            "win_rate": 0.7319745222929936
+          },
+          {
+            "bucket": 7,
+            "win_rate": 0.6483180428134556
+          },
+          {
+            "bucket": 8,
+            "win_rate": 0.23802242609582058
+          },
+          {
+            "bucket": 9,
+            "win_rate": 0.49121019108280256
+          }
+        ]
+      }
+    ],
+    "probability_summary": {
+      "min": 2.3013481609268638e-07,
+      "p10": 2.680847501324024e-06,
+      "p25": 7.09215009919717e-06,
+      "median": 4.244160663802177e-05,
+      "p75": 0.9775131940841675,
+      "p90": 0.99924635887146,
+      "max": 0.9999895095825195
+    },
+    "probability_buckets": {
+      "0.50-0.55": 9,
+      "0.55-0.60": 9,
+      "0.60-0.65": 6,
+      "0.65-0.70": 7,
+      "0.70-0.75": 23,
+      "0.75-0.80": 39,
+      "0.80-0.90": 318,
+      "0.90-0.95": 540,
+      "0.95-1.00": 10604
+    },
+    "calibration": [
+      {
+        "bucket": "0.50-0.60",
+        "n": 18,
+        "avg_pred": 0.546298086643219,
+        "actual_positive_rate": 0.6666666666666666
+      },
+      {
+        "bucket": "0.60-0.70",
+        "n": 13,
+        "avg_pred": 0.6510628461837769,
+        "actual_positive_rate": 0.7692307692307693
+      },
+      {
+        "bucket": "0.70-0.80",
+        "n": 62,
+        "avg_pred": 0.7581294775009155,
+        "actual_positive_rate": 1.0
+      },
+      {
+        "bucket": "0.80-0.90",
+        "n": 318,
+        "avg_pred": 0.8617820739746094,
+        "actual_positive_rate": 1.0
+      },
+      {
+        "bucket": "0.90-1.00",
+        "n": 11144,
+        "avg_pred": 0.9913225769996643,
+        "actual_positive_rate": 1.0
+      }
+    ],
+    "target_difficulty": {
+      "tp_first_candle": 0.0,
+      "tp_2_candles": 0.0,
+      "tp_3_5": 0.0,
+      "tp_6_10": 0.0,
+      "tp_11_20": 0.0,
+      "tp_21_40": 0.0,
+      "sl": 0.9999745183977169,
+      "unresolved": 2.5481602283151563e-05
+    },
+    "ablations": {
+      "all_current_features": {
+        "roc_auc": 0.9999998155196496,
+        "f1": 0.9995671370444117,
+        "accuracy": 0.9997451839771685,
+        "precision": 0.9992211163998269,
+        "recall": 0.9999133974192431
+      },
+      "price_technical_only": {
+        "roc_auc": 0.9999996091518,
+        "f1": 0.9995236651799246,
+        "accuracy": 0.9997197023748853,
+        "precision": 0.9995669495929326,
+        "recall": 0.9994803845154585
+      },
+      "remove_volatility": {
+        "roc_auc": 0.9999995216018032,
+        "f1": 0.9993072993332756,
+        "accuracy": 0.9995922943634695,
+        "precision": 0.9991342740888235,
+        "recall": 0.9994803845154585
+      },
+      "remove_volume": {
+        "roc_auc": 0.9999998405339344,
+        "f1": 0.9996535896769724,
+        "accuracy": 0.9997961471817348,
+        "precision": 0.9996535896769724,
+        "recall": 0.9996535896769724
+      },
+      "remove_future_like": {
+        "roc_auc": 0.9973420258723436,
+        "f1": 0.9612007439768157,
+        "accuracy": 0.977143002752013,
+        "precision": 0.9601624611130315,
+        "recall": 0.9622412747899888
+      }
+    }
+  },
+  "V0.2": {
+    "target_dist": {
+      "train": {
+        "0": 77877,
+        "1": 57325,
+        "2": 6074
+      },
+      "val": {
+        "0": 8616,
+        "1": 6408,
+        "2": 674
+      },
+      "test": {
+        "0": 21505,
+        "1": 16039,
+        "2": 1700
+      }
+    },
+    "majority_baseline": {
+      "accuracy": 0.5479818570991744,
+      "precision": 0.1826606190330581,
+      "recall": 0.3333333333333333,
+      "f1": 0.2359983977788386,
+      "confusion_matrix": [
+        [
+          21505,
+          0,
+          0
+        ],
+        [
+          16039,
+          0,
+          0
+        ],
+        [
+          1700,
+          0,
+          0
+        ]
+      ],
+      "roc_auc": null
+    },
+    "random_baseline": {
+      "accuracy": 0.46957114463357463,
+      "precision": 0.3333751404719082,
+      "recall": 0.3333800860059692,
+      "f1": 0.33337255403328114,
+      "roc_auc": null
+    },
+    "normal_model": {
+      "accuracy": 0.9980888798287636,
+      "precision": 0.9985033842953626,
+      "recall": 0.997882741225919,
+      "f1": 0.9981926721440283,
+      "confusion_matrix": [
+        [
+          21478,
+          27,
+          0
+        ],
+        [
+          43,
+          15995,
+          1
+        ],
+        [
+          2,
+          2,
+          1696
+        ]
+      ],
+      "roc_auc": 0.9995150989082227
+    },
+    "shuffled_target_model": {
+      "accuracy": 0.5479818570991744,
+      "precision": 0.1826606190330581,
+      "recall": 0.3333333333333333,
+      "f1": 0.2359983977788386,
+      "confusion_matrix": [
+        [
+          21505,
+          0,
+          0
+        ],
+        [
+          16039,
+          0,
+          0
+        ],
+        [
+          1700,
+          0,
+          0
+        ]
+      ],
+      "roc_auc": 0.5064268385534647
+    },
+    "feature_shuffled_model": {
+      "accuracy": 0.5479818570991744,
+      "precision": 0.1826606190330581,
+      "recall": 0.3333333333333333,
+      "f1": 0.2359983977788386,
+      "confusion_matrix": [
+        [
+          21505,
+          0,
+          0
+        ],
+        [
+          16039,
+          0,
+          0
+        ],
+        [
+          1700,
+          0,
+          0
+        ]
+      ],
+      "roc_auc": 0.5049563240138796
+    },
+    "top_features": [
+      {
+        "feature": "returns_2",
+        "importance": 0.23305697739124298
+      },
+      {
+        "feature": "upper_shadow",
+        "importance": 0.2213505357503891
+      },
+      {
+        "feature": "atr_pct",
+        "importance": 0.05993315950036049
+      },
+      {
+        "feature": "returns_5",
+        "importance": 0.051582466810941696
+      },
+      {
+        "feature": "price_to_sma_200",
+        "importance": 0.04362623766064644
+      },
+      {
+        "feature": "returns",
+        "importance": 0.037656571716070175
+      },
+      {
+        "feature": "log_returns",
+        "importance": 0.028703216463327408
+      },
+      {
+        "feature": "price_to_sma_20",
+        "importance": 0.02844277210533619
+      },
+      {
+        "feature": "high_low_ratio",
+        "importance": 0.025433087721467018
+      },
+      {
+        "feature": "returns_10",
+        "importance": 0.02504083700478077
+      },
+      {
+        "feature": "close_open_ratio",
+        "importance": 0.023494791239500046
+      },
+      {
+        "feature": "body_size",
+        "importance": 0.02086697891354561
+      },
+      {
+        "feature": "lower_shadow",
+        "importance": 0.020695267245173454
+      },
+      {
+        "feature": "ema_12",
+        "importance": 0.014712085016071796
+      },
+      {
+        "feature": "price_to_sma_50",
+        "importance": 0.014314823783934116
+      }
+    ],
+    "conditional_probabilities": [
+      {
+        "feature": "returns_2",
+        "buckets": [
+          {
+            "bucket": 0,
+            "win_rate": 0.9969426751592356
+          },
+          {
+            "bucket": 1,
+            "win_rate": 0.9615188583078491
+          },
+          {
+            "bucket": 2,
+            "win_rate": 0.9457186544342507
+          },
+          {
+            "bucket": 3,
+            "win_rate": 0.5329936305732484
+          },
+          {
+            "bucket": 4,
+            "win_rate": 0.31269113149847094
+          },
+          {
+            "bucket": 5,
+            "win_rate": 0.07339449541284404
+          },
+          {
+            "bucket": 6,
+            "win_rate": 0.08611464968152867
+          },
+          {
+            "bucket": 7,
+            "win_rate": 0.053261977573904176
+          },
+          {
+            "bucket": 8,
+            "win_rate": 0.09734964322120285
+          },
+          {
+            "bucket": 9,
+            "win_rate": 0.02700636942675159
+          }
+        ]
+      },
+      {
+        "feature": "upper_shadow",
+        "buckets": [
+          {
+            "bucket": 0,
+            "win_rate": 0.009936305732484076
+          },
+          {
+            "bucket": 1,
+            "win_rate": 0.08486238532110092
+          },
+          {
+            "bucket": 2,
+            "win_rate": 0.16309887869520898
+          },
+          {
+            "bucket": 3,
+            "win_rate": 0.009171974522292993
+          },
+          {
+            "bucket": 4,
+            "win_rate": 0.15239551478083588
+          },
+          {
+            "bucket": 5,
+            "win_rate": 0.6628440366972477
+          },
+          {
+            "bucket": 6,
+            "win_rate": 0.513375796178344
+          },
+          {
+            "bucket": 7,
+            "win_rate": 0.790519877675841
+          },
+          {
+            "bucket": 8,
+            "win_rate": 0.7754841997961264
+          },
+          {
+            "bucket": 9,
+            "win_rate": 0.9253503184713375
+          }
+        ]
+      },
+      {
+        "feature": "atr_pct",
+        "buckets": [
+          {
+            "bucket": 0,
+            "win_rate": 0.0
+          },
+          {
+            "bucket": 1,
+            "win_rate": 0.00025484199796126404
+          },
+          {
+            "bucket": 2,
+            "win_rate": 0.15035677879714576
+          },
+          {
+            "bucket": 3,
+            "win_rate": 0.24331210191082803
+          },
+          {
+            "bucket": 4,
+            "win_rate": 0.327217125382263
+          },
+          {
+            "bucket": 5,
+            "win_rate": 0.5629459734964322
+          },
+          {
+            "bucket": 6,
+            "win_rate": 0.35006369426751593
+          },
+          {
+            "bucket": 7,
+            "win_rate": 0.7930682976554536
+          },
+          {
+            "bucket": 8,
+            "win_rate": 0.9054536187563711
+          },
+          {
+            "bucket": 9,
+            "win_rate": 0.7543949044585987
+          }
+        ]
+      },
+      {
+        "feature": "returns_5",
+        "buckets": [
+          {
+            "bucket": 0,
+            "win_rate": 0.9755414012738853
+          },
+          {
+            "bucket": 1,
+            "win_rate": 0.9166666666666666
+          },
+          {
+            "bucket": 2,
+            "win_rate": 0.6867991845056065
+          },
+          {
+            "bucket": 3,
+            "win_rate": 0.4749044585987261
+          },
+          {
+            "bucket": 4,
+            "win_rate": 0.35881753312945974
+          },
+          {
+            "bucket": 5,
+            "win_rate": 0.31829765545361877
+          },
+          {
+            "bucket": 6,
+            "win_rate": 0.10114649681528662
+          },
+          {
+            "bucket": 7,
+            "win_rate": 0.22043832823649337
+          },
+          {
+            "bucket": 8,
+            "win_rate": 0.0326197757390418
+          },
+          {
+            "bucket": 9,
+            "win_rate": 0.0017834394904458599
+          }
+        ]
+      },
+      {
+        "feature": "price_to_sma_200",
+        "buckets": [
+          {
+            "bucket": 0,
+            "win_rate": 0.8300636942675159
+          },
+          {
+            "bucket": 1,
+            "win_rate": 0.8465851172273191
+          },
+          {
+            "bucket": 2,
+            "win_rate": 0.781855249745158
+          },
+          {
+            "bucket": 3,
+            "win_rate": 0.34496815286624205
+          },
+          {
+            "bucket": 4,
+            "win_rate": 0.5389908256880734
+          },
+          {
+            "bucket": 5,
+            "win_rate": 0.3200815494393476
+          },
+          {
+            "bucket": 6,
+            "win_rate": 0.24076433121019108
+          },
+          {
+            "bucket": 7,
+            "win_rate": 0.18374108053007135
+          },
+          {
+            "bucket": 8,
+            "win_rate": 0.0
+          },
+          {
+            "bucket": 9,
+            "win_rate": 0.0
+          }
+        ]
+      }
+    ],
+    "probability_summary": {
+      "min": 5.295774485603033e-07,
+      "p10": 1.896737376227975e-05,
+      "p25": 0.00010369728988735005,
+      "median": 0.02641811966896057,
+      "p75": 0.9958429932594299,
+      "p90": 0.9997130632400513,
+      "max": 0.9999979734420776
+    },
+    "probability_buckets": {
+      "0.50-0.55": 48,
+      "0.55-0.60": 50,
+      "0.60-0.65": 54,
+      "0.65-0.70": 116,
+      "0.70-0.75": 154,
+      "0.75-0.80": 200,
+      "0.80-0.90": 698,
+      "0.90-0.95": 862,
+      "0.95-1.00": 13832
+    },
+    "calibration": [
+      {
+        "bucket": "0.50-0.60",
+        "n": 98,
+        "avg_pred": 0.5511565804481506,
+        "actual_positive_rate": 0.8163265306122449
+      },
+      {
+        "bucket": "0.60-0.70",
+        "n": 170,
+        "avg_pred": 0.6599591374397278,
+        "actual_positive_rate": 0.9764705882352941
+      },
+      {
+        "bucket": "0.70-0.80",
+        "n": 354,
+        "avg_pred": 0.7551940083503723,
+        "actual_positive_rate": 1.0
+      },
+      {
+        "bucket": "0.80-0.90",
+        "n": 698,
+        "avg_pred": 0.8539842963218689,
+        "actual_positive_rate": 1.0
+      },
+      {
+        "bucket": "0.90-1.00",
+        "n": 14694,
+        "avg_pred": 0.9906954765319824,
+        "actual_positive_rate": 1.0
+      }
+    ],
+    "target_difficulty": {
+      "tp_first_candle": 0.0,
+      "tp_2_candles": 0.0,
+      "tp_3_5": 0.0,
+      "tp_6_10": 0.0,
+      "tp_11_20": 0.0,
+      "tp_21_40": 0.0,
+      "sl": 0.9999745183977169,
+      "unresolved": 2.5481602283151563e-05
+    },
+    "ablations": {
+      "all_current_features": {
+        "roc_auc": 0.9995150989082227,
+        "f1": 0.9981926721440283,
+        "accuracy": 0.9980888798287636,
+        "precision": 0.9985033842953626,
+        "recall": 0.997882741225919
+      },
+      "price_technical_only": {
+        "roc_auc": 0.9995265973364765,
+        "f1": 0.9968682400089371,
+        "accuracy": 0.9964835388849251,
+        "precision": 0.9973998900946003,
+        "recall": 0.996339054048665
+      },
+      "remove_volatility": {
+        "roc_auc": 0.9995374674183459,
+        "f1": 0.9969613885130734,
+        "accuracy": 0.9964835388849251,
+        "precision": 0.997415970368464,
+        "recall": 0.996509067400169
+      },
+      "remove_volume": {
+        "roc_auc": 0.9995148836587062,
+        "f1": 0.998228958329319,
+        "accuracy": 0.9981398430333299,
+        "precision": 0.9985396737336517,
+        "recall": 0.9979190241727354
+      },
+      "remove_future_like": {
+        "roc_auc": 0.9975294430898117,
+        "f1": 0.9576147143744378,
+        "accuracy": 0.9679441443277953,
+        "precision": 0.9765789656960213,
+        "recall": 0.9409990055772419
+      }
+    }
+  }
+}

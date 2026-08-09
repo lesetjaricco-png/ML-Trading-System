@@ -1,0 +1,92 @@
+{
+  "train": {
+    "roc_auc": 0.5676503736245411,
+    "balanced_accuracy": 0.542121057978873,
+    "macro_f1": 0.525780226033579,
+    "sell_recall": 0.3368260038240918,
+    "buy_recall": 0.7474161121336542,
+    "confusion_matrix": [
+      [
+        4404,
+        8671
+      ],
+      [
+        3568,
+        10558
+      ]
+    ],
+    "prediction_distribution": {
+      "SELL": {
+        "count": 7972,
+        "percentage": 29.307746038748576
+      },
+      "BUY": {
+        "count": 19229,
+        "percentage": 70.69225396125142
+      }
+    },
+    "probability_mean": 0.526333212852478,
+    "probability_std": 0.04914592206478119,
+    "predictions_near_0_5_pct": 66.69975368552626
+  },
+  "internal_train_validation": {
+    "roc_auc": 0.4802600374362729,
+    "balanced_accuracy": 0.48450361869358805,
+    "macro_f1": 0.45172245899322644,
+    "sell_recall": 0.256687898089172,
+    "buy_recall": 0.7123193392980042,
+    "confusion_matrix": [
+      [
+        403,
+        1167
+      ],
+      [
+        418,
+        1035
+      ]
+    ],
+    "prediction_distribution": {
+      "SELL": {
+        "count": 821,
+        "percentage": 27.1584518690043
+      },
+      "BUY": {
+        "count": 2202,
+        "percentage": 72.8415481309957
+      }
+    },
+    "probability_mean": 0.5319480895996094,
+    "probability_std": 0.05888188257813454,
+    "predictions_near_0_5_pct": 58.31955011577903
+  },
+  "external_validation": {
+    "roc_auc": 0.4923667867029372,
+    "balanced_accuracy": 0.5073016031133534,
+    "macro_f1": 0.479660580224183,
+    "sell_recall": 0.2582908163265306,
+    "buy_recall": 0.7563123899001761,
+    "confusion_matrix": [
+      [
+        405,
+        1163
+      ],
+      [
+        415,
+        1288
+      ]
+    ],
+    "prediction_distribution": {
+      "SELL": {
+        "count": 820,
+        "percentage": 25.068786303882604
+      },
+      "BUY": {
+        "count": 2451,
+        "percentage": 74.9312136961174
+      }
+    },
+    "probability_mean": 0.5381227135658264,
+    "probability_std": 0.0527561716735363,
+    "predictions_near_0_5_pct": 54.38703760317946
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "source": "MetaTrader5 via IC Markets terminal",
+  "instrument": "US30",
+  "instrument_identity": "US Wall Street 30 Index",
+  "timeframe": "M1",
+  "timezone": "UTC",
+  "timestamp_resolution": "1 second epoch converted to UTC-naive DatetimeIndex",
+  "timestamp_semantics": "bar open",
+  "availability_rule": "bar_open_timestamp + 1 minute",
+  "retrieval_date_utc": "2026-08-09T20:30:13.868504+00:00",
+  "requested_start_utc": "2022-05-12T00:00:00+00:00",
+  "requested_end_exclusive_utc": "2025-10-02T12:15:00+00:00",
+  "historical_coverage": {
+    "row_count": 1200410,
+    "first_bar_open_utc": "2022-05-12T01:00:00",
+    "last_bar_open_utc": "2025-10-02T12:14:00",
+    "duplicate_timestamps": 0,
+    "missing_values": 0,
+    "nonzero_tick_volume_rows": 1200410,
+    "nonzero_real_volume_rows": 0,
+    "positive_spread_rows": 1200170
+  },
+  "schema": [
+    "Open",
+    "High",
+    "Low",
+    "Close",
+    "TickVolume",
+    "Spread",
+    "RealVolume"
+  ],
+  "chunk_count": 28,
+  "duplicate_count_before_deduplication": 0,
+  "missing_data_behavior": "No synthetic fill; incomplete M15 groups are excluded.",
+  "revision_policy": "Broker bar snapshot retrieved once; no revised series used.",
+  "contract_specification": {
+    "name": "US30",
+    "description": "US Wall Street 30 Index",
+    "path": "Indices\\Indices Spot\\Major Spot Indices\\US30",
+    "currency_base": "USD",
+    "currency_profit": "USD",
+    "digits": 2,
+    "point": 0.01,
+    "trade_tick_size": 0.01,
+    "trade_tick_value": 0.01,
+    "trade_contract_size": 1.0,
+    "spread_float": true,
+    "ticks_bookdepth": 10
+  },
+  "data_path": "data\\context\\microstructure_mt5_v1\\US30_2022-05-12_2025-10-02T1215_M1_mt5.parquet",
+  "data_sha256": "2852f508d94d2776b9ef2b7918286fa74fcbcb427f93c86b089344416db5b420"
+}

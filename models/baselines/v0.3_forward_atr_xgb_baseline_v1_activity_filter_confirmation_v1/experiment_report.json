@@ -1,0 +1,220 @@
+{
+  "experiment_id": "v0.3_forward_atr_xgb_baseline_v1_activity_filter_confirmation_v1",
+  "status": "completed",
+  "generated_at_utc": "2026-08-09T21:17:21.458417+00:00",
+  "runtime_seconds": 10.050455000004149,
+  "scientific_question": "Does the frozen MA10/20 plus ML activity-filter effect survive on genuinely unseen data?",
+  "predeclared_design": {
+    "direction_rule": "BUY when sma_10 > sma_20; SELL when sma_10 < sma_20; no trade when equal",
+    "activity_probability": "P(BUY) + P(SELL)",
+    "model_direction_used": false,
+    "thresholds": [
+      0.7,
+      0.8
+    ],
+    "horizon_bars": 5,
+    "atr_target_multiplier": 1.0,
+    "permutations": 500,
+    "random_seed": 42,
+    "minimum_filtered_trades_for_meaningful_determination": 1000,
+    "confirmation_rule": "Both thresholds must improve average return, win rate, and profit factor over unfiltered and each have one-sided permutation p <= 0.05.",
+    "cost_policy": "Gross outcomes only; no reliable execution-time spread or slippage series exists for this confirmation period."
+  },
+  "confirmation_eligibility": {
+    "status": "ELIGIBLE_UNTOUCHED_CONFIRMATION_DATA",
+    "validation_last_timestamp": "2025-10-02T12:00:00",
+    "confirmation_first_timestamp": "2025-10-02T12:15:00",
+    "confirmation_last_timestamp": "2026-08-07T22:30:00",
+    "confirmation_rows_recorded": 19977,
+    "strictly_after_validation": true,
+    "previous_activity_test_rows_exposed": 0,
+    "sealed_dataset_created_after_legacy_diagnostics": true
+  },
+  "data_access": {
+    "reader": "pyarrow.ParquetFile.iter_batches",
+    "partition": "sealed TEST used once as confirmation",
+    "rows_exposed": 19977,
+    "first_timestamp": "2025-10-02T12:15:00",
+    "last_timestamp": "2026-08-07T22:30:00",
+    "target_labels_read": false,
+    "prior_train_rows_reused_as_confirmation": 0,
+    "prior_validation_rows_reused_as_confirmation": 0
+  },
+  "results": {
+    "unfiltered_ma_10_20": {
+      "signals": 19969,
+      "trades": 19969,
+      "trade_frequency": 1.0,
+      "buy_trades": 10337,
+      "sell_trades": 9632,
+      "win_rate": 0.4972206920727127,
+      "average_return": -1.712810627239575e-05,
+      "median_return": 0.0,
+      "cumulative_gross_return": -0.34203115415347074,
+      "profit_factor": 0.9740797851783591,
+      "maximum_drawdown": 0.6049348720909876,
+      "average_mfe": 0.0009205508816898615,
+      "average_mae": -0.000940711186405116,
+      "reached_plus_1atr_pct": 29.871300515799486,
+      "reached_minus_1atr_pct": 30.30196805047824,
+      "first_passage_favorable_pct": 28.429065050828783,
+      "first_passage_adverse_pct": 28.78461615504031,
+      "first_passage_tie_pct": 0.03505433421803796
+    },
+    "activity_filtered": [
+      {
+        "threshold": 0.7,
+        "metrics": {
+          "signals": 19969,
+          "trades": 11724,
+          "trade_frequency": 0.5871100205318244,
+          "buy_trades": 6595,
+          "sell_trades": 5129,
+          "win_rate": 0.4920675537359263,
+          "average_return": -1.9946386215051075e-05,
+          "median_return": -2.0418155507999923e-05,
+          "cumulative_gross_return": -0.23385143198525882,
+          "profit_factor": 0.975062448020743,
+          "maximum_drawdown": 0.5241401821106733,
+          "average_mfe": 0.001111000937713,
+          "average_mae": -0.0011372079036081628,
+          "reached_plus_1atr_pct": 37.922210849539404,
+          "reached_minus_1atr_pct": 38.64721937905152,
+          "first_passage_favorable_pct": 35.636301603548276,
+          "first_passage_adverse_pct": 36.173660866598425,
+          "first_passage_tie_pct": 0.0597065847833504
+        },
+        "permutation": {
+          "iterations": 500,
+          "statistic": "average_terminal_return",
+          "observed": -1.9946386215051075e-05,
+          "random_mean": -1.7389623339853918e-05,
+          "random_std": 1.185107675854078e-05,
+          "random_min": -5.5869207635718464e-05,
+          "random_q05": -3.565134168966131e-05,
+          "random_median": -1.7195352435975986e-05,
+          "random_q95": 1.841327360375796e-06,
+          "random_max": 1.621673174096154e-05,
+          "one_sided_p_value": 0.5868263473053892,
+          "trade_count_preserved_each_iteration": true
+        },
+        "difference_vs_unfiltered": {
+          "signals": 0,
+          "trades": -8245,
+          "buy_trades": -3742,
+          "sell_trades": -4503,
+          "win_rate": -0.005153138336786378,
+          "average_return": -2.8182799426553257e-06,
+          "median_return": -2.0418155507999923e-05,
+          "cumulative_gross_return": 0.10817972216821192,
+          "profit_factor": 0.0009826628423839079,
+          "maximum_drawdown": -0.08079468998031436,
+          "average_mfe": 0.00019045005602313838,
+          "average_mae": -0.00019649671720304684,
+          "reached_plus_1atr_pct": 8.050910333739917,
+          "reached_minus_1atr_pct": 8.34525132857328
+        }
+      },
+      {
+        "threshold": 0.8,
+        "metrics": {
+          "signals": 19969,
+          "trades": 8995,
+          "trade_frequency": 0.45044819470178776,
+          "buy_trades": 5334,
+          "sell_trades": 3661,
+          "win_rate": 0.48993885491939965,
+          "average_return": -1.854417476054394e-05,
+          "median_return": -2.116263271616042e-05,
+          "cumulative_gross_return": -0.16680485197109274,
+          "profit_factor": 0.977416036005786,
+          "maximum_drawdown": 0.43180967214058835,
+          "average_mfe": 0.0011337822058867166,
+          "average_mae": -0.0011631330195002413,
+          "reached_plus_1atr_pct": 39.777654252362424,
+          "reached_minus_1atr_pct": 40.54474708171206,
+          "first_passage_favorable_pct": 37.065036131183994,
+          "first_passage_adverse_pct": 37.65425236242357,
+          "first_passage_tie_pct": 0.06670372429127293
+        },
+        "permutation": {
+          "iterations": 500,
+          "statistic": "average_terminal_return",
+          "observed": -1.854417476054394e-05,
+          "random_mean": -1.8109977011336284e-05,
+          "random_std": 1.6635692320100075e-05,
+          "random_min": -6.54351377403213e-05,
+          "random_q05": -4.722252028413664e-05,
+          "random_median": -1.8347907577574033e-05,
+          "random_q95": 9.299058828569808e-06,
+          "random_max": 2.7826450746936613e-05,
+          "one_sided_p_value": 0.5049900199600799,
+          "trade_count_preserved_each_iteration": true
+        },
+        "difference_vs_unfiltered": {
+          "signals": 0,
+          "trades": -10974,
+          "buy_trades": -5003,
+          "sell_trades": -5971,
+          "win_rate": -0.007281837153313042,
+          "average_return": -1.4160684881481917e-06,
+          "median_return": -2.116263271616042e-05,
+          "cumulative_gross_return": 0.175226302182378,
+          "profit_factor": 0.0033362508274268343,
+          "maximum_drawdown": -0.17312519995039927,
+          "average_mfe": 0.00021323132419685505,
+          "average_mae": -0.00022242183309512532,
+          "reached_plus_1atr_pct": 9.906353736562938,
+          "reached_minus_1atr_pct": 10.24277903123382
+        }
+      }
+    ]
+  },
+  "decision": {
+    "verdict": "FAILED_CONFIRMATION",
+    "supported_thresholds": [],
+    "reason": "The validation effect did not reproduce consistently at both frozen thresholds with supporting permutation evidence."
+  },
+  "cost_sensitivity": {
+    "status": "UNAVAILABLE_RELIABLE_EXECUTION_COST_HISTORY",
+    "reason": "No timestamp-aligned historical bid/ask or slippage series exists for the confirmation period; costs were not invented."
+  },
+  "integrity": {
+    "protected_hashes_before": {
+      "dataset_sha256": "35995f3d673b914cd4631e95f7abc13ee78acec89c12129edbc1b1d353bb4634",
+      "metadata_sha256": "f3a4667ffc2ca8b7dd1fddf0a44c842f0a871401b88f77c57e8e7aa25b79b042",
+      "endpoint_model_sha256": "6e30c834df78c6448a6987b9427e1a7ee0677eacaf15efd04e82a828d207f3b8",
+      "endpoint_report_sha256": "f0590c40956a7b041103933b3386dad04c94b53818b08955213e9e921d655bcd",
+      "frozen_activity_model_sha256": "03b3e332a145340c7b4dae96f2b65d3b20b71231504e70443cbef58acd0092bc",
+      "frozen_activity_report_sha256": "34a2999ff051e166273425e937944a412309240dd4743fd98534b71a833b783f",
+      "previous_activity_report_sha256": "0473081c6dff253d83a8ce17b571a5e72ecb42cd036a16370dac55fa4c491fc1"
+    },
+    "protected_hashes_after": {
+      "dataset_sha256": "35995f3d673b914cd4631e95f7abc13ee78acec89c12129edbc1b1d353bb4634",
+      "metadata_sha256": "f3a4667ffc2ca8b7dd1fddf0a44c842f0a871401b88f77c57e8e7aa25b79b042",
+      "endpoint_model_sha256": "6e30c834df78c6448a6987b9427e1a7ee0677eacaf15efd04e82a828d207f3b8",
+      "endpoint_report_sha256": "f0590c40956a7b041103933b3386dad04c94b53818b08955213e9e921d655bcd",
+      "frozen_activity_model_sha256": "03b3e332a145340c7b4dae96f2b65d3b20b71231504e70443cbef58acd0092bc",
+      "frozen_activity_report_sha256": "34a2999ff051e166273425e937944a412309240dd4743fd98534b71a833b783f",
+      "previous_activity_report_sha256": "0473081c6dff253d83a8ce17b571a5e72ecb42cd036a16370dac55fa4c491fc1"
+    },
+    "protected_artifacts_checked": 98,
+    "protected_artifacts_unchanged": true,
+    "frozen_model_loaded_not_retrained": true,
+    "frozen_model_hash_verified": true,
+    "frozen_feature_order_verified": true,
+    "deterministic_model_reload": true,
+    "exact_strategy_parameters_verified": true,
+    "only_strategies_evaluated": [
+      "unfiltered_ma_10_20",
+      "ma_10_20_activity_0.70",
+      "ma_10_20_activity_0.80"
+    ],
+    "prior_train_rows_reused_as_confirmation": 0,
+    "prior_validation_rows_reused_as_confirmation": 0,
+    "confirmation_target_labels_read": false,
+    "final_confirmation_tail_excluded": 5,
+    "all_features_precomputed_causally_at_or_before_entry": true,
+    "future_values_used_only_for_outcomes": true
+  }
+}

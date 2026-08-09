@@ -1,0 +1,3 @@
+model,roc_auc,balanced_accuracy,buy_recall,sell_recall,directional_macro_f1,confusion_matrix,confusion_matrix_labels,directional_rows,decision_rule,activity_auc
+first_passage_42f_control,0.49936062678464477,0.5084323934898648,0.17071094082588337,0.8461538461538461,0.4363368054785036,"[[1793, 326], [1948, 401]]","['SELL', 'BUY']",4468,BUY when P(BUY)/(P(BUY)+P(SELL)) >= 0.5; otherwise SELL,0.7382637804618457
+directional_context_60f,0.49953671810381495,0.5016830633500826,0.2515964240102171,0.7517697026899481,0.46173842318854036,"[[1593, 526], [1758, 591]]","['SELL', 'BUY']",4468,BUY when P(BUY)/(P(BUY)+P(SELL)) >= 0.5; otherwise SELL,0.7474758566288093

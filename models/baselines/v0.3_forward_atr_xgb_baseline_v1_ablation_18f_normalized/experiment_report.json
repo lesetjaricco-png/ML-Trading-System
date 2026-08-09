@@ -1,0 +1,536 @@
+{
+  "experiment_id": "v0.3_forward_atr_xgb_baseline_v1_ablation_18f_normalized",
+  "status": "completed",
+  "timestamp_utc": "2026-08-09T18:14:55.670233+00:00",
+  "runtime_seconds": 31.890761700007715,
+  "training_seconds": 7.133107799993013,
+  "cv_seconds": 23.76804589999665,
+  "features": [
+    "returns",
+    "returns_2",
+    "returns_5",
+    "returns_10",
+    "log_returns",
+    "high_low_ratio",
+    "close_open_ratio",
+    "rsi",
+    "bb_width",
+    "bb_pct",
+    "price_to_sma_10",
+    "price_to_sma_20",
+    "price_to_sma_50",
+    "price_to_sma_200",
+    "atr_pct",
+    "volatility_5",
+    "volatility_20",
+    "volume_ratio"
+  ],
+  "feature_source": "models\\baselines\\v0.3_forward_atr_xgb_baseline_v1_diagnostics\\diagnostic_report.json",
+  "model_parameters": {
+    "n_estimators": 500,
+    "max_depth": 6,
+    "learning_rate": 0.05,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "min_child_weight": 1,
+    "gamma": 0.1,
+    "reg_alpha": 0.1,
+    "reg_lambda": 1.0,
+    "random_state": 42,
+    "objective": "multi:softprob",
+    "eval_metric": "mlogloss",
+    "early_stopping": false
+  },
+  "boundaries": {
+    "train": [
+      0,
+      71917
+    ],
+    "validation": [
+      71917,
+      79908
+    ],
+    "test_start": 79908,
+    "validation_end_timestamp": "2025-10-02T12:00:00"
+  },
+  "data_access": {
+    "reader": "pyarrow.ParquetFile.iter_batches",
+    "batch_size": 79908,
+    "rows_exposed": 79908,
+    "last_exposed_timestamp": "2025-10-02T12:00:00",
+    "test_rows_exposed": 0,
+    "test_labels_exposed": false
+  },
+  "preprocessing": {
+    "type": "StandardScaler",
+    "fit_scope": "TRAIN only",
+    "scaler_n_samples_seen": 71917
+  },
+  "evaluation": {
+    "train": {
+      "accuracy": 0.6697164787185227,
+      "balanced_accuracy": 0.4837605353703556,
+      "macro_f1": 0.5035273818112027,
+      "per_class": {
+        "SELL": {
+          "precision": 0.8898207056101793,
+          "recall": 0.2101058381700239,
+          "f1": 0.3399436557476661,
+          "support": 14645
+        },
+        "BUY": {
+          "precision": 0.8299916457811195,
+          "recall": 0.2550869760575133,
+          "f1": 0.3902391122894879,
+          "support": 15579
+        },
+        "NO_TRADE": {
+          "precision": 0.6457099778549104,
+          "recall": 0.9860887918835296,
+          "f1": 0.7803993773964542,
+          "support": 41693
+        }
+      },
+      "confusion_matrix": [
+        [
+          3077,
+          443,
+          11125
+        ],
+        [
+          172,
+          3974,
+          11433
+        ],
+        [
+          209,
+          371,
+          41113
+        ]
+      ],
+      "confusion_matrix_labels": [
+        "SELL",
+        "BUY",
+        "NO_TRADE"
+      ],
+      "prediction_distribution": {
+        "SELL": {
+          "count": 3458,
+          "percentage": 4.8083207030326625
+        },
+        "BUY": {
+          "count": 4788,
+          "percentage": 6.657674819583686
+        },
+        "NO_TRADE": {
+          "count": 63671,
+          "percentage": 88.53400447738365
+        }
+      },
+      "directional": {
+        "accuracy_on_actual_buy_sell_rows": 0.23329142403388037,
+        "actual_directional_row_count": 30224,
+        "predicted_buy_sell_percentage": 11.46599552261635,
+        "predicted_no_trade_percentage": 88.53400447738366,
+        "buy_precision": 0.8299916457811195,
+        "buy_recall": 0.2550869760575133,
+        "sell_precision": 0.8898207056101793,
+        "sell_recall": 0.2101058381700239
+      }
+    },
+    "validation": {
+      "accuracy": 0.5856588662245026,
+      "balanced_accuracy": 0.36038206936585954,
+      "macro_f1": 0.3225147867269132,
+      "per_class": {
+        "SELL": {
+          "precision": 0.26936026936026936,
+          "recall": 0.05102040816326531,
+          "f1": 0.08579088471849866,
+          "support": 1568
+        },
+        "BUY": {
+          "precision": 0.3418013856812933,
+          "recall": 0.08690546095126248,
+          "f1": 0.13857677902621723,
+          "support": 1703
+        },
+        "NO_TRADE": {
+          "precision": 0.6131386861313869,
+          "recall": 0.9432203389830508,
+          "f1": 0.7431766964360237,
+          "support": 4720
+        }
+      },
+      "confusion_matrix": [
+        [
+          80,
+          132,
+          1356
+        ],
+        [
+          102,
+          148,
+          1453
+        ],
+        [
+          115,
+          153,
+          4452
+        ]
+      ],
+      "confusion_matrix_labels": [
+        "SELL",
+        "BUY",
+        "NO_TRADE"
+      ],
+      "prediction_distribution": {
+        "SELL": {
+          "count": 297,
+          "percentage": 3.716681266424728
+        },
+        "BUY": {
+          "count": 433,
+          "percentage": 5.4185959204104615
+        },
+        "NO_TRADE": {
+          "count": 7261,
+          "percentage": 90.8647228131648
+        }
+      },
+      "directional": {
+        "accuracy_on_actual_buy_sell_rows": 0.06970345460103944,
+        "actual_directional_row_count": 3271,
+        "predicted_buy_sell_percentage": 9.13527718683519,
+        "predicted_no_trade_percentage": 90.86472281316482,
+        "buy_precision": 0.3418013856812933,
+        "buy_recall": 0.08690546095126248,
+        "sell_precision": 0.26936026936026936,
+        "sell_recall": 0.05102040816326531
+      }
+    }
+  },
+  "gaps": {
+    "accuracy": 0.0840576124940201,
+    "balanced_accuracy": 0.12337846600449609,
+    "macro_f1": 0.18101259508428952
+  },
+  "cv": {
+    "scope": "TRAIN only",
+    "folds": [
+      {
+        "row_type": "fold",
+        "fold": 1,
+        "accuracy": 0.532037376939763,
+        "balanced_accuracy": 0.3786519855320642,
+        "macro_f1": 0.3724659740308893,
+        "buy_recall": 0.13228346456692913,
+        "scaler_fit_rows": 11987,
+        "train_first": "2022-05-16T04:45:00",
+        "train_last": "2022-11-15T04:45:00",
+        "validation_first": "2022-11-15T05:00:00",
+        "validation_last": "2023-05-22T04:45:00"
+      },
+      {
+        "row_type": "fold",
+        "fold": 2,
+        "accuracy": 0.5460537293509093,
+        "balanced_accuracy": 0.37228087236117097,
+        "macro_f1": 0.3553107813434249,
+        "buy_recall": 0.13588190764572294,
+        "scaler_fit_rows": 23973,
+        "train_first": "2022-05-16T04:45:00",
+        "train_last": "2023-05-22T04:45:00",
+        "validation_first": "2023-05-22T05:00:00",
+        "validation_last": "2023-11-21T09:00:00"
+      },
+      {
+        "row_type": "fold",
+        "fold": 3,
+        "accuracy": 0.5674119806440847,
+        "balanced_accuracy": 0.3810022822044297,
+        "macro_f1": 0.36958796134400335,
+        "buy_recall": 0.14663643235071808,
+        "scaler_fit_rows": 35959,
+        "train_first": "2022-05-16T04:45:00",
+        "train_last": "2023-11-21T09:00:00",
+        "validation_first": "2023-11-21T09:15:00",
+        "validation_last": "2024-05-27T06:45:00"
+      },
+      {
+        "row_type": "fold",
+        "fold": 4,
+        "accuracy": 0.586434173202069,
+        "balanced_accuracy": 0.3691221449768178,
+        "macro_f1": 0.3430299492935427,
+        "buy_recall": 0.11342229199372056,
+        "scaler_fit_rows": 47945,
+        "train_first": "2022-05-16T04:45:00",
+        "train_last": "2024-05-27T06:45:00",
+        "validation_first": "2024-05-27T07:00:00",
+        "validation_last": "2024-11-26T08:45:00"
+      },
+      {
+        "row_type": "fold",
+        "fold": 5,
+        "accuracy": 0.5733355581511764,
+        "balanced_accuracy": 0.35993136304894086,
+        "macro_f1": 0.3221278938556948,
+        "buy_recall": 0.08699122106943336,
+        "scaler_fit_rows": 59931,
+        "train_first": "2022-05-16T04:45:00",
+        "train_last": "2024-11-26T08:45:00",
+        "validation_first": "2024-11-26T09:00:00",
+        "validation_last": "2025-06-02T22:30:00"
+      }
+    ]
+  },
+  "feature_importance": [
+    {
+      "rank": 1,
+      "feature": "volume_ratio",
+      "importance": 0.1840217560529709
+    },
+    {
+      "rank": 2,
+      "feature": "atr_pct",
+      "importance": 0.06840261816978455
+    },
+    {
+      "rank": 3,
+      "feature": "high_low_ratio",
+      "importance": 0.06680316478013992
+    },
+    {
+      "rank": 4,
+      "feature": "volatility_20",
+      "importance": 0.053279802203178406
+    },
+    {
+      "rank": 5,
+      "feature": "price_to_sma_200",
+      "importance": 0.050244566053152084
+    },
+    {
+      "rank": 6,
+      "feature": "volatility_5",
+      "importance": 0.04942440241575241
+    },
+    {
+      "rank": 7,
+      "feature": "price_to_sma_50",
+      "importance": 0.04925176873803139
+    },
+    {
+      "rank": 8,
+      "feature": "price_to_sma_20",
+      "importance": 0.04864290729165077
+    },
+    {
+      "rank": 9,
+      "feature": "bb_width",
+      "importance": 0.04752323031425476
+    },
+    {
+      "rank": 10,
+      "feature": "price_to_sma_10",
+      "importance": 0.0458289310336113
+    },
+    {
+      "rank": 11,
+      "feature": "rsi",
+      "importance": 0.044916391372680664
+    },
+    {
+      "rank": 12,
+      "feature": "bb_pct",
+      "importance": 0.044428810477256775
+    },
+    {
+      "rank": 13,
+      "feature": "returns_10",
+      "importance": 0.0437985360622406
+    },
+    {
+      "rank": 14,
+      "feature": "close_open_ratio",
+      "importance": 0.04356372356414795
+    },
+    {
+      "rank": 15,
+      "feature": "returns_5",
+      "importance": 0.043317683041095734
+    },
+    {
+      "rank": 16,
+      "feature": "returns_2",
+      "importance": 0.039712145924568176
+    },
+    {
+      "rank": 17,
+      "feature": "log_returns",
+      "importance": 0.03873082995414734
+    },
+    {
+      "rank": 18,
+      "feature": "returns",
+      "importance": 0.038108762353658676
+    }
+  ],
+  "importance_concentration": {
+    "reference_42f": {
+      "top1_share": 0.3999711479998392,
+      "top2_share": 0.5100609690402409,
+      "hhi": 0.17905021537250945,
+      "normalized_entropy": 0.7277295383853459
+    },
+    "ablation_25f": {
+      "top1_share": 0.6463834968439386,
+      "top2_share": 0.7361443785501611,
+      "hhi": 0.42947402373947824,
+      "normalized_entropy": 0.5105302398919613
+    },
+    "normalized_18f": {
+      "top1_share": 0.18402175056869535,
+      "top2_share": 0.2524243666999231,
+      "hhi": 0.07417556840574646,
+      "normalized_entropy": 0.9611412920455343
+    }
+  },
+  "comparison": [
+    {
+      "metric": "Validation Accuracy",
+      "reference_42f": 0.5086972844450006,
+      "ablation_25f": 0.5915404830434239,
+      "normalized_18f": 0.5856588662245026,
+      "difference_18f_vs_42f": 0.07696158177950196,
+      "difference_18f_vs_25f": -0.005881616818921298
+    },
+    {
+      "metric": "Validation Balanced Accuracy",
+      "reference_42f": 0.40638999294792416,
+      "ablation_25f": 0.38903459621753894,
+      "normalized_18f": 0.36038206936585954,
+      "difference_18f_vs_42f": -0.046007923582064625,
+      "difference_18f_vs_25f": -0.028652526851679405
+    },
+    {
+      "metric": "Validation Macro F1",
+      "reference_42f": 0.36408925785314034,
+      "ablation_25f": 0.3720994583661921,
+      "normalized_18f": 0.3225147867269132,
+      "difference_18f_vs_42f": -0.04157447112622714,
+      "difference_18f_vs_25f": -0.04958467163927893
+    },
+    {
+      "metric": "BUY Recall",
+      "reference_42f": 0.042278332354668234,
+      "ablation_25f": 0.1638285378743394,
+      "normalized_18f": 0.08690546095126248,
+      "difference_18f_vs_42f": 0.04462712859659424,
+      "difference_18f_vs_25f": -0.07692307692307693
+    },
+    {
+      "metric": "SELL Recall",
+      "reference_42f": 0.4955357142857143,
+      "ablation_25f": 0.09119897959183673,
+      "normalized_18f": 0.05102040816326531,
+      "difference_18f_vs_42f": -0.444515306122449,
+      "difference_18f_vs_25f": -0.040178571428571425
+    },
+    {
+      "metric": "NO_TRADE Recall",
+      "reference_42f": 0.6813559322033899,
+      "ablation_25f": 0.9120762711864406,
+      "normalized_18f": 0.9432203389830508,
+      "difference_18f_vs_42f": 0.26186440677966094,
+      "difference_18f_vs_25f": 0.031144067796610164
+    },
+    {
+      "metric": "BUY Prediction %",
+      "reference_42f": 2.590414215992992,
+      "ablation_25f": 9.74846702540358,
+      "normalized_18f": 5.4185959204104615,
+      "difference_18f_vs_42f": 2.8281817044174695,
+      "difference_18f_vs_25f": -4.329871104993118
+    },
+    {
+      "metric": "SELL Prediction %",
+      "reference_42f": 37.98022775622575,
+      "ablation_25f": 6.0192716806407205,
+      "normalized_18f": 3.716681266424728,
+      "difference_18f_vs_42f": -34.26354648980102,
+      "difference_18f_vs_25f": -2.3025904142159925
+    },
+    {
+      "metric": "NO_TRADE Prediction %",
+      "reference_42f": 59.429358027781255,
+      "ablation_25f": 84.2322612939557,
+      "normalized_18f": 90.8647228131648,
+      "difference_18f_vs_42f": 31.43536478538355,
+      "difference_18f_vs_25f": 6.632461519209102
+    },
+    {
+      "metric": "TRAIN-VALIDATION Accuracy Gap",
+      "reference_42f": 0.23091921791188297,
+      "ablation_25f": 0.11309124519885538,
+      "normalized_18f": 0.0840576124940201,
+      "difference_18f_vs_42f": -0.14686160541786286,
+      "difference_18f_vs_25f": -0.029033632704835277
+    },
+    {
+      "metric": "TRAIN-VALIDATION Balanced Accuracy Gap",
+      "reference_42f": 0.19867241136173158,
+      "ablation_25f": 0.16167795679410818,
+      "normalized_18f": 0.12337846600449609,
+      "difference_18f_vs_42f": -0.07529394535723549,
+      "difference_18f_vs_25f": -0.03829949078961209
+    },
+    {
+      "metric": "TRAIN-VALIDATION Macro F1 Gap",
+      "reference_42f": 0.2857063034230794,
+      "ablation_25f": 0.21390208740836908,
+      "normalized_18f": 0.18101259508428952,
+      "difference_18f_vs_42f": -0.10469370833878988,
+      "difference_18f_vs_25f": -0.03288949232407956
+    },
+    {
+      "metric": "CV Mean Accuracy",
+      "reference_42f": 0.5380443851159686,
+      "ablation_25f": 0.5712164191556817,
+      "normalized_18f": 0.5610545636576005,
+      "difference_18f_vs_42f": 0.023010178541631898,
+      "difference_18f_vs_25f": -0.01016185549808113
+    },
+    {
+      "metric": "CV Mean Macro F1",
+      "reference_42f": 0.3860620848072621,
+      "ablation_25f": 0.39133585446055386,
+      "normalized_18f": 0.352504511973511,
+      "difference_18f_vs_42f": -0.033557572833751104,
+      "difference_18f_vs_25f": -0.03883134248704284
+    }
+  ],
+  "hypothesis": {
+    "verdict": "INCONCLUSIVE",
+    "reason": "Normalized/relative features show stable above-majority CV signal, but weak BUY/SELL recall and lower class-balanced holdout metrics prevent a clear conclusion."
+  },
+  "integrity": {
+    "dataset_sha256": "35995f3d673b914cd4631e95f7abc13ee78acec89c12129edbc1b1d353bb4634",
+    "metadata_sha256": "f3a4667ffc2ca8b7dd1fddf0a44c842f0a871401b88f77c57e8e7aa25b79b042",
+    "reference_model_sha256": "6e30c834df78c6448a6987b9427e1a7ee0677eacaf15efd04e82a828d207f3b8",
+    "ablation_25f_model_sha256": "045855f38925db37e5036d707863126558ab979e0b5351b8b1e7537e0b651e57",
+    "dataset_sha256_after": "35995f3d673b914cd4631e95f7abc13ee78acec89c12129edbc1b1d353bb4634",
+    "metadata_sha256_after": "f3a4667ffc2ca8b7dd1fddf0a44c842f0a871401b88f77c57e8e7aa25b79b042",
+    "reference_model_sha256_after": "6e30c834df78c6448a6987b9427e1a7ee0677eacaf15efd04e82a828d207f3b8",
+    "ablation_25f_model_sha256_after": "045855f38925db37e5036d707863126558ab979e0b5351b8b1e7537e0b651e57",
+    "dataset_unchanged": true,
+    "metadata_unchanged": true,
+    "reference_model_unchanged": true,
+    "ablation_25f_model_unchanged": true,
+    "test_labels_read": false,
+    "test_evaluated": false,
+    "reload_predictions_identical": true,
+    "reload_feature_order_preserved": true
+  }
+}

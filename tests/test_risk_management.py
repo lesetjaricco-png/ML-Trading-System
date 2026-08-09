@@ -5,6 +5,7 @@ from __future__ import annotations
 import pandas as pd
 import pytest
 
+from src.instruments import InstrumentSpec
 from src.risk_management import RiskManager, Trade
 
 
@@ -28,10 +29,26 @@ class TestRiskManager:
         qty = self.rm.calculate_position_size(100_000, 100.0, atr=1.0)
         assert qty > 0
 
-    def test_position_size_no_over_allocation(self):
-        qty = self.rm.calculate_position_size(1_000, 200.0)
-        cost = qty * 200.0
-        assert cost <= 1_000 * 0.1 + 1  # within max_position_size (+1 rounding)
+    def test_position_size_uses_risk_amount_and_instrument_spec(self):
+        spec = InstrumentSpec(symbol="US30", point_size=0.01, tick_size=0.01, tick_value=1.0)
+        qty = self.rm.calculate_position_size(
+            100_000,
+            100.0,
+            instrument_spec=spec,
+            stop_loss_points=20,
+        )
+        assert qty == pytest.approx(0.1)
+
+    def test_position_size_respects_absolute_max_position_size(self):
+        spec = InstrumentSpec(symbol="US30", point_size=0.01, tick_size=0.01, tick_value=1.0)
+        rm = RiskManager(max_position_size=0.1, risk_per_trade=0.01)
+        qty = rm.calculate_position_size(
+            100_000,
+            100.0,
+            instrument_spec=spec,
+            stop_loss_points=20,
+        )
+        assert qty <= 0.1
 
     def test_stop_loss_price(self):
         sl = self.rm.calculate_stop_loss(100.0)

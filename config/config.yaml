@@ -1,9 +1,12 @@
+# Active experiment: V0.3 forward-looking ATR target
+# Historical V0.1/V0.2 configs are preserved in config/config_v01.yaml and config/config_v02.yaml.
 data:
   ticker: "US30"
-  start_date: "2024-01-01"
+  start_date: "2022-05-12"
   end_date: "current"
   interval: "15m"
   source: "mt5"
+  use_cache: true
 
 features:
   rsi_period: 14
@@ -34,15 +37,23 @@ model:
   validation_size: 0.1
 
 signal:
-  prediction_threshold: 0.45
+  prediction_threshold: 0.55
+  buy_threshold: 0.70
+  sell_threshold: 0.70
+
+experiment:
+  target_mode: "v0.3_forward_atr"
+  signal_mode: "v0.3_forward_atr"
 
 target:
-  type: "tp_before_sl"
+  type: "forward_atr"
   take_profit_points: 100
   stop_loss_points: 20
   max_bars: 40
-  same_bar_rule: "drop"
+  same_bar_rule: "conservative_sl"
   unresolved_policy: "drop"
+  forward_horizon: 5
+  atr_threshold_multiplier: 1.0
 
 instruments:
   US30:

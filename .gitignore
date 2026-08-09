@@ -18,11 +18,22 @@ build/
 # Data files (potentially large)
 data/raw/*.parquet
 data/raw/*.csv
-data/processed/
+data/processed/*.parquet
+data/processed/*.csv
+data/context/**/*.parquet
 !data/raw/US30_2026-01-01_2026-08-08_15m_mt5.parquet
 
 # Saved models
 models/*.joblib
+models/**/*.joblib
+
+# Regenerable row-level experiment artifacts
+models/**/*.parquet
+models/**/target_audit.csv
+models/**/target_boundary_rows.csv
+
+# One-off local probes
+tmp_*.py
 
 # Logs
 logs/

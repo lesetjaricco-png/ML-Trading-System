@@ -1,0 +1,5 @@
+family,rows,matched_rows,max_source_age_minutes,future_observations
+h1,79908,79364,345.0,0
+h4,79908,75060,945.0,0
+US500,79908,79908,15.0,0
+USTEC,79908,79908,15.0,0

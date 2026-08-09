@@ -1,0 +1,867 @@
+{
+  "diagnostic_id": "v0.3_forward_atr_xgb_baseline_v1_directional_signal_diagnostic_v1",
+  "status": "completed",
+  "generated_at_utc": "2026-08-09T18:30:48.418546+00:00",
+  "runtime_seconds": 5.621017299999949,
+  "mode": "read-only; loaded existing models; no fitting, tuning, or target changes",
+  "target_definition": "At candle close t, compare Close[t+h]/Close[t]-1 with +/- atr_threshold_multiplier * ATR[t]/Close[t]. 1=BUY, 0=SELL, 2=NO_TRADE; a complete h-bar horizon is required.",
+  "data_access": {
+    "reader": "pyarrow.ParquetFile.iter_batches",
+    "batch_size": 79908,
+    "rows_exposed": 79908,
+    "last_exposed_timestamp": "2025-10-02T12:00:00",
+    "test_rows_exposed": 0,
+    "test_labels_exposed": false
+  },
+  "class_distribution": {
+    "train": [
+      {
+        "class": "SELL",
+        "count": 14645,
+        "percentage": 20.3637526593156
+      },
+      {
+        "class": "BUY",
+        "count": 15579,
+        "percentage": 21.662472016352183
+      },
+      {
+        "class": "NO_TRADE",
+        "count": 41693,
+        "percentage": 57.973775324332216
+      }
+    ],
+    "validation": [
+      {
+        "class": "SELL",
+        "count": 1568,
+        "percentage": 19.622074834188464
+      },
+      {
+        "class": "BUY",
+        "count": 1703,
+        "percentage": 21.311475409836067
+      },
+      {
+        "class": "NO_TRADE",
+        "count": 4720,
+        "percentage": 59.06644975597547
+      }
+    ]
+  },
+  "majority_baseline": {
+    "accuracy": 0.5906644975597547,
+    "balanced_accuracy": 0.3333333333333333,
+    "macro_f1": 0.24755461149135918,
+    "per_class": {
+      "SELL": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1568
+      },
+      "BUY": {
+        "precision": 0.0,
+        "recall": 0.0,
+        "f1": 0.0,
+        "support": 1703
+      },
+      "NO_TRADE": {
+        "precision": 0.5906644975597547,
+        "recall": 1.0,
+        "f1": 0.7426638344740776,
+        "support": 4720
+      }
+    },
+    "confusion_matrix": [
+      [
+        0,
+        0,
+        1568
+      ],
+      [
+        0,
+        0,
+        1703
+      ],
+      [
+        0,
+        0,
+        4720
+      ]
+    ],
+    "confusion_matrix_labels": [
+      "SELL",
+      "BUY",
+      "NO_TRADE"
+    ],
+    "prediction_distribution": {
+      "SELL": {
+        "count": 0,
+        "percentage": 0.0
+      },
+      "BUY": {
+        "count": 0,
+        "percentage": 0.0
+      },
+      "NO_TRADE": {
+        "count": 7991,
+        "percentage": 100.0
+      }
+    },
+    "directional": {
+      "accuracy_on_actual_buy_sell_rows": 0.0,
+      "actual_directional_row_count": 3271,
+      "predicted_buy_sell_percentage": 0.0,
+      "predicted_no_trade_percentage": 100.0,
+      "buy_precision": 0.0,
+      "buy_recall": 0.0,
+      "sell_precision": 0.0,
+      "sell_recall": 0.0
+    }
+  },
+  "saved_model_validation": {
+    "reference_42f": {
+      "multiclass": {
+        "accuracy": 0.5086972844450006,
+        "balanced_accuracy": 0.40638999294792416,
+        "macro_f1": 0.36408925785314034,
+        "per_class": {
+          "SELL": {
+            "precision": 0.2560131795716639,
+            "recall": 0.4955357142857143,
+            "f1": 0.33760590918965894,
+            "support": 1568
+          },
+          "BUY": {
+            "precision": 0.34782608695652173,
+            "recall": 0.042278332354668234,
+            "f1": 0.07539267015706806,
+            "support": 1703
+          },
+          "NO_TRADE": {
+            "precision": 0.677195198989261,
+            "recall": 0.6813559322033899,
+            "f1": 0.679269194212694,
+            "support": 4720
+          }
+        },
+        "confusion_matrix": [
+          [
+            777,
+            65,
+            726
+          ],
+          [
+            824,
+            72,
+            807
+          ],
+          [
+            1434,
+            70,
+            3216
+          ]
+        ],
+        "confusion_matrix_labels": [
+          "SELL",
+          "BUY",
+          "NO_TRADE"
+        ],
+        "prediction_distribution": {
+          "SELL": {
+            "count": 3035,
+            "percentage": 37.98022775622575
+          },
+          "BUY": {
+            "count": 207,
+            "percentage": 2.590414215992992
+          },
+          "NO_TRADE": {
+            "count": 4749,
+            "percentage": 59.429358027781255
+          }
+        },
+        "directional": {
+          "accuracy_on_actual_buy_sell_rows": 0.25955365331702845,
+          "actual_directional_row_count": 3271,
+          "predicted_buy_sell_percentage": 40.570641972218745,
+          "predicted_no_trade_percentage": 59.429358027781255,
+          "buy_precision": 0.34782608695652173,
+          "buy_recall": 0.042278332354668234,
+          "sell_precision": 0.2560131795716639,
+          "sell_recall": 0.4955357142857143
+        }
+      },
+      "directional_filter": {
+        "accuracy": 0.6199474408709799,
+        "balanced_accuracy": 0.6063459575416216,
+        "precision": 0.5360888340530536,
+        "recall": 0.5313359828798533,
+        "f1": 0.5337018271150008,
+        "roc_auc": 0.6689584639539041
+      },
+      "buy_vs_sell_on_actual_directional": {
+        "accuracy": 0.48150412717823293,
+        "balanced_accuracy": 0.5004121253610075,
+        "precision": 0.5255474452554745,
+        "recall": 0.042278332354668234,
+        "f1": 0.0782608695652174,
+        "roc_auc": 0.5129618200774144,
+        "actual_directional_rows": 3271
+      },
+      "emitted_trade_quality": {
+        "emitted_rows": 3242,
+        "emitted_percentage": 40.570641972218745,
+        "correct_direction_count": 849,
+        "correct_direction_precision": 0.2618753855644664
+      }
+    },
+    "ablation_25f": {
+      "multiclass": {
+        "accuracy": 0.5915404830434239,
+        "balanced_accuracy": 0.38903459621753894,
+        "macro_f1": 0.3720994583661921,
+        "per_class": {
+          "SELL": {
+            "precision": 0.2972972972972973,
+            "recall": 0.09119897959183673,
+            "f1": 0.13958028306490972,
+            "support": 1568
+          },
+          "BUY": {
+            "precision": 0.3581514762516046,
+            "recall": 0.1638285378743394,
+            "f1": 0.22481869460112813,
+            "support": 1703
+          },
+          "NO_TRADE": {
+            "precision": 0.6395780716089734,
+            "recall": 0.9120762711864406,
+            "f1": 0.7518993974325386,
+            "support": 4720
+          }
+        },
+        "confusion_matrix": [
+          [
+            143,
+            251,
+            1174
+          ],
+          [
+            172,
+            279,
+            1252
+          ],
+          [
+            166,
+            249,
+            4305
+          ]
+        ],
+        "confusion_matrix_labels": [
+          "SELL",
+          "BUY",
+          "NO_TRADE"
+        ],
+        "prediction_distribution": {
+          "SELL": {
+            "count": 481,
+            "percentage": 6.0192716806407205
+          },
+          "BUY": {
+            "count": 779,
+            "percentage": 9.74846702540358
+          },
+          "NO_TRADE": {
+            "count": 6731,
+            "percentage": 84.2322612939557
+          }
+        },
+        "directional": {
+          "accuracy_on_actual_buy_sell_rows": 0.12901253439315194,
+          "actual_directional_row_count": 3271,
+          "predicted_buy_sell_percentage": 15.767738706044298,
+          "predicted_no_trade_percentage": 84.2322612939557,
+          "buy_precision": 0.3581514762516046,
+          "buy_recall": 0.1638285378743394,
+          "sell_precision": 0.2972972972972973,
+          "sell_recall": 0.09119897959183673
+        }
+      },
+      "directional_filter": {
+        "accuracy": 0.6444750344137155,
+        "balanced_accuracy": 0.5852035284394447,
+        "precision": 0.6706349206349206,
+        "recall": 0.25833078569244877,
+        "f1": 0.372986095784595,
+        "roc_auc": 0.7011527859100778
+      },
+      "buy_vs_sell_on_actual_directional": {
+        "accuracy": 0.48792418220727607,
+        "balanced_accuracy": 0.5018760036310472,
+        "precision": 0.5264150943396226,
+        "recall": 0.1638285378743394,
+        "f1": 0.24988804299149125,
+        "roc_auc": 0.51636723758793,
+        "actual_directional_rows": 3271
+      },
+      "emitted_trade_quality": {
+        "emitted_rows": 1260,
+        "emitted_percentage": 15.767738706044298,
+        "correct_direction_count": 422,
+        "correct_direction_precision": 0.3349206349206349
+      }
+    },
+    "normalized_18f": {
+      "multiclass": {
+        "accuracy": 0.5856588662245026,
+        "balanced_accuracy": 0.36038206936585954,
+        "macro_f1": 0.3225147867269132,
+        "per_class": {
+          "SELL": {
+            "precision": 0.26936026936026936,
+            "recall": 0.05102040816326531,
+            "f1": 0.08579088471849866,
+            "support": 1568
+          },
+          "BUY": {
+            "precision": 0.3418013856812933,
+            "recall": 0.08690546095126248,
+            "f1": 0.13857677902621723,
+            "support": 1703
+          },
+          "NO_TRADE": {
+            "precision": 0.6131386861313869,
+            "recall": 0.9432203389830508,
+            "f1": 0.7431766964360237,
+            "support": 4720
+          }
+        },
+        "confusion_matrix": [
+          [
+            80,
+            132,
+            1356
+          ],
+          [
+            102,
+            148,
+            1453
+          ],
+          [
+            115,
+            153,
+            4452
+          ]
+        ],
+        "confusion_matrix_labels": [
+          "SELL",
+          "BUY",
+          "NO_TRADE"
+        ],
+        "prediction_distribution": {
+          "SELL": {
+            "count": 297,
+            "percentage": 3.716681266424728
+          },
+          "BUY": {
+            "count": 433,
+            "percentage": 5.4185959204104615
+          },
+          "NO_TRADE": {
+            "count": 7261,
+            "percentage": 90.8647228131648
+          }
+        },
+        "directional": {
+          "accuracy_on_actual_buy_sell_rows": 0.06970345460103944,
+          "actual_directional_row_count": 3271,
+          "predicted_buy_sell_percentage": 9.13527718683519,
+          "predicted_no_trade_percentage": 90.86472281316482,
+          "buy_precision": 0.3418013856812933,
+          "buy_recall": 0.08690546095126248,
+          "sell_precision": 0.26936026936026936,
+          "sell_recall": 0.05102040816326531
+        }
+      },
+      "directional_filter": {
+        "accuracy": 0.6149418095357277,
+        "balanced_accuracy": 0.5422307748109996,
+        "precision": 0.6328767123287671,
+        "recall": 0.14124121063894834,
+        "f1": 0.23094226443389151,
+        "roc_auc": 0.6644583693889289
+      },
+      "buy_vs_sell_on_actual_directional": {
+        "accuracy": 0.48425557933353713,
+        "balanced_accuracy": 0.5013608937409374,
+        "precision": 0.5285714285714286,
+        "recall": 0.08690546095126248,
+        "f1": 0.14926878466969237,
+        "roc_auc": 0.5091588822845639,
+        "actual_directional_rows": 3271
+      },
+      "emitted_trade_quality": {
+        "emitted_rows": 730,
+        "emitted_percentage": 9.13527718683519,
+        "correct_direction_count": 228,
+        "correct_direction_precision": 0.31232876712328766
+      }
+    }
+  },
+  "model_comparison": [
+    {
+      "model": "majority_no_trade",
+      "accuracy": 0.5906644975597547,
+      "balanced_accuracy": 0.3333333333333333,
+      "macro_f1": 0.24755461149135918,
+      "sell_precision": 0.0,
+      "sell_recall": 0.0,
+      "buy_precision": 0.0,
+      "buy_recall": 0.0,
+      "no_trade_precision": 0.5906644975597547,
+      "no_trade_recall": 1.0,
+      "sell_prediction_pct": 0.0,
+      "buy_prediction_pct": 0.0,
+      "no_trade_prediction_pct": 100.0,
+      "filter_roc_auc": null,
+      "direction_roc_auc": null,
+      "emitted_trade_precision": null
+    },
+    {
+      "model": "reference_42f",
+      "accuracy": 0.5086972844450006,
+      "balanced_accuracy": 0.40638999294792416,
+      "macro_f1": 0.36408925785314034,
+      "sell_precision": 0.2560131795716639,
+      "sell_recall": 0.4955357142857143,
+      "buy_precision": 0.34782608695652173,
+      "buy_recall": 0.042278332354668234,
+      "no_trade_precision": 0.677195198989261,
+      "no_trade_recall": 0.6813559322033899,
+      "sell_prediction_pct": 37.98022775622575,
+      "buy_prediction_pct": 2.590414215992992,
+      "no_trade_prediction_pct": 59.429358027781255,
+      "filter_roc_auc": 0.6689584639539041,
+      "direction_roc_auc": 0.5129618200774144,
+      "emitted_trade_precision": 0.2618753855644664
+    },
+    {
+      "model": "ablation_25f",
+      "accuracy": 0.5915404830434239,
+      "balanced_accuracy": 0.38903459621753894,
+      "macro_f1": 0.3720994583661921,
+      "sell_precision": 0.2972972972972973,
+      "sell_recall": 0.09119897959183673,
+      "buy_precision": 0.3581514762516046,
+      "buy_recall": 0.1638285378743394,
+      "no_trade_precision": 0.6395780716089734,
+      "no_trade_recall": 0.9120762711864406,
+      "sell_prediction_pct": 6.0192716806407205,
+      "buy_prediction_pct": 9.74846702540358,
+      "no_trade_prediction_pct": 84.2322612939557,
+      "filter_roc_auc": 0.7011527859100778,
+      "direction_roc_auc": 0.51636723758793,
+      "emitted_trade_precision": 0.3349206349206349
+    },
+    {
+      "model": "normalized_18f",
+      "accuracy": 0.5856588662245026,
+      "balanced_accuracy": 0.36038206936585954,
+      "macro_f1": 0.3225147867269132,
+      "sell_precision": 0.26936026936026936,
+      "sell_recall": 0.05102040816326531,
+      "buy_precision": 0.3418013856812933,
+      "buy_recall": 0.08690546095126248,
+      "no_trade_precision": 0.6131386861313869,
+      "no_trade_recall": 0.9432203389830508,
+      "sell_prediction_pct": 3.716681266424728,
+      "buy_prediction_pct": 5.4185959204104615,
+      "no_trade_prediction_pct": 90.8647228131648,
+      "filter_roc_auc": 0.6644583693889289,
+      "direction_roc_auc": 0.5091588822845639,
+      "emitted_trade_precision": 0.31232876712328766
+    }
+  ],
+  "feature_separation_summary": [
+    {
+      "split": "train",
+      "comparison": "BUY_vs_NO_TRADE",
+      "median_ks": 0.05037172524680558,
+      "max_ks": 0.29821389046189817,
+      "features_ks_at_least_0_1": 10,
+      "median_absolute_median_iqr_effect": 0.035265916454455336,
+      "top_features": [
+        {
+          "feature": "is_asia_session",
+          "ks_statistic": 0.29821389046189817,
+          "absolute_median_iqr_effect": 0.0
+        },
+        {
+          "feature": "hour_of_day",
+          "ks_statistic": 0.29821389046189817,
+          "absolute_median_iqr_effect": 0.3076923076923077
+        },
+        {
+          "feature": "volume_ratio",
+          "ks_statistic": 0.25469217223249474,
+          "absolute_median_iqr_effect": 0.3877006978903278
+        },
+        {
+          "feature": "is_new_york_session",
+          "ks_statistic": 0.2336740318574274,
+          "absolute_median_iqr_effect": 0.0
+        },
+        {
+          "feature": "is_london_session",
+          "ks_statistic": 0.21511781946453779,
+          "absolute_median_iqr_effect": 0.0
+        }
+      ]
+    },
+    {
+      "split": "train",
+      "comparison": "SELL_vs_NO_TRADE",
+      "median_ks": 0.04957934772318462,
+      "max_ks": 0.2877896627167069,
+      "features_ks_at_least_0_1": 6,
+      "median_absolute_median_iqr_effect": 0.038106369289387425,
+      "top_features": [
+        {
+          "feature": "hour_of_day",
+          "ks_statistic": 0.2877896627167069,
+          "absolute_median_iqr_effect": 0.3076923076923077
+        },
+        {
+          "feature": "is_asia_session",
+          "ks_statistic": 0.2877896627167068,
+          "absolute_median_iqr_effect": 0.0
+        },
+        {
+          "feature": "volume_ratio",
+          "ks_statistic": 0.23876400452913074,
+          "absolute_median_iqr_effect": 0.37583401769125657
+        },
+        {
+          "feature": "is_new_york_session",
+          "ks_statistic": 0.22929173303271244,
+          "absolute_median_iqr_effect": 0.0
+        },
+        {
+          "feature": "is_london_session",
+          "ks_statistic": 0.22108500954197896,
+          "absolute_median_iqr_effect": 0.0
+        }
+      ]
+    },
+    {
+      "split": "train",
+      "comparison": "BUY_vs_SELL",
+      "median_ks": 0.01496974933055771,
+      "max_ks": 0.02508011513516134,
+      "features_ks_at_least_0_1": 0,
+      "median_absolute_median_iqr_effect": 0.008787426280818687,
+      "top_features": [
+        {
+          "feature": "upper_shadow",
+          "ks_statistic": 0.02508011513516134,
+          "absolute_median_iqr_effect": 0.03327137747307016
+        },
+        {
+          "feature": "bb_pct",
+          "ks_statistic": 0.023078422904343587,
+          "absolute_median_iqr_effect": 0.03692657924653808
+        },
+        {
+          "feature": "macd",
+          "ks_statistic": 0.02293483158152676,
+          "absolute_median_iqr_effect": 0.02847613475066268
+        },
+        {
+          "feature": "price_to_sma_10",
+          "ks_statistic": 0.022717145716045772,
+          "absolute_median_iqr_effect": 0.02735008423077118
+        },
+        {
+          "feature": "macd_hist",
+          "ks_statistic": 0.0225111536831486,
+          "absolute_median_iqr_effect": 0.028224466521256868
+        }
+      ]
+    },
+    {
+      "split": "validation",
+      "comparison": "BUY_vs_NO_TRADE",
+      "median_ks": 0.06881052380146702,
+      "max_ks": 0.24660768135991318,
+      "features_ks_at_least_0_1": 8,
+      "median_absolute_median_iqr_effect": 0.07928005422339461,
+      "top_features": [
+        {
+          "feature": "is_asia_session",
+          "ks_statistic": 0.24660768135991318,
+          "absolute_median_iqr_effect": 0.0
+        },
+        {
+          "feature": "hour_of_day",
+          "ks_statistic": 0.24660768135991318,
+          "absolute_median_iqr_effect": 0.25
+        },
+        {
+          "feature": "volume_ratio",
+          "ks_statistic": 0.24466805836161504,
+          "absolute_median_iqr_effect": 0.4501251149013872
+        },
+        {
+          "feature": "is_new_york_session",
+          "ks_statistic": 0.21458418344496744,
+          "absolute_median_iqr_effect": 0.0
+        },
+        {
+          "feature": "is_london_session",
+          "ks_statistic": 0.18503712292365415,
+          "absolute_median_iqr_effect": 0.0
+        }
+      ]
+    },
+    {
+      "split": "validation",
+      "comparison": "SELL_vs_NO_TRADE",
+      "median_ks": 0.03968890522310619,
+      "max_ks": 0.22122319266689733,
+      "features_ks_at_least_0_1": 10,
+      "median_absolute_median_iqr_effect": 0.03802726929503143,
+      "top_features": [
+        {
+          "feature": "volume_ratio",
+          "ks_statistic": 0.22122319266689733,
+          "absolute_median_iqr_effect": 0.3849280236342093
+        },
+        {
+          "feature": "hour_of_day",
+          "ks_statistic": 0.21652758561051538,
+          "absolute_median_iqr_effect": 0.15384615384615385
+        },
+        {
+          "feature": "is_asia_session",
+          "ks_statistic": 0.21652758561051533,
+          "absolute_median_iqr_effect": 0.0
+        },
+        {
+          "feature": "is_london_session",
+          "ks_statistic": 0.1882199066067105,
+          "absolute_median_iqr_effect": 0.0
+        },
+        {
+          "feature": "is_new_york_session",
+          "ks_statistic": 0.18754756139744033,
+          "absolute_median_iqr_effect": 0.0
+        }
+      ]
+    },
+    {
+      "split": "validation",
+      "comparison": "BUY_vs_SELL",
+      "median_ks": 0.05137710912315603,
+      "max_ks": 0.09855844128608576,
+      "features_ks_at_least_0_1": 0,
+      "median_absolute_median_iqr_effect": 0.05621585764069318,
+      "top_features": [
+        {
+          "feature": "sma_200",
+          "ks_statistic": 0.09855844128608576,
+          "absolute_median_iqr_effect": 0.1278165782351169
+        },
+        {
+          "feature": "price_to_sma_200",
+          "ks_statistic": 0.09118886838352491,
+          "absolute_median_iqr_effect": 0.13423978163164588
+        },
+        {
+          "feature": "sma_50",
+          "ks_statistic": 0.0880513978932736,
+          "absolute_median_iqr_effect": 0.11489484789134456
+        },
+        {
+          "feature": "bb_upper",
+          "ks_statistic": 0.08443870061236475,
+          "absolute_median_iqr_effect": 0.1228561531973595
+        },
+        {
+          "feature": "sma_20",
+          "ks_statistic": 0.08133156374704903,
+          "absolute_median_iqr_effect": 0.11953249724671429
+        }
+      ]
+    }
+  ],
+  "feature_families": {
+    "session_time": [
+      "day_of_week",
+      "is_weekend",
+      "hour_of_day",
+      "is_market_open",
+      "is_asia_session",
+      "is_london_session",
+      "is_new_york_session"
+    ],
+    "normalized_relative": [
+      "returns",
+      "returns_2",
+      "returns_5",
+      "returns_10",
+      "log_returns",
+      "high_low_ratio",
+      "close_open_ratio",
+      "rsi",
+      "bb_width",
+      "bb_pct",
+      "price_to_sma_10",
+      "price_to_sma_20",
+      "price_to_sma_50",
+      "price_to_sma_200",
+      "atr_pct",
+      "volatility_5",
+      "volatility_20",
+      "volume_ratio"
+    ],
+    "price_level_or_scale_dependent": [
+      "macd",
+      "macd_signal",
+      "macd_hist",
+      "bb_upper",
+      "bb_lower",
+      "sma_10",
+      "sma_20",
+      "sma_50",
+      "sma_200",
+      "ema_12",
+      "ema_26",
+      "atr",
+      "volume_sma",
+      "obv",
+      "body_size",
+      "upper_shadow",
+      "lower_shadow"
+    ]
+  },
+  "loaded_feature_order": {
+    "reference_42f": [
+      "returns",
+      "returns_2",
+      "returns_5",
+      "returns_10",
+      "log_returns",
+      "high_low_ratio",
+      "close_open_ratio",
+      "rsi",
+      "macd",
+      "macd_signal",
+      "macd_hist",
+      "bb_upper",
+      "bb_lower",
+      "bb_width",
+      "bb_pct",
+      "sma_10",
+      "sma_20",
+      "sma_50",
+      "sma_200",
+      "ema_12",
+      "ema_26",
+      "price_to_sma_10",
+      "price_to_sma_20",
+      "price_to_sma_50",
+      "price_to_sma_200",
+      "atr",
+      "atr_pct",
+      "volatility_5",
+      "volatility_20",
+      "volume_sma",
+      "volume_ratio",
+      "obv",
+      "body_size",
+      "upper_shadow",
+      "lower_shadow",
+      "day_of_week",
+      "is_weekend",
+      "hour_of_day",
+      "is_market_open",
+      "is_asia_session",
+      "is_london_session",
+      "is_new_york_session"
+    ],
+    "ablation_25f": [
+      "returns",
+      "returns_2",
+      "returns_5",
+      "returns_10",
+      "log_returns",
+      "high_low_ratio",
+      "close_open_ratio",
+      "rsi",
+      "bb_width",
+      "bb_pct",
+      "price_to_sma_10",
+      "price_to_sma_20",
+      "price_to_sma_50",
+      "price_to_sma_200",
+      "atr_pct",
+      "volatility_5",
+      "volatility_20",
+      "volume_ratio",
+      "day_of_week",
+      "is_weekend",
+      "hour_of_day",
+      "is_market_open",
+      "is_asia_session",
+      "is_london_session",
+      "is_new_york_session"
+    ],
+    "normalized_18f": [
+      "returns",
+      "returns_2",
+      "returns_5",
+      "returns_10",
+      "log_returns",
+      "high_low_ratio",
+      "close_open_ratio",
+      "rsi",
+      "bb_width",
+      "bb_pct",
+      "price_to_sma_10",
+      "price_to_sma_20",
+      "price_to_sma_50",
+      "price_to_sma_200",
+      "atr_pct",
+      "volatility_5",
+      "volatility_20",
+      "volume_ratio"
+    ]
+  },
+  "conclusion": {
+    "verdict": "FILTER_ONLY_SIGNAL",
+    "answer": "NO_TRADE dominance is primarily a learnable activity filter; the current target/features do not provide sufficient BUY/SELL direction signal.",
+    "evidence": "Best filter AUC=0.7012, best BUY-vs-SELL AUC=0.5164, best validation BUY/SELL recall=0.1638/0.4955, validation median BUY-vs-SELL feature KS=0.0514."
+  },
+  "integrity": {
+    "before": {
+      "dataset_sha256": "35995f3d673b914cd4631e95f7abc13ee78acec89c12129edbc1b1d353bb4634",
+      "metadata_sha256": "f3a4667ffc2ca8b7dd1fddf0a44c842f0a871401b88f77c57e8e7aa25b79b042",
+      "reference_42f_model_sha256": "6e30c834df78c6448a6987b9427e1a7ee0677eacaf15efd04e82a828d207f3b8",
+      "ablation_25f_model_sha256": "045855f38925db37e5036d707863126558ab979e0b5351b8b1e7537e0b651e57",
+      "normalized_18f_model_sha256": "ce5e527e084cd71c01819f3dabef0502af7b146f1496e1cae45e01986a3d4729"
+    },
+    "after": {
+      "dataset_sha256": "35995f3d673b914cd4631e95f7abc13ee78acec89c12129edbc1b1d353bb4634",
+      "metadata_sha256": "f3a4667ffc2ca8b7dd1fddf0a44c842f0a871401b88f77c57e8e7aa25b79b042",
+      "reference_42f_model_sha256": "6e30c834df78c6448a6987b9427e1a7ee0677eacaf15efd04e82a828d207f3b8",
+      "ablation_25f_model_sha256": "045855f38925db37e5036d707863126558ab979e0b5351b8b1e7537e0b651e57",
+      "normalized_18f_model_sha256": "ce5e527e084cd71c01819f3dabef0502af7b146f1496e1cae45e01986a3d4729"
+    },
+    "all_protected_artifacts_unchanged": true,
+    "test_rows_exposed": 0,
+    "test_labels_read": false,
+    "test_evaluated": false
+  }
+}

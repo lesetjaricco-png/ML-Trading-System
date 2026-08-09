@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import math
 from dataclasses import dataclass, field
 from typing import Optional
 
@@ -26,6 +27,12 @@ class Trade:
     take_profit_price: float = 0.0
     pnl: float = 0.0
     return_pct: float = 0.0
+    gross_pnl: float = 0.0
+    commission: float = 0.0
+    slippage: float = 0.0
+    net_pnl: float = 0.0
+    entry_fill_price: float = 0.0
+    exit_fill_price: float = 0.0
     exit_reason: str = ""
 
 
@@ -65,21 +72,55 @@ class RiskManager:
         portfolio_value: float,
         entry_price: float,
         atr: Optional[float] = None,
+        instrument_spec: Optional[object] = None,
+        stop_loss_points: int = 20,
     ) -> float:
-        """Return the number of shares to buy.
+        """Return the position size in contract/lot units.
 
-        If *atr* is provided the position is ATR-based; otherwise a flat
-        ``risk_per_trade`` fraction is used.
-
-        Parameters
-        ----------
-        portfolio_value:
-            Current total portfolio value in dollars.
-        entry_price:
-            Intended entry price per share.
-        atr:
-            Average True Range value at entry (optional).
+        When an instrument specification is provided, the size is derived from
+        the configured risk-per-trade fraction and the monetary loss of the
+        configured stop-loss distance. The result is capped by the configured
+        maximum position size.
         """
+        if portfolio_value <= 0 or entry_price <= 0:
+            return 0.0
+
+        if instrument_spec is not None:
+            risk_amount = portfolio_value * self.risk_per_trade
+            point_size = getattr(instrument_spec, "effective_point_size", lambda: getattr(instrument_spec, "point_size", 0.01))()
+            point_size = float(point_size or 0.01)
+            stop_distance = max(float(stop_loss_points) * point_size, 1e-9)
+            tick_value = getattr(instrument_spec, "tick_value", None)
+            contract_size = getattr(instrument_spec, "contract_size", None)
+            monetary_loss_per_unit = None
+            if tick_value is not None and tick_value > 0:
+                monetary_loss_per_unit = stop_distance * float(tick_value)
+            elif contract_size is not None and contract_size > 0:
+                monetary_loss_per_unit = stop_distance * float(contract_size)
+            else:
+                monetary_loss_per_unit = stop_distance * float(entry_price)
+
+            if monetary_loss_per_unit is None or monetary_loss_per_unit <= 0:
+                return 0.0
+
+            raw_size = risk_amount / monetary_loss_per_unit
+            size = float(raw_size)
+            max_allowed = float(self.max_position_size)
+            if max_allowed <= 0:
+                return 0.0
+
+            volume_min = getattr(instrument_spec, "volume_min", None)
+            volume_step = getattr(instrument_spec, "volume_step", None)
+            if volume_min is not None and volume_min > 0 and size < volume_min:
+                size = float(volume_min)
+            if volume_step is not None and volume_step > 0:
+                size = math.floor(size / float(volume_step) + 1e-12) * float(volume_step)
+
+            volume_max = getattr(instrument_spec, "volume_max", None)
+            if volume_max is not None and volume_max > 0:
+                max_allowed = min(max_allowed, float(volume_max))
+            return max(0.0, min(size, max_allowed))
+
         if atr and atr > 0:
             risk_amount = portfolio_value * self.risk_per_trade
             stop_distance = atr * 2

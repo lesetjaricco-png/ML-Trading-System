@@ -1,0 +1,19 @@
+name,family,lookback,sources,formula
+return_lag_1,lagged_return,1,['Close'],Close.pct_change(1).shift(1)
+return_lag_2,lagged_return,2,['Close'],Close.pct_change(1).shift(2)
+return_lag_3,lagged_return,3,['Close'],Close.pct_change(1).shift(3)
+return_lag_5,lagged_return,5,['Close'],Close.pct_change(1).shift(5)
+return_20,multi_horizon_trend,20,['Close'],Close.pct_change(20)
+return_40,multi_horizon_trend,40,['Close'],Close.pct_change(40)
+return_80,multi_horizon_trend,80,['Close'],Close.pct_change(80)
+atr_trend_5,normalized_trend,5,"['Close', 'atr']",(Close-Close.shift(5))/ATR[t]
+atr_trend_10,normalized_trend,10,"['Close', 'atr']",(Close-Close.shift(10))/ATR[t]
+atr_trend_20,normalized_trend,20,"['Close', 'atr']",(Close-Close.shift(20))/ATR[t]
+atr_trend_40,normalized_trend,40,"['Close', 'atr']",(Close-Close.shift(40))/ATR[t]
+directional_persistence_5,directional_persistence,5,['Close'],rolling_5_mean(sign(Close.pct_change()))
+directional_persistence_10,directional_persistence,10,['Close'],rolling_10_mean(sign(Close.pct_change()))
+directional_persistence_20,directional_persistence,20,['Close'],rolling_20_mean(sign(Close.pct_change()))
+range_position_20,rolling_range_location,20,"['High', 'Low', 'Close']",2*(Close-rolling_20_low)/(rolling_20_high-rolling_20_low)-1
+range_position_50,rolling_range_location,50,"['High', 'Low', 'Close']",2*(Close-rolling_50_low)/(rolling_50_high-rolling_50_low)-1
+candle_close_location,candle_asymmetry,0,"['High', 'Low', 'Close']",2*(Close-Low)/(High-Low)-1
+signed_body_range,candle_asymmetry,0,"['Open', 'High', 'Low', 'Close']",(Close-Open)/(High-Low)

@@ -1,0 +1,277 @@
+{
+  "experiment_id": "v0.3_forward_atr_xgb_baseline_v1_neural_network_directional_v1",
+  "status": "completed",
+  "generated_at_utc": "2026-08-09T21:53:28.233786+00:00",
+  "runtime_seconds": 1.9102644000086002,
+  "scientific_question": "Can one small MLP recover BUY-vs-SELL direction from the frozen 42-feature representation?",
+  "environment": {
+    "python": "3.14.6 (tags/v3.14.6:c63aec6, Jun 10 2026, 10:26:10) [MSC v.1944 64 bit (AMD64)]",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "scikit_learn": "1.9.0",
+    "execution": "CPU-only; no TensorFlow, CUDA, GPU, or external data",
+    "resources_before_training": {
+      "total_ram_gib": 5.841,
+      "available_ram_gib": 0.429,
+      "available_ram_mib": 438.8,
+      "dataset_shape_exposed": [
+        79908,
+        43
+      ],
+      "train_rows": 71917,
+      "validation_rows": 7991,
+      "feature_count": 42,
+      "estimated_parameter_count": 1921,
+      "estimated_float32_feature_arrays_mib": 12.8,
+      "required_available_ram_mib": 128,
+      "array_memory_headroom_multiplier": 8,
+      "batch_size": 256,
+      "maximum_epochs": 50
+    }
+  },
+  "predeclared_design": {
+    "architecture": "42 -> Dense(32, ReLU) -> Dense(16, ReLU) -> Dense(1, logistic)",
+    "dropout": "unavailable in sklearn MLPClassifier; omitted as predeclared",
+    "parameter_count": 1921,
+    "solver": "Adam",
+    "learning_rate": 0.001,
+    "batch_size": 256,
+    "maximum_epochs": 50,
+    "patience": 5,
+    "internal_validation_fraction": 0.1,
+    "random_seed": 42,
+    "shuffle": false,
+    "class_weighting": false,
+    "probability_calibration": false,
+    "classification_threshold": 0.5,
+    "architecture_search": false,
+    "hyperparameter_search": false,
+    "threshold_optimization": false,
+    "cv_refits": 0,
+    "decision_thresholds": {
+      "minimum_validation_auc": 0.54,
+      "minimum_gain_over_frozen_xgb": 0.02,
+      "minimum_internal_auc": 0.52,
+      "maximum_train_validation_auc_gap": 0.1
+    }
+  },
+  "data": {
+    "dataset_sha256": "35995f3d673b914cd4631e95f7abc13ee78acec89c12129edbc1b1d353bb4634",
+    "features": [
+      "returns",
+      "returns_2",
+      "returns_5",
+      "returns_10",
+      "log_returns",
+      "high_low_ratio",
+      "close_open_ratio",
+      "rsi",
+      "macd",
+      "macd_signal",
+      "macd_hist",
+      "bb_upper",
+      "bb_lower",
+      "bb_width",
+      "bb_pct",
+      "sma_10",
+      "sma_20",
+      "sma_50",
+      "sma_200",
+      "ema_12",
+      "ema_26",
+      "price_to_sma_10",
+      "price_to_sma_20",
+      "price_to_sma_50",
+      "price_to_sma_200",
+      "atr",
+      "atr_pct",
+      "volatility_5",
+      "volatility_20",
+      "volume_sma",
+      "volume_ratio",
+      "obv",
+      "body_size",
+      "upper_shadow",
+      "lower_shadow",
+      "day_of_week",
+      "is_weekend",
+      "hour_of_day",
+      "is_market_open",
+      "is_asia_session",
+      "is_london_session",
+      "is_new_york_session"
+    ],
+    "feature_count": 42,
+    "target": "frozen v0.3 endpoint target restricted to SELL=0 and BUY=1",
+    "train_rows_exposed": 71917,
+    "validation_rows_exposed": 7991,
+    "directional_fit_rows": 27201,
+    "directional_internal_validation_rows": 3023,
+    "directional_external_validation_rows": 3271,
+    "internal_fit_last_timestamp": "2025-02-10T14:45:00",
+    "internal_validation_first_timestamp": "2025-02-10T15:00:00",
+    "external_validation_first_timestamp": "2025-06-02T23:30:00",
+    "data_access": {
+      "reader": "pyarrow.ParquetFile.iter_batches",
+      "batch_size": 79908,
+      "rows_exposed": 79908,
+      "last_exposed_timestamp": "2025-10-02T12:00:00",
+      "test_rows_exposed": 0,
+      "test_labels_exposed": false
+    }
+  },
+  "training": {
+    "actual_epochs": 13,
+    "best_epoch": 8,
+    "best_internal_validation_loss": 0.7100656032562256,
+    "final_observed_epoch": {
+      "epoch": 13,
+      "train_loss": 0.6828396916389465,
+      "internal_validation_loss": 0.7107530236244202,
+      "train_auc": 0.5810060534132984,
+      "internal_validation_auc": 0.48594101376024135
+    },
+    "best_model_train_loss": 0.685671329498291,
+    "best_model_internal_validation_loss": 0.7100656032562256
+  },
+  "metrics": {
+    "train": {
+      "roc_auc": 0.5676503736245411,
+      "balanced_accuracy": 0.542121057978873,
+      "macro_f1": 0.525780226033579,
+      "sell_recall": 0.3368260038240918,
+      "buy_recall": 0.7474161121336542,
+      "confusion_matrix": [
+        [
+          4404,
+          8671
+        ],
+        [
+          3568,
+          10558
+        ]
+      ],
+      "prediction_distribution": {
+        "SELL": {
+          "count": 7972,
+          "percentage": 29.307746038748576
+        },
+        "BUY": {
+          "count": 19229,
+          "percentage": 70.69225396125142
+        }
+      },
+      "probability_mean": 0.526333212852478,
+      "probability_std": 0.04914592206478119,
+      "predictions_near_0_5_pct": 66.69975368552626
+    },
+    "internal_train_validation": {
+      "roc_auc": 0.4802600374362729,
+      "balanced_accuracy": 0.48450361869358805,
+      "macro_f1": 0.45172245899322644,
+      "sell_recall": 0.256687898089172,
+      "buy_recall": 0.7123193392980042,
+      "confusion_matrix": [
+        [
+          403,
+          1167
+        ],
+        [
+          418,
+          1035
+        ]
+      ],
+      "prediction_distribution": {
+        "SELL": {
+          "count": 821,
+          "percentage": 27.1584518690043
+        },
+        "BUY": {
+          "count": 2202,
+          "percentage": 72.8415481309957
+        }
+      },
+      "probability_mean": 0.5319480895996094,
+      "probability_std": 0.05888188257813454,
+      "predictions_near_0_5_pct": 58.31955011577903
+    },
+    "external_validation": {
+      "roc_auc": 0.4923667867029372,
+      "balanced_accuracy": 0.5073016031133534,
+      "macro_f1": 0.479660580224183,
+      "sell_recall": 0.2582908163265306,
+      "buy_recall": 0.7563123899001761,
+      "confusion_matrix": [
+        [
+          405,
+          1163
+        ],
+        [
+          415,
+          1288
+        ]
+      ],
+      "prediction_distribution": {
+        "SELL": {
+          "count": 820,
+          "percentage": 25.068786303882604
+        },
+        "BUY": {
+          "count": 2451,
+          "percentage": 74.9312136961174
+        }
+      },
+      "probability_mean": 0.5381227135658264,
+      "probability_std": 0.0527561716735363,
+      "predictions_near_0_5_pct": 54.38703760317946
+    }
+  },
+  "comparison": {
+    "chance_directional_auc": 0.5,
+    "frozen_xgboost_42f": {
+      "validation_directional_auc": 0.5129618200774144,
+      "chronological_cv_directional_auc": null,
+      "directional_balanced_accuracy": 0.5004121253610075,
+      "directional_macro_f1": null,
+      "source": "models\\baselines\\v0.3_forward_atr_xgb_baseline_v1_directional_signal_diagnostic_v1\\diagnostic_report.json"
+    },
+    "small_mlp_42f": {
+      "validation_directional_auc": 0.4923667867029372,
+      "chronological_cv_directional_auc": null,
+      "chronological_internal_holdout_auc": 0.4802600374362729,
+      "directional_balanced_accuracy": 0.5073016031133534,
+      "directional_macro_f1": 0.479660580224183
+    }
+  },
+  "decision": {
+    "verdict": "NEURAL_NO_DIRECTIONAL_SIGNAL",
+    "train_to_external_validation_auc_gap": 0.07528358692160386,
+    "flags": {
+      "severe_overfitting": false,
+      "cross_period_instability": false,
+      "near_constant_predictions": false,
+      "extreme_class_bias": false
+    },
+    "recommendation": "Retire the neural-network branch; do not proceed automatically to LSTM."
+  },
+  "integrity": {
+    "protected_artifacts_checked": 102,
+    "protected_artifacts_unchanged": true,
+    "dataset_hash_verified": true,
+    "frozen_xgboost_identity_verified": true,
+    "exact_feature_order_verified": true,
+    "scaler_train_rows": 71917,
+    "scaler_fit_on_train_only": true,
+    "external_validation_used_for_training": false,
+    "test_rows_exposed": 0,
+    "test_features_read": false,
+    "test_labels_read": false,
+    "target_absent_from_features": true,
+    "future_columns_absent": true,
+    "chronology_verified": true,
+    "model_instances_trained": 1,
+    "reload_predictions_identical": true,
+    "maximum_reload_probability_difference": 0.0,
+    "deterministic_seed_configured": true,
+    "model_sha256": "ac798ee6a2dcf571dad18932f3c125bb991f0047e22f0126bc000c3f6631eac5"
+  }
+}
