@@ -1,0 +1,608 @@
+{
+  "experiment_id": "v0.3_forward_atr_xgb_baseline_v1_directional_asymmetric_buy_sell_v1",
+  "timestamp_utc": "2026-08-10T15:55:18.568235+00:00",
+  "duration_seconds": 42.02877980002086,
+  "research_question": "Does separating BUY and SELL into independent success questions reveal directional information absent from the frozen BUY-vs-SELL formulation?",
+  "targets": {
+    "buy_success": "Close[t+5]/Close[t]-1 > +ATR%[t]  (frozen target == 1)",
+    "sell_success": "Close[t+5]/Close[t]-1 < -ATR%[t]  (frozen target == 0)",
+    "horizon_bars": 5,
+    "atr_multiplier": 1.0,
+    "source": "derived from frozen v0.3_forward_atr_v1 labels; dataset not rewritten"
+  },
+  "integrity": {
+    "dataset_sha256": "35995f3d673b914cd4631e95f7abc13ee78acec89c12129edbc1b1d353bb4634",
+    "metadata_sha256": "f3a4667ffc2ca8b7dd1fddf0a44c842f0a871401b88f77c57e8e7aa25b79b042",
+    "baseline_model_sha256": "6e30c834df78c6448a6987b9427e1a7ee0677eacaf15efd04e82a828d207f3b8"
+  },
+  "protected_hashes_before": {
+    "dataset_sha256": "35995f3d673b914cd4631e95f7abc13ee78acec89c12129edbc1b1d353bb4634",
+    "metadata_sha256": "f3a4667ffc2ca8b7dd1fddf0a44c842f0a871401b88f77c57e8e7aa25b79b042",
+    "baseline_model_sha256": "6e30c834df78c6448a6987b9427e1a7ee0677eacaf15efd04e82a828d207f3b8",
+    "baseline_evaluation_sha256": "f0590c40956a7b041103933b3386dad04c94b53818b08955213e9e921d655bcd",
+    "directional_diagnostic_sha256": "6fbd66ff36785e58c10f7152891c13d1a6294c1a8f831aedd19d7caa0c260cc7"
+  },
+  "protected_hashes_after": {
+    "dataset_sha256": "35995f3d673b914cd4631e95f7abc13ee78acec89c12129edbc1b1d353bb4634",
+    "metadata_sha256": "f3a4667ffc2ca8b7dd1fddf0a44c842f0a871401b88f77c57e8e7aa25b79b042",
+    "baseline_model_sha256": "6e30c834df78c6448a6987b9427e1a7ee0677eacaf15efd04e82a828d207f3b8",
+    "baseline_evaluation_sha256": "f0590c40956a7b041103933b3386dad04c94b53818b08955213e9e921d655bcd",
+    "directional_diagnostic_sha256": "6fbd66ff36785e58c10f7152891c13d1a6294c1a8f831aedd19d7caa0c260cc7"
+  },
+  "access": {
+    "reader": "pyarrow.ParquetFile.iter_batches",
+    "batch_size": 79908,
+    "rows_exposed": 79908,
+    "last_exposed_timestamp": "2025-10-02T12:00:00",
+    "test_rows_exposed": 0,
+    "test_labels_exposed": false
+  },
+  "splits": {
+    "train": {
+      "row_count": 71917,
+      "first_timestamp": "2022-05-16T04:45:00",
+      "last_timestamp": "2025-06-02T22:30:00"
+    },
+    "validation": {
+      "row_count": 7991,
+      "first_timestamp": "2025-06-02T22:45:00",
+      "last_timestamp": "2025-10-02T12:00:00"
+    },
+    "test": {
+      "row_count": 19977,
+      "first_timestamp": "2025-10-02T12:15:00",
+      "last_timestamp": "2026-08-07T22:30:00"
+    }
+  },
+  "features": [
+    "returns",
+    "returns_2",
+    "returns_5",
+    "returns_10",
+    "log_returns",
+    "high_low_ratio",
+    "close_open_ratio",
+    "rsi",
+    "macd",
+    "macd_signal",
+    "macd_hist",
+    "bb_upper",
+    "bb_lower",
+    "bb_width",
+    "bb_pct",
+    "sma_10",
+    "sma_20",
+    "sma_50",
+    "sma_200",
+    "ema_12",
+    "ema_26",
+    "price_to_sma_10",
+    "price_to_sma_20",
+    "price_to_sma_50",
+    "price_to_sma_200",
+    "atr",
+    "atr_pct",
+    "volatility_5",
+    "volatility_20",
+    "volume_sma",
+    "volume_ratio",
+    "obv",
+    "body_size",
+    "upper_shadow",
+    "lower_shadow",
+    "day_of_week",
+    "is_weekend",
+    "hour_of_day",
+    "is_market_open",
+    "is_asia_session",
+    "is_london_session",
+    "is_new_york_session"
+  ],
+  "model_parameters": {
+    "n_estimators": 500,
+    "max_depth": 6,
+    "learning_rate": 0.05,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "min_child_weight": 1,
+    "gamma": 0.1,
+    "reg_alpha": 0.1,
+    "reg_lambda": 1.0,
+    "random_state": 42
+  },
+  "label_relationship_audit": {
+    "interpretation": "If both_zero_rate > 0, asymmetric labels are not complements of each other and therefore not a trivial BUY-vs-SELL relabeling on the full sample.",
+    "train": {
+      "split": "train",
+      "rows": 71917,
+      "buy_success_prevalence": 0.21662472016352183,
+      "sell_success_prevalence": 0.203637526593156,
+      "both_zero_count": 41693,
+      "both_zero_rate": 0.5797377532433222,
+      "both_one_count": 0,
+      "directional_count": 30224,
+      "label_pearson_correlation": -0.2659148488185895,
+      "are_strict_complements": false,
+      "are_mutually_exclusive": true
+    },
+    "validation": {
+      "split": "validation",
+      "rows": 7991,
+      "buy_success_prevalence": 0.21311475409836064,
+      "sell_success_prevalence": 0.19622074834188463,
+      "both_zero_count": 4720,
+      "both_zero_rate": 0.5906644975597547,
+      "both_one_count": 0,
+      "directional_count": 3271,
+      "label_pearson_correlation": -0.25713140663514233,
+      "are_strict_complements": false,
+      "are_mutually_exclusive": true
+    }
+  },
+  "control": {
+    "baseline_id": "v0.3_forward_atr_xgb_baseline_v1",
+    "direction_roc_auc": 0.5129618200774144,
+    "balanced_accuracy": 0.5004121253610075,
+    "precision": 0.5255474452554745,
+    "recall": 0.042278332354668234,
+    "accuracy": 0.48150412717823293,
+    "actual_directional_rows": 3271,
+    "filter_roc_auc": 0.6689584639539041,
+    "source": "recomputed from frozen joblib on VALIDATION; matches directional diagnostic"
+  },
+  "buy_model": {
+    "path": "models\\baselines\\v0.3_forward_atr_xgb_baseline_v1_directional_asymmetric_buy_sell_v1\\buy_success_xgb.joblib",
+    "train": {
+      "label_column": "buy_success",
+      "rows": 71917,
+      "positive_count": 15579,
+      "prevalence": 0.21662472016352183,
+      "threshold": 0.5,
+      "accuracy": 0.8273287261704465,
+      "balanced_accuracy": 0.6025884253795198,
+      "precision": 0.9849647131021786,
+      "recall": 0.20604660119391488,
+      "f1": 0.34080050960823866,
+      "brier_score": 0.11186359822750092,
+      "roc_auc": 0.9181861387499792,
+      "pr_auc": 0.815347002978767,
+      "calibration": [
+        {
+          "bin": 0,
+          "mean_predicted_probability": 0.030576830872609585,
+          "observed_frequency": 0.0008342602892102336
+        },
+        {
+          "bin": 1,
+          "mean_predicted_probability": 0.05824571090322547,
+          "observed_frequency": 0.005144605116796441
+        },
+        {
+          "bin": 2,
+          "mean_predicted_probability": 0.08929516926061758,
+          "observed_frequency": 0.026282853566958697
+        },
+        {
+          "bin": 3,
+          "mean_predicted_probability": 0.13452949493323701,
+          "observed_frequency": 0.05339265850945495
+        },
+        {
+          "bin": 4,
+          "mean_predicted_probability": 0.18101952904555635,
+          "observed_frequency": 0.05408787541713014
+        },
+        {
+          "bin": 5,
+          "mean_predicted_probability": 0.22104468510050118,
+          "observed_frequency": 0.08135168961201501
+        },
+        {
+          "bin": 6,
+          "mean_predicted_probability": 0.2595455279849362,
+          "observed_frequency": 0.13598442714126807
+        },
+        {
+          "bin": 7,
+          "mean_predicted_probability": 0.3058582232585621,
+          "observed_frequency": 0.29328327075511057
+        },
+        {
+          "bin": 8,
+          "mean_predicted_probability": 0.37125628455661164,
+          "observed_frequency": 0.5889877641824249
+        },
+        {
+          "bin": 9,
+          "mean_predicted_probability": 0.5127343231681589,
+          "observed_frequency": 0.9268631813125695
+        }
+      ]
+    },
+    "validation": {
+      "label_column": "buy_success",
+      "rows": 7991,
+      "positive_count": 1703,
+      "prevalence": 0.21311475409836064,
+      "threshold": 0.5,
+      "accuracy": 0.784257289450632,
+      "balanced_accuracy": 0.5017554805245645,
+      "precision": 0.3018867924528302,
+      "recall": 0.009395184967704051,
+      "f1": 0.018223234624145785,
+      "brier_score": 0.16893033683300018,
+      "roc_auc": 0.6116169415146747,
+      "pr_auc": 0.28461007728835025,
+      "calibration": [
+        {
+          "bin": 0,
+          "mean_predicted_probability": 0.0252239445282612,
+          "observed_frequency": 0.1225
+        },
+        {
+          "bin": 1,
+          "mean_predicted_probability": 0.04607244920409815,
+          "observed_frequency": 0.14518147684605756
+        },
+        {
+          "bin": 2,
+          "mean_predicted_probability": 0.06575599750585491,
+          "observed_frequency": 0.16896120150187735
+        },
+        {
+          "bin": 3,
+          "mean_predicted_probability": 0.08773820554471583,
+          "observed_frequency": 0.1639549436795995
+        },
+        {
+          "bin": 4,
+          "mean_predicted_probability": 0.11520175326228589,
+          "observed_frequency": 0.1902377972465582
+        },
+        {
+          "bin": 5,
+          "mean_predicted_probability": 0.14888769084207704,
+          "observed_frequency": 0.2190237797246558
+        },
+        {
+          "bin": 6,
+          "mean_predicted_probability": 0.18783529833873014,
+          "observed_frequency": 0.21401752190237797
+        },
+        {
+          "bin": 7,
+          "mean_predicted_probability": 0.2328789033862915,
+          "observed_frequency": 0.26783479349186484
+        },
+        {
+          "bin": 8,
+          "mean_predicted_probability": 0.2850214331335061,
+          "observed_frequency": 0.30287859824780977
+        },
+        {
+          "bin": 9,
+          "mean_predicted_probability": 0.3888428777791979,
+          "observed_frequency": 0.33667083854818525
+        }
+      ]
+    }
+  },
+  "sell_model": {
+    "path": "models\\baselines\\v0.3_forward_atr_xgb_baseline_v1_directional_asymmetric_buy_sell_v1\\sell_success_xgb.joblib",
+    "train": {
+      "label_column": "sell_success",
+      "rows": 71917,
+      "positive_count": 14645,
+      "prevalence": 0.203637526593156,
+      "threshold": 0.5,
+      "accuracy": 0.8350876705090591,
+      "balanced_accuracy": 0.5959476228653254,
+      "precision": 0.9880827199439187,
+      "recall": 0.19248890406282007,
+      "f1": 0.32220825237169964,
+      "brier_score": 0.10707122087478638,
+      "roc_auc": 0.9225879090755746,
+      "pr_auc": 0.817052140624936,
+      "calibration": [
+        {
+          "bin": 0,
+          "mean_predicted_probability": 0.030089038415776734,
+          "observed_frequency": 0.0006952169076751947
+        },
+        {
+          "bin": 1,
+          "mean_predicted_probability": 0.05720696759485827,
+          "observed_frequency": 0.00389321468298109
+        },
+        {
+          "bin": 2,
+          "mean_predicted_probability": 0.08912413642836155,
+          "observed_frequency": 0.02127659574468085
+        },
+        {
+          "bin": 3,
+          "mean_predicted_probability": 0.13087610252827273,
+          "observed_frequency": 0.04157397107897664
+        },
+        {
+          "bin": 4,
+          "mean_predicted_probability": 0.1702963233706816,
+          "observed_frequency": 0.04824805339265851
+        },
+        {
+          "bin": 5,
+          "mean_predicted_probability": 0.20395050331807207,
+          "observed_frequency": 0.07300792657488528
+        },
+        {
+          "bin": 6,
+          "mean_predicted_probability": 0.23735796811848514,
+          "observed_frequency": 0.12652947719688543
+        },
+        {
+          "bin": 7,
+          "mean_predicted_probability": 0.27759863027792253,
+          "observed_frequency": 0.24892226394103742
+        },
+        {
+          "bin": 8,
+          "mean_predicted_probability": 0.34054514502607147,
+          "observed_frequency": 0.5482480533926585
+        },
+        {
+          "bin": 9,
+          "mean_predicted_probability": 0.4988149189503161,
+          "observed_frequency": 0.9239432703003337
+        }
+      ]
+    },
+    "validation": {
+      "label_column": "sell_success",
+      "rows": 7991,
+      "positive_count": 1568,
+      "prevalence": 0.19622074834188463,
+      "threshold": 0.5,
+      "accuracy": 0.6892754348642223,
+      "balanced_accuracy": 0.5449491742049458,
+      "precision": 0.25651942522618415,
+      "recall": 0.30739795918367346,
+      "f1": 0.2796634754859298,
+      "brier_score": 0.20953406393527985,
+      "roc_auc": 0.5754141188236154,
+      "pr_auc": 0.23354162420141056,
+      "calibration": [
+        {
+          "bin": 0,
+          "mean_predicted_probability": 0.05622840066091157,
+          "observed_frequency": 0.095
+        },
+        {
+          "bin": 1,
+          "mean_predicted_probability": 0.11445143445860012,
+          "observed_frequency": 0.17146433041301626
+        },
+        {
+          "bin": 2,
+          "mean_predicted_probability": 0.17455368575748426,
+          "observed_frequency": 0.1539424280350438
+        },
+        {
+          "bin": 3,
+          "mean_predicted_probability": 0.23592252736545177,
+          "observed_frequency": 0.20400500625782228
+        },
+        {
+          "bin": 4,
+          "mean_predicted_probability": 0.2951113958755632,
+          "observed_frequency": 0.1902377972465582
+        },
+        {
+          "bin": 5,
+          "mean_predicted_probability": 0.3550441991700995,
+          "observed_frequency": 0.21026282853566958
+        },
+        {
+          "bin": 6,
+          "mean_predicted_probability": 0.4195562253084887,
+          "observed_frequency": 0.20525657071339173
+        },
+        {
+          "bin": 7,
+          "mean_predicted_probability": 0.4890983437417595,
+          "observed_frequency": 0.2165206508135169
+        },
+        {
+          "bin": 8,
+          "mean_predicted_probability": 0.5876683289178173,
+          "observed_frequency": 0.2903629536921151
+        },
+        {
+          "bin": 9,
+          "mean_predicted_probability": 0.7624792026936337,
+          "observed_frequency": 0.22528160200250313
+        }
+      ]
+    }
+  },
+  "combination": {
+    "definition": "P(BUY_success)/(P(BUY_success)+P(SELL_success)) on actual BUY/SELL rows",
+    "train": {
+      "actual_directional_rows": 30224,
+      "roc_auc": 0.9791037873882411,
+      "pr_auc": 0.9807353662568573,
+      "balanced_accuracy": 0.9194026125854085,
+      "precision": 0.9013346334328722,
+      "recall": 0.9493549008280378,
+      "accuracy": 0.9203282159872949,
+      "score_mean": 0.5152379274368286,
+      "buy_dominates_rate_all_rows": 0.538162047916348,
+      "neither_dominates_rate_all_rows": 0.9150131401476702,
+      "mean_buy_probability_all_rows": 0.2164110392332077,
+      "mean_sell_probability_all_rows": 0.20358653366565704,
+      "probability_pearson_correlation_all_rows": 0.2755529842928253
+    },
+    "validation": {
+      "actual_directional_rows": 3271,
+      "roc_auc": 0.5156173229714669,
+      "pr_auc": 0.5274691155383839,
+      "balanced_accuracy": 0.5074970864740493,
+      "precision": 0.5383502170767004,
+      "recall": 0.2184380504991192,
+      "accuracy": 0.49556710486089883,
+      "score_mean": 0.34554392099380493,
+      "buy_dominates_rate_all_rows": 0.21011137529720936,
+      "neither_dominates_rate_all_rows": 0.7586034288574647,
+      "mean_buy_probability_all_rows": 0.15832920372486115,
+      "mean_sell_probability_all_rows": 0.34897470474243164,
+      "probability_pearson_correlation_all_rows": -0.026976993591390677
+    }
+  },
+  "chronological_cv": [
+    {
+      "fold": 1,
+      "fit_rows": 11987,
+      "validation_rows": 11986,
+      "buy_roc_auc": 0.6224357349942733,
+      "buy_pr_auc": 0.28380627712987255,
+      "buy_balanced_accuracy": 0.5134395094536537,
+      "sell_roc_auc": 0.5980120797871387,
+      "sell_pr_auc": 0.25756652227698285,
+      "sell_balanced_accuracy": 0.5427145902521779,
+      "combination_direction_roc_auc": 0.5261576039054598,
+      "combination_direction_balanced_accuracy": 0.5095404547479891,
+      "scaler_fit_rows_buy": 11987,
+      "scaler_fit_rows_sell": 11987
+    },
+    {
+      "fold": 2,
+      "fit_rows": 23973,
+      "validation_rows": 11986,
+      "buy_roc_auc": 0.6322284643223792,
+      "buy_pr_auc": 0.30266294240319147,
+      "buy_balanced_accuracy": 0.5067676521522716,
+      "sell_roc_auc": 0.6078284441562493,
+      "sell_pr_auc": 0.2694733248932387,
+      "sell_balanced_accuracy": 0.5439843994761392,
+      "combination_direction_roc_auc": 0.5290082245644826,
+      "combination_direction_balanced_accuracy": 0.5138015798203446,
+      "scaler_fit_rows_buy": 23973,
+      "scaler_fit_rows_sell": 23973
+    },
+    {
+      "fold": 3,
+      "fit_rows": 35959,
+      "validation_rows": 11986,
+      "buy_roc_auc": 0.6285797842810691,
+      "buy_pr_auc": 0.2964107982324307,
+      "buy_balanced_accuracy": 0.5047940327689486,
+      "sell_roc_auc": 0.6073602304565466,
+      "sell_pr_auc": 0.23965938968797795,
+      "sell_balanced_accuracy": 0.5705956019720855,
+      "combination_direction_roc_auc": 0.5236939622017727,
+      "combination_direction_balanced_accuracy": 0.5078735197782817,
+      "scaler_fit_rows_buy": 35959,
+      "scaler_fit_rows_sell": 35959
+    },
+    {
+      "fold": 4,
+      "fit_rows": 47945,
+      "validation_rows": 11986,
+      "buy_roc_auc": 0.6080611862330144,
+      "buy_pr_auc": 0.27858343688935716,
+      "buy_balanced_accuracy": 0.5081049902478474,
+      "sell_roc_auc": 0.6241848628655073,
+      "sell_pr_auc": 0.24774853311648198,
+      "sell_balanced_accuracy": 0.5163335601353779,
+      "combination_direction_roc_auc": 0.47658390697052727,
+      "combination_direction_balanced_accuracy": 0.4803958608104072,
+      "scaler_fit_rows_buy": 47945,
+      "scaler_fit_rows_sell": 47945
+    },
+    {
+      "fold": 5,
+      "fit_rows": 59931,
+      "validation_rows": 11986,
+      "buy_roc_auc": 0.6334641585932159,
+      "buy_pr_auc": 0.2810517605405848,
+      "buy_balanced_accuracy": 0.5217827425150103,
+      "sell_roc_auc": 0.6115462308385783,
+      "sell_pr_auc": 0.26936577574249254,
+      "sell_balanced_accuracy": 0.5084581382425969,
+      "combination_direction_roc_auc": 0.5068847484637823,
+      "combination_direction_balanced_accuracy": 0.5035564882755156,
+      "scaler_fit_rows_buy": 59931,
+      "scaler_fit_rows_sell": 59931
+    }
+  ],
+  "permutations": {
+    "buy_roc_auc": {
+      "method": "label permutation on sealed VALIDATION scores (model not refit)",
+      "metric": "roc_auc",
+      "permutations": 199,
+      "observed": 0.6116169415146747,
+      "null_mean": 0.49992575215250196,
+      "null_std": 0.007460591014870872,
+      "one_sided_p_value": 0.005
+    },
+    "sell_roc_auc": {
+      "method": "label permutation on sealed VALIDATION scores (model not refit)",
+      "metric": "roc_auc",
+      "permutations": 199,
+      "observed": 0.5754141188236154,
+      "null_mean": 0.5004767175442135,
+      "null_std": 0.008564027812183498,
+      "one_sided_p_value": 0.005
+    },
+    "combination_direction_roc_auc": {
+      "method": "label permutation on sealed VALIDATION scores (model not refit)",
+      "metric": "roc_auc",
+      "permutations": 199,
+      "observed": 0.5156173229714669,
+      "null_mean": 0.49980469165184316,
+      "null_std": 0.010525103702973536,
+      "one_sided_p_value": 0.065
+    }
+  },
+  "leakage_audit": {
+    "test_rows_exposed": 0,
+    "test_labels_exposed": false,
+    "last_exposed_timestamp": "2025-10-02T12:00:00",
+    "feature_count": 42,
+    "forbidden_feature_columns": [],
+    "features_are_frozen_ohlcv_only": true,
+    "target_depends_on_future_close_only_via_precomputed_frozen_label": true,
+    "asymmetric_labels_derived_only_from_frozen_target_column": true,
+    "scaler_fit_scope": "TRAIN partition only for holdout models; fold TRAIN only for CV",
+    "threshold_selection": "fixed predeclared threshold=0.5; no validation-tuned threshold search",
+    "hyperparameter_selection": "copied exactly from frozen XGBoost baseline; no search",
+    "train_validation_gap_ok": true,
+    "horizon": "5 M15 bars (75 minutes), inherited from v0.3_forward_atr_v1",
+    "atr_barrier": "+/- 1.0 * ATR%[t] known at prediction time t"
+  },
+  "decision": {
+    "verdict": "DIRECTIONAL_ASYMMETRY_NOT_SUPPORTED",
+    "control_direction_auc": 0.5129618200774144,
+    "combination_direction_auc": 0.5156173229714669,
+    "combination_gain_vs_control": 0.002655502894052475,
+    "cv_combination_direction_auc_mean": 0.512465689221205,
+    "cv_combination_direction_auc_std": 0.01952356173782623,
+    "buy_validation_roc_auc": 0.6116169415146747,
+    "sell_validation_roc_auc": 0.5754141188236154,
+    "permutation_p_values": {
+      "buy_roc_auc": 0.005,
+      "sell_roc_auc": 0.005,
+      "combination_direction_roc_auc": 0.065
+    },
+    "gates": {
+      "promising_auc": 0.54,
+      "minimum_control_gain": 0.02,
+      "minimum_cv_mean_auc": 0.52,
+      "permutation_alpha": 0.05
+    },
+    "genuinely_different_problem_from_label_construction": true,
+    "notes": "Asymmetric labels include NO_TRADE as negatives, so the learning problems differ from BUY-vs-SELL on directional rows. Empirical usefulness is gated separately from that mathematical distinction."
+  },
+  "prior_first_passage_direction_auc": 0.49936062678464477,
+  "recommended_next_experiment": "Do not invest in asymmetric BUY/SELL model architecture on this representation. If path-ordered success remains scientifically interesting, treat it as a separate predeclared first-passage asymmetric study; otherwise move to a new information source.",
+  "test_policy": "not evaluated; not used for fitting, preprocessing, CV, thresholding, or selection"
+}

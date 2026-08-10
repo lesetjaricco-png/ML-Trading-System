@@ -1,0 +1,101 @@
+{
+  "experiment_id": "neural_network_showdown_frozen_42f_v1",
+  "status": "stopped_pre_training",
+  "scientific_verdict": "NEURAL_EXPERIMENT_INCONCLUSIVE",
+  "plain_answer": "INCONCLUSIVE",
+  "stop_reason": "No compatible CPU neural framework or compatible isolated Python environment is installed; creating and populating a new runtime with less than 1 GiB free RAM was not considered safe under the predefined stop conditions.",
+  "environment": {
+    "operating_system": "Windows 11",
+    "python": "3.14.6",
+    "selected_interpreter": ".venv/Scripts/python.exe",
+    "physical_ram_gib": 5.841,
+    "free_ram_gib_at_preflight": 0.953,
+    "torch_available": false,
+    "tensorflow_available": false,
+    "compatible_existing_isolated_environment_found": false,
+    "global_environment_modified": false,
+    "dependencies_installed": false,
+    "gpu_required": false
+  },
+  "dataset": {
+    "path": "data/processed/US30_2022-05-12_2026-08-09_M15_v0.3_forward_atr_v1.parquet",
+    "sha256": "35995f3d673b914cd4631e95f7abc13ee78acec89c12129edbc1b1d353bb4634",
+    "metadata_sha256": "f3a4667ffc2ca8b7dd1fddf0a44c842f0a871401b88f77c57e8e7aa25b79b042",
+    "feature_count": 42,
+    "target": "Frozen BUY-vs-SELL directional target; SELL=0 and BUY=1",
+    "splits": {
+      "train": {
+        "rows": 71917,
+        "first_timestamp": "2022-05-16T04:45:00",
+        "last_timestamp": "2025-06-02T22:30:00"
+      },
+      "validation": {
+        "rows": 7991,
+        "first_timestamp": "2025-06-02T22:45:00",
+        "last_timestamp": "2025-10-02T12:00:00"
+      },
+      "test": {
+        "rows_not_exposed": 19977,
+        "first_timestamp_from_metadata_only": "2025-10-02T12:15:00",
+        "last_timestamp_from_metadata_only": "2026-08-07T22:30:00"
+      }
+    }
+  },
+  "frozen_xgboost_control": {
+    "model_sha256": "6e30c834df78c6448a6987b9427e1a7ee0677eacaf15efd04e82a828d207f3b8",
+    "evaluation_report_sha256": "f0590c40956a7b041103933b3386dad04c94b53818b08955213e9e921d655bcd",
+    "validation_auc": 0.5129618200774144,
+    "validation_balanced_accuracy": 0.5004,
+    "cv_mean_auc": null,
+    "cv_auc_standard_deviation": null,
+    "permutation_p_value": null,
+    "existing_verdict": "INSUFFICIENT_DIRECTIONAL_INFORMATION",
+    "note": "Authoritative apples-to-apples CV and permutation metrics are absent from the frozen control artifacts; the control was not retrained."
+  },
+  "predeclared_success_rule": {
+    "minimum_validation_auc": 0.54,
+    "minimum_gain_over_frozen_xgboost": 0.02,
+    "minimum_internal_auc": 0.52,
+    "maximum_train_validation_auc_gap": 0.1,
+    "requires_supportive_chronological_cv": true,
+    "requires_supportive_permutation_test": true,
+    "requires_deterministic_reload": true
+  },
+  "architectures": {
+    "mlp": {
+      "showdown_status": "NOT_RUN_DEPENDENCY_RESOURCE_STOP",
+      "prior_independent_sklearn_evidence": {
+        "validation_auc": 0.4923667867029372,
+        "internal_holdout_auc": 0.4802600374362729,
+        "parameter_count": 1921,
+        "training_time_seconds": 1.9102644000086002,
+        "reload_predictions_identical": true,
+        "verdict": "NO_NEURAL_INCREMENTAL_SIGNAL"
+      }
+    },
+    "cnn_1d": {"showdown_status": "NOT_RUN_DEPENDENCY_RESOURCE_STOP"},
+    "gru": {"showdown_status": "NOT_RUN_DEPENDENCY_RESOURCE_STOP"},
+    "lstm": {"showdown_status": "NOT_RUN_DEPENDENCY_RESOURCE_STOP"}
+  },
+  "integrity": {
+    "test_rows_exposed": 0,
+    "test_features_read": false,
+    "test_labels_read": false,
+    "training_started": false,
+    "models_trained": 0,
+    "validation_predictions_created": false,
+    "dataset_identity_verified": true,
+    "frozen_baseline_identity_verified": true,
+    "protected_artifacts_modified": false,
+    "normalization_performed": false,
+    "sequences_constructed": false,
+    "leakage_detected": false
+  },
+  "testing": {
+    "focused_showdown_tests": "NOT_CREATED_OR_RUN_BECAUSE_PREFLIGHT_STOP_PRECEDED_IMPLEMENTATION",
+    "existing_neural_tests": "NOT_RERUN",
+    "repository_suite": "NOT_RUN_AFTER_STOP",
+    "reason": "The mandatory dependency/resource preflight failed before implementation or training."
+  },
+  "final_answer": "INCONCLUSIVE: the requested four-architecture comparison could not be run safely. Existing MLP evidence is negative but cannot answer for CNN, GRU, or LSTM."
+}
